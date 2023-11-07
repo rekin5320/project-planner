@@ -1,0 +1,1 @@
+Technologies java, javaFX, Oracle database
