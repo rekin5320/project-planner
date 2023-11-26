@@ -3,6 +3,7 @@
 
     <groupId>pw.pap</groupId>
     <artifactId>pap-app</artifactId>
+    <packaging>jar</packaging>
     <version>0.0.0</version>
 
     <properties>
