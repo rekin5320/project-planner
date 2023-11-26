@@ -22,18 +22,23 @@ Dodatkowe funkcjonalności, na przykład:
 - możliwość zalogowania się Facebookiem
 
 ## How to use it
-### Building
+### Build
+```sh
+mvn compile
+```
+
+### Test
+```sh
+mvn test
+```
+
+### Build & Test at once
 ```sh
 mvn package
 ```
 
-### Running
+### Run
 ```sh
 java -cp target/pap-app-0.0.0.jar pw.pap.Main
-```
-
-### Testing
-```sh
-mvn test
 ```
 
