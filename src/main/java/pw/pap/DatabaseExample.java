@@ -6,10 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class OracleDatabaseExample {
+public class DatabaseExample {
     public static void main(String[] args) {
-        String url = "jdbc:oracle:thin:@//localhost:1521/FREEPDB1";
-        String username = "admin";
+        String url = "jdbc:mysql://localhost:3306/papdb";
+        String username = "myuser";
         String password = "2L9(4Evz,9";
 
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
@@ -31,11 +31,14 @@ public class OracleDatabaseExample {
     }
 }
 
-/* create table tasks_tmp (
-    task_id NUMBER(4) constraint task_pk primary key,
-    name varchar2(50) not null
+// docker run --name pap-mysql -e MYSQL_USER="myuser" -e MYSQL_PASSWORD="2L9(4Evz,9" -e MYSQL_ROOT_PASSWORD="E{E28>kU_i" -e MYSQL_DATABASE="papdb" -p 3306:3306 -v $HOME/mysql-data:`pwd`/mysql-data/ -d mysql:8.2.0-oracle
+/*
+use papdb;
+create table tasks_tmp (
+    task_id INT primary key,
+    name varchar(99) not null
 );
-
+show tables;
 insert into tasks_tmp values (1, 'Pierwsze zadanie');
-insert into tasks_tmp values (2, 'Drugie zadanie'); */
-
+insert into tasks_tmp values (2, 'Drugie zadanie');
+*/

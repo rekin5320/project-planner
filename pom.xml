@@ -20,9 +20,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc8</artifactId>
-            <version>23.3.0.23.09</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
         </dependency>
     </dependencies>
 
