@@ -8,7 +8,7 @@ Frontend: interfejs webowy – React
 
 Backend: Java (prawdopodobnie Spring + REST)
 
-Baza danych: prawdopodobnie Oracle
+Baza danych: MySQL
 
 ### Funkcjonalności
 Podstawowe funkcjonalności:
@@ -40,6 +40,6 @@ mvn package
 ### Run
 ```sh
 java -cp target/pap-app-0.0.0.jar pw.pap.Main
-java -cp target/pap-app-0.0.0.jar pw.pap.OracleDatabaseExample
+java -cp target/pap-app-0.0.0.jar pw.pap.DatabaseExample
 ```
 
