@@ -7,28 +7,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class OracleDatabaseExample {
-
     public static void main(String[] args) {
-        String url = "jdbc:oracle:thin:@//ora4.ii.pw.edu.pl:1521/pdb1.ii.pw.edu.pl";
-        String username = "plenczew";
-        String password = "plenczew";
+        String url = "jdbc:oracle:thin:@//localhost:1521/FREEPDB1";
+        String username = "admin";
+        String password = "2L9(4Evz,9";
 
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
-
-            String sql = "SELECT * FROM Projects";
+            String sql = "SELECT * FROM tasks_tmp";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
                  ResultSet resultSet = preparedStatement.executeQuery()) {
 
                 while (resultSet.next()) {
-                    String project_id = resultSet.getString("project_id");
+                    String task_id = resultSet.getString("task_id");
                     String name = resultSet.getString("name");
-                    String status = resultSet.getString("status");
-                    String owner = resultSet.getString("owner");
-                    String date_start = resultSet.getString("date_start");
-                    String date_end = resultSet.getString("date_end");
 
-                    System.out.println(project_id+", "+name+", "+status+", "+owner+", "+date_start+", "+date_end);
+                    System.out.println(task_id + " " + name);
                 }
             }
         } catch (SQLException e) {
@@ -36,3 +30,12 @@ public class OracleDatabaseExample {
         }
     }
 }
+
+/* create table tasks_tmp (
+    task_id NUMBER(4) constraint task_pk primary key,
+    name varchar2(50) not null
+);
+
+insert into tasks_tmp values (1, 'Pierwsze zadanie');
+insert into tasks_tmp values (2, 'Drugie zadanie'); */
+
