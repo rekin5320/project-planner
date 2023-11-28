@@ -31,8 +31,9 @@ public class DatabaseExample {
     }
 }
 
-// docker run --name pap-mysql -e MYSQL_USER="myuser" -e MYSQL_PASSWORD="2L9(4Evz,9" -e MYSQL_ROOT_PASSWORD="E{E28>kU_i" -e MYSQL_DATABASE="papdb" -p 3306:3306 -v $HOME/mysql-data:`pwd`/mysql-data/ -d mysql:8.2.0-oracle
+// docker run --name pap-mysql -e MYSQL_USER="myuser" -e MYSQL_PASSWORD="2L9(4Evz,9" -e MYSQL_ROOT_PASSWORD="E{E28>kU_i" -e MYSQL_DATABASE="papdb" -p 3306:3306 -v $HOME/mysql-data:<project-dir-change-me>/mysql-data/ -d mysql:8.2.0-oracle
 /*
+-- Init database:
 use papdb;
 create table tasks_tmp (
     task_id INT primary key,
