@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
     mysql:
-        image: mysql:8.2.0-oracle
+        image: linuxserver/mariadb:10.6.13
         container_name: pap-mysql
         environment:
             MYSQL_DATABASE: papdb
@@ -12,4 +12,4 @@ services:
         ports:
             - "30306:3306"
         volumes:
-            - ./mysql-data:/var/lib/mysql
+            - ./mysql-data:/config
