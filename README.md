@@ -32,7 +32,7 @@ mvn compile
 mvn test
 ```
 
-### Build & Test at once
+### Build & Test & Package at once
 ```sh
 mvn package
 ```
