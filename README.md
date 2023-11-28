@@ -22,22 +22,34 @@ Dodatkowe funkcjonalności, na przykład:
 - możliwość zalogowania się Facebookiem
 
 ## How to use it
-### Build
+### MySQL database
+#### Start
+```sh
+docker-compose up -d
+```
+
+#### Stop
+```sh
+docker-compose down
+```
+
+### Java backend
+#### Build
 ```sh
 mvn compile
 ```
 
-### Test
+#### Test
 ```sh
 mvn test
 ```
 
-### Build & Test & Package at once
+#### Build & Test & Package at once
 ```sh
 mvn package
 ```
 
-### Run
+#### Run
 ```sh
 java -cp target/pap-app-0.0.0.jar pw.pap.Main
 java -cp target/pap-app-0.0.0.jar pw.pap.DatabaseExample
