@@ -40,5 +40,6 @@ mvn package
 ### Run
 ```sh
 java -cp target/pap-app-0.0.0.jar pw.pap.Main
+java -cp target/pap-app-0.0.0.jar pw.pap.OracleDatabaseExample
 ```
 
