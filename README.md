@@ -8,7 +8,7 @@ Frontend: interfejs webowy – React
 
 Backend: Java (prawdopodobnie Spring + REST)
 
-Baza danych: prawdopodobnie Oracle
+Baza danych: MySQL
 
 ### Funkcjonalności
 Podstawowe funkcjonalności:
@@ -22,24 +22,36 @@ Dodatkowe funkcjonalności, na przykład:
 - możliwość zalogowania się Facebookiem
 
 ## How to use it
-### Build
+### MySQL database config
+address: `rekin.ddns.net:30306`
+
+database name: `papdb`
+
+jdbc: `jdbc:mysql://rekin.ddns.net:30306/papdb`
+
+user: `myuser`
+
+password: `2L9(4Evz,9`
+
+### Java backend
+#### Build
 ```sh
 mvn compile
 ```
 
-### Test
+#### Test
 ```sh
 mvn test
 ```
 
-### Build & Test & Package at once
+#### Build & Test & Package at once
 ```sh
 mvn package
 ```
 
-### Run
+#### Run
 ```sh
 java -cp target/pap-app-0.0.0.jar pw.pap.Main
-java -cp target/pap-app-0.0.0.jar pw.pap.OracleDatabaseExample
+java -cp target/pap-app-0.0.0.jar pw.pap.DatabaseExample
 ```
 
