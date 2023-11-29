@@ -12,12 +12,12 @@
 
         <properties>
             <!-- The JDBC URL to the database instance -->
-            <property name="javax.persistence.jdbc.url"
+            <property name="jakarta.persistence.jdbc.url"
                 value="jdbc:mysql://rekin.ddns.net:30306/papdb" />
             <!-- The database username -->
-            <property name="javax.persistence.jdbc.user" value="myuser" />
+            <property name="jakarta.persistence.jdbc.user" value="myuser" />
             <!-- The database password -->
-        <property name="javax.persistence.jdbc.password" value="2L9(4Evz,9"/>
+        <property name="jakarta.persistence.jdbc.password" value="2L9(4Evz,9"/>
 
             <property name="hibernate.hbm2ddl.auto" value="update" />
         </properties>
