@@ -22,7 +22,16 @@ Dodatkowe funkcjonalności, na przykład:
 - możliwość zalogowania się Facebookiem
 
 ## How to use it
-### MySQL database
+### MySQL database config
+address: `rekin.ddns.net:30306`
+
+database name: `papdb`
+
+jdbc: `jdbc:mysql://rekin.ddns.net:30306/papdb`
+
+user: `myuser`
+
+password: `2L9(4Evz,9`
 
 ### Java backend
 #### Build
