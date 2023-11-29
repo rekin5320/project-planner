@@ -23,15 +23,6 @@ Dodatkowe funkcjonalności, na przykład:
 
 ## How to use it
 ### MySQL database
-#### Start
-```sh
-docker-compose up -d
-```
-
-#### Stop
-```sh
-docker-compose down
-```
 
 ### Java backend
 #### Build
