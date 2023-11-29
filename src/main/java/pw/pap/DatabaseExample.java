@@ -8,7 +8,9 @@ import java.sql.SQLException;
 
 public class DatabaseExample {
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:30306/papdb";
+        // String url = "jdbc:mysql://localhost:30306/papdb";
+        String url = "jdbc:mysql://rekin.ddns.net:30306/papdb";
+
         String username = "myuser";
         String password = "2L9(4Evz,9";
 
@@ -33,6 +35,10 @@ public class DatabaseExample {
 
 /*
 -- Init database:
+create database papdb;
+create user myuser@'%' identified by 'passw'
+GRANT ALL PRIVILEGES ON papdb.* TO 'myuser'@'%';
+
 use papdb;
 create table tasks_tmp (
     task_id INT primary key,
