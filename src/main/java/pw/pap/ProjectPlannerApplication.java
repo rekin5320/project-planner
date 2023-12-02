@@ -3,32 +3,46 @@ package pw.pap;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import pw.pap.repository.UserRepository;
+import pw.pap.service.UserService;
 import pw.pap.database.User;
-import pw.pap.repository.ProjectRepository;
+import pw.pap.service.ProjectService;
 import pw.pap.database.Project;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 @SpringBootApplication
 public class ProjectPlannerApplication {
-	public static void main(String[] args) {
+	//throws IOException is temporary and to be deleted!!!
+	public static void main(String[] args) throws IOException {
 		ConfigurableApplicationContext configurableApplicationContext =
 			SpringApplication.run(ProjectPlannerApplication.class, args);
-		ProjectRepository projectRepository = configurableApplicationContext.getBean(ProjectRepository.class);
-		UserRepository userRepository = configurableApplicationContext.getBean(UserRepository.class);
+		ProjectService projectService = configurableApplicationContext.getBean(ProjectService.class);
+		UserService userService = configurableApplicationContext.getBean(UserService.class);
 
-		User bob = new User("Bob");
-		userRepository.save(bob);
-		Project roller_coaster = new Project("roller coaster", bob);
+		User bob = userService.createUser(new User("Bob"));
+		Project rollerCoaster = projectService.createProject(new Project("Roller Coaster", bob));
 
-		User robert = new User("Robert");
-		userRepository.save(robert);
-		User ronald = new User("Ronald");
-		userRepository.save(ronald);
+		User robert = userService.createUser(new User("Robert"));
+		User ronald = userService.createUser(new User("Ronald"));
 
-		roller_coaster.addMember(robert);
-		roller_coaster.addMember(ronald);
+		projectService.assignUserToProject(rollerCoaster.getId(), robert.getId());
+		projectService.assignUserToProject(rollerCoaster.getId(), ronald.getId());
 
-		projectRepository.save(roller_coaster);
+		BufferedReader reader = new BufferedReader( new InputStreamReader(System.in));
+		String name = reader.readLine();
+
+		projectService.deleteProject(rollerCoaster.getId());
+
+		name = reader.readLine();
+
+		userService.deleteUser(bob.getId());
+
+		name = reader.readLine();
+
+		userService.deleteUser(ronald.getId());
+		userService.deleteUser(robert.getId());
 	}
 }
 

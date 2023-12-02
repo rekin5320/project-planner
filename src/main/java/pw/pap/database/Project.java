@@ -14,8 +14,8 @@ public class Project {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id", nullable = false)
-    private User owner_id;
+    @JoinColumn(name = "owner", nullable = false)
+    private User owner;
 
     @ManyToMany
     @JoinTable(name = "project_user",
@@ -27,13 +27,10 @@ public class Project {
     public Project() {
     }
 
-    public Project(String name, User owner_id) {
+    public Project(String name, User owner) {
         this.name = name;
-        this.owner_id = owner_id;
-    }
-
-    public void addMember(User member) {
-        this.members.add(member);
+        this.members.add(owner);
+        this.owner = owner;
     }
 
     public Long getId() {
@@ -50,12 +47,10 @@ public class Project {
         this.name = name;
     }
 
-    public User getOwner_id() {
-        return owner_id;
+    public User getOwner() {
+        return this.owner;
     }
-    public void setOwner_id(User owner_id) {
-        this.owner_id = owner_id;
-    }
+    public void setOwner(User owner) {this.owner = owner;}
 
     public Set<User> getMembers() {
         return members;
