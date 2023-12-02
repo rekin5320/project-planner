@@ -7,9 +7,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Projects")
-public class Projects {
+public class Project {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
 
@@ -24,12 +24,16 @@ public class Projects {
     )
     private Set<User> members = new HashSet<>();
 
-    public Projects() {
+    public Project() {
     }
 
-    public Projects(String name, User owner_id) {
+    public Project(String name, User owner_id) {
         this.name = name;
         this.owner_id = owner_id;
+    }
+
+    public void addMember(User member) {
+        this.members.add(member);
     }
 
     public Long getId() {
