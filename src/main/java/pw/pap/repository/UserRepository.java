@@ -1,6 +1,6 @@
 package pw.pap.repository;
 
-import pw.pap.database.User;
+import pw.pap.api.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
