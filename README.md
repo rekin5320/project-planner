@@ -50,8 +50,20 @@ mvn package
 ```
 
 #### Run
+`Main.java`:
+
 ```sh
-java -cp target/pap-app-0.0.0.jar pw.pap.Main
-java -cp target/pap-app-0.0.0.jar pw.pap.DatabaseExample
+java -jar target/pap-app-0.0.0.jar
 ```
 
+or
+
+```sh
+java -cp target/pap-app-0.0.0.jar pw.pap.Main
+```
+
+`DatabaseExample.java`:
+
+```sh
+java -cp target/pap-app-0.0.0.jar pw.pap.DatabaseExample
+```
