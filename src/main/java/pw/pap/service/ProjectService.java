@@ -3,13 +3,12 @@ package pw.pap.service;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pw.pap.database.Project;
-import pw.pap.database.User;
+import pw.pap.api.model.Project;
+import pw.pap.api.model.User;
 import pw.pap.repository.UserRepository;
 import pw.pap.repository.ProjectRepository;
 
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class ProjectService {

@@ -1,4 +1,4 @@
-package pw.pap.database;
+package pw.pap.api.model;
 
 import jakarta.persistence.*;
 
