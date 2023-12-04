@@ -33,37 +33,25 @@ user: `myuser`
 
 password: `2L9(4Evz,9`
 
-### Java backend
+### Spring backend
 #### Build
-```sh
-mvn compile
-```
-
-#### Test
-```sh
-mvn test
-```
-
-#### Build & Test & Package at once
 ```sh
 mvn package
 ```
 
 #### Run
-`Main.java`:
-
 ```sh
-java -jar target/pap-app-0.0.0.jar
+java -jar target/pap-app-0.0.1-SNAPSHOT.jar
 ```
 
-or
-
+### React frontend
+#### Install dependencies
 ```sh
-java -cp target/pap-app-0.0.0.jar pw.pap.Main
+npm install axios
 ```
 
-`DatabaseExample.java`:
-
+#### Run
 ```sh
-java -cp target/pap-app-0.0.0.jar pw.pap.DatabaseExample
+npm start
 ```
+
