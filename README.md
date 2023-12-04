@@ -41,7 +41,7 @@ mvn package
 
 #### Run
 ```sh
-java -jar target/pap-app-0.0.1-SNAPSHOT.jar
+java -jar target/pap-app-0.1.0.jar
 ```
 
 ### React frontend

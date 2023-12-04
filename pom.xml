@@ -3,7 +3,7 @@
 
 	<groupId>pw.pap</groupId>
 	<artifactId>pap-app</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0</version>
 	<name>ProjectPlanner</name>
 	<description>Web application for managing projects</description>
 
