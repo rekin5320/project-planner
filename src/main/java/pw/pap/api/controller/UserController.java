@@ -2,6 +2,7 @@ package pw.pap.api.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pw.pap.api.model.User;
@@ -14,6 +15,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin()
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -40,6 +42,7 @@ public class UserController {
     public User updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
         return userService.updateUser(userId, updatedUser);
     }
+
 
     @DeleteMapping("/delete/{userId}")
     public void deleteUser(@PathVariable Long userId) {
