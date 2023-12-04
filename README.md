@@ -4,16 +4,16 @@
 Aplikacja służąca do planowania zadań dla pracowników
 
 ### Technologie
-Frontend: interfejs webowy – React
+Frontend: interfejs webowy (React)
 
-Backend: Java (prawdopodobnie Spring + REST)
+Backend: Java (Spring + REST)
 
 Baza danych: MySQL
 
 ### Funkcjonalności
 Podstawowe funkcjonalności:
 
-- wyświetlanie, dodawanie, edytowanie, usuwanie zadań
+- wyświetlanie, dodawanie, edytowanie, usuwanie użytkowników i zadań
 - przydzielanie zadań pracownikom
 
 Dodatkowe funkcjonalności, na przykład:
@@ -41,8 +41,11 @@ mvn package
 
 #### Run
 ```sh
-java -jar target/pap-app-0.0.1-SNAPSHOT.jar
+java -jar target/pap-app-0.1.0.jar
 ```
+
+#### Usage
+Open `http://127.0.0.1:8080/api/users/all`
 
 ### React frontend
 #### Install dependencies
@@ -54,4 +57,7 @@ npm install axios
 ```sh
 npm start
 ```
+
+#### Usage
+Open `http://127.0.0.1:3000/`
 

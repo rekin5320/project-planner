@@ -2,6 +2,9 @@ package pw.pap.api.model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "Users")
 public class User {

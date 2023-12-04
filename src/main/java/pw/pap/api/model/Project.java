@@ -13,7 +13,7 @@ public class Project {
     private Long id;
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "owner", nullable = false)
     private User owner;
 
