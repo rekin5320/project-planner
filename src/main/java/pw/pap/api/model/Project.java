@@ -17,7 +17,7 @@ public class Project {
     @JoinColumn(name = "owner", nullable = false)
     private User owner;
 
-    @ManyToMany(cascade = CascadeType.REMOVE)
+    @ManyToMany
     @JoinTable(name = "project_user",
             joinColumns = { @JoinColumn(name = "project_id")},
             inverseJoinColumns = { @JoinColumn(name = "user_id")}
