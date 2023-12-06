@@ -25,6 +25,8 @@
   --tw-content: '';
 }
 
+
+
 /*
 1. Use a consistent sensible line-height in all browsers.
 2. Prevent adjustments of font size after orientation changes in iOS.
@@ -640,4 +642,15 @@ video {
 
 .focus\:ring-opacity-50:focus {
   --tw-ring-opacity: 0.5;
+}
+
+.hide-scrollbar {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Remove the nesting and define it as a separate rule */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
