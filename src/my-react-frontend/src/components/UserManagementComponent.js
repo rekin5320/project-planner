@@ -57,7 +57,7 @@ const UserManagementComponent = () => {
                 value={newUserName}
                 onChange={(e) => setNewUserName(e.target.value)}
                 placeholder="Name"
-                className="mr-2 p-2 border border-custom-blue rounded bg-custom-blue"
+                className="mr-2 p-2 border border-custom-lightgray rounded bg-custom-lightgray"
               />
               <button
                 type="submit"
