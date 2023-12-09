@@ -33,7 +33,7 @@ const UserManagementComponent = () => {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center justify-center">
             <div className="flex flex-col items-center justify-center overflow-hidden">
                 {/* Scrollable container for the user list */}
                 <div className="overflow-y-auto overflow-x-hidden max-h-[calc(100vh-150px)] w-full hide-scrollbar">
