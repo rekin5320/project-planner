@@ -1,15 +1,15 @@
 package pw.pap.service;
+
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pw.pap.api.model.Project;
+import pw.pap.api.model.User;
 import pw.pap.repository.ProjectRepository;
 import pw.pap.repository.UserRepository;
-import pw.pap.api.model.User;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+
 
 @Service
 public class UserService {
@@ -39,10 +39,9 @@ public class UserService {
         User existingUser = userRepository.findById(userId).orElse(null);
         if (existingUser != null) {
             existingUser.setName(updatedUser.getName());
-
-
             return userRepository.save(existingUser);
-        } else {
+        }
+        else {
             return null;
         }
     }

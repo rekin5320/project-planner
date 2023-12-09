@@ -1,9 +1,9 @@
 package pw.pap.api.model;
 
 import jakarta.persistence.*;
-
 import java.util.HashSet;
 import java.util.Set;
+
 
 @Entity
 @Table(name = "Projects")
@@ -11,6 +11,7 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String name;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
@@ -19,13 +20,12 @@ public class Project {
 
     @ManyToMany
     @JoinTable(name = "project_user",
-            joinColumns = { @JoinColumn(name = "project_id")},
-            inverseJoinColumns = { @JoinColumn(name = "user_id")}
+        joinColumns = {@JoinColumn(name = "project_id")},
+        inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
     private Set<User> members = new HashSet<>();
 
-    public Project() {
-    }
+    public Project() { }
 
     public Project(String name, User owner) {
         this.name = name;
@@ -36,6 +36,7 @@ public class Project {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -50,11 +51,13 @@ public class Project {
     public User getOwner() {
         return this.owner;
     }
+
     public void setOwner(User owner) {this.owner = owner;}
 
     public Set<User> getMembers() {
         return members;
     }
+
     public void setMembers(Set<User> members) {
         this.members = members;
     }

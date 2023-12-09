@@ -36,7 +36,7 @@ public class ProjectService {
 
     public Project updateProject(Long projectId, Project updatedProject) {
         Project existingProject = projectRepository.findById(projectId)
-                .orElseThrow(() -> new IllegalArgumentException("Project not found"));
+            .orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
         projectRepository.deleteById(projectId);
         updatedProject.setId(projectId);
@@ -50,10 +50,10 @@ public class ProjectService {
     @Transactional
     public void assignUserToProject(Long projectId, Long userId) {
         Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new IllegalArgumentException("Project not found"));
+            .orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+            .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         project.getMembers().add(user);
         projectRepository.save(project);
@@ -62,10 +62,10 @@ public class ProjectService {
     @Transactional
     public void removeUserFromProject(Long projectId, Long userId) {
         Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new IllegalArgumentException("Project not found"));
+            .orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+            .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         project.getMembers().remove(user);
         projectRepository.save(project);
