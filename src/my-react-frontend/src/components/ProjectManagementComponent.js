@@ -4,6 +4,7 @@ import axios from "axios";
 const ProjectManagementComponent = () => {
     const [projects, setProjects] = useState([]);
     const [newProjectName, setNewProjectName] = useState("");
+    const [newProjectOwnerId, setNewProjectOwnerId] = useState("");
 
     useEffect(() => {
         axios.get("http://localhost:8080/api/projects/all")
@@ -15,7 +16,7 @@ const ProjectManagementComponent = () => {
 
     const handleAddProject = (e) => {
         e.preventDefault();
-        const newProject = { name: newProjectName };
+        const newProject = {name: newProjectName, owner: {id: newProjectOwnerId}};
         axios.post("http://localhost:8080/api/projects/add", newProject)
             .then(response => {
                 setProjects([...projects, response.data]);
@@ -57,6 +58,13 @@ const ProjectManagementComponent = () => {
                         value={newProjectName}
                         onChange={(e) => setNewProjectName(e.target.value)}
                         placeholder="Name"
+                        className="mr-2 p-2 border border-custom-lightgray rounded bg-custom-lightgray"
+                    />
+                    <input
+                        type="text"
+                        value={newProjectOwnerId}
+                        onChange={(e) => setNewProjectOwnerId(e.target.value)}
+                        placeholder="Owner ID"
                         className="mr-2 p-2 border border-custom-lightgray rounded bg-custom-lightgray"
                     />
                     <button

@@ -15,7 +15,7 @@ const UserManagementComponent = () => {
 
     const handleAddUser = (e) => {
         e.preventDefault();
-        const newUser = { name: newUserName };
+        const newUser = {name: newUserName};
         axios.post("http://localhost:8080/api/users/add", newUser)
             .then(response => {
                 setUsers([...users, response.data]);
