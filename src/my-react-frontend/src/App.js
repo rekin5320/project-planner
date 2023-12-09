@@ -5,7 +5,7 @@ import ProjectManagementComponent from "./components/ProjectManagementComponent"
 
 function App() {
     return (
-        <div className="flex justify-center gap-x-40 bg-custom-pink min-h-screen">
+        <div className="flex justify-center gap-x-[10%] bg-custom-pink min-h-screen">
             <UserManagementComponent/>
             <ProjectManagementComponent/>
         </div>
