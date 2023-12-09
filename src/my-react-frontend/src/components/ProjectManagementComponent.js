@@ -20,7 +20,8 @@ const ProjectManagementComponent = () => {
         axios.post("http://localhost:8080/api/projects/add", newProject)
             .then(response => {
                 setProjects([...projects, response.data]);
-                setNewProjectName(""); // Clear the input field
+                setNewProjectName("");    // Clear the input field
+                setNewProjectOwnerId(""); // Clear the input field
             })
             .catch(error => console.error("Error adding project:", error));
     };
