@@ -40,7 +40,7 @@ const UserManagementComponent = () => {
                     {users.map(user => (
                         <div key={user.id} className="bg-custom-blue shadow-md rounded-md p-4 mb-2 flex items-center justify-between w-full max-w-md mr-2" >
                             <span className="text-gray-800 font-bold">ID: {user.id}</span>
-                            <span className="text-gray-800 ml-4">{user.name}</span>
+                            <span className="text-gray-800 ml-2 mr-2">{user.name}</span>
                             <button
                                 onClick={() => handleDeleteUser(user.id)}
                                 className="bg-custom-gray text-white py-2 px-4 rounded hover:bg-pink-600"
