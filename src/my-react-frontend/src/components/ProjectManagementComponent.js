@@ -41,7 +41,9 @@ const ProjectManagementComponent = () => {
                 <div className="overflow-y-auto overflow-x-hidden max-h-[calc(100vh-150px)] w-full hide-scrollbar">
                     {projects.map(project => (
                         <div key={project.id} className="bg-custom-blue shadow-md rounded-md p-4 mb-2 flex items-center justify-between w-full mr-2" >
-                            <span className="text-gray-800 font-bold">ID: {project.id}</span>
+                            <span className="text-gray-800">
+                                <span className="font-bold">ID: {project.id}</span>, owner: {project.owner.name}
+                            </span>
                             <span className="text-gray-800 ml-2 mr-2">{project.name}</span>
                             <button
                                 onClick={() => handleDeleteProject(project.id)}
