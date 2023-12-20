@@ -39,16 +39,16 @@ const ProjectManagementComponent = () => {
             <div className="flex flex-col items-center justify-center overflow-hidden">
                 <h2 className="text-3xl mb-2">Projects</h2>
                 {/* Scrollable container for the project list */}
-                <div className="overflow-y-auto overflow-x-hidden max-h-[calc(100vh-150px)] w-full hide-scrollbar">
+                <div className="mylist-container">
                     {projects.map(project => (
-                        <div key={project.id} className="bg-custom-blue shadow-md rounded-md p-4 mb-2 flex items-center justify-between w-full mr-2" >
+                        <div key={project.id} className="mylist-entry" >
                             <span className="text-gray-800">
                                 <span className="font-bold">ID: {project.id}</span>, owner: {project.owner.name}
                             </span>
                             <span className="text-gray-800 ml-2 mr-2">{project.name}</span>
                             <button
                                 onClick={() => handleDeleteProject(project.id)}
-                                className="bg-custom-gray text-white py-2 px-4 rounded hover:bg-pink-600"
+                                className="mybutton"
                                 >
                                 Delete
                             </button>
@@ -62,18 +62,18 @@ const ProjectManagementComponent = () => {
                         value={newProjectName}
                         onChange={(e) => setNewProjectName(e.target.value)}
                         placeholder="Name"
-                        className="mr-2 p-2 border border-custom-lightgray rounded bg-custom-lightgray"
+                        className="myinput"
                     />
                     <input
                         type="text"
                         value={newProjectOwnerId}
                         onChange={(e) => setNewProjectOwnerId(e.target.value)}
                         placeholder="Owner ID"
-                        className="mr-2 p-2 border border-custom-lightgray rounded bg-custom-lightgray"
+                        className="myinput"
                     />
                     <button
                         type="submit"
-                        className="bg-custom-gray text-white py-2 px-4 rounded hover:bg-pink-600"
+                        className="mybutton"
                         >
                         Add Project
                     </button>
