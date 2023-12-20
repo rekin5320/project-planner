@@ -64,7 +64,7 @@ const UserManagementComponent = () => {
                         type="submit"
                         className="mybutton"
                         >
-                        Add User
+                        Add user
                     </button>
                 </form>
             </div>

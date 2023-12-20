@@ -75,7 +75,7 @@ const ProjectManagementComponent = () => {
                         type="submit"
                         className="mybutton"
                         >
-                        Add Project
+                        Add project
                     </button>
                 </form>
             </div>
