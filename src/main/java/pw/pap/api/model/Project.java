@@ -12,7 +12,12 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(length=100)
     private String name;
+
+    @Lob
+    @Column(length=1000)
+    private String description;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "owner", nullable = false)
@@ -24,6 +29,9 @@ public class Project {
         inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
     private Set<User> members = new HashSet<>();
+
+    @OneToMany
+    private Set<Task> tasks = new HashSet<>();
 
     public Project() { }
 
@@ -60,5 +68,21 @@ public class Project {
 
     public void setMembers(Set<User> members) {
         this.members = members;
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
