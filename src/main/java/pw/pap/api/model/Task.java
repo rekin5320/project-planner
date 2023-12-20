@@ -16,7 +16,7 @@ public class Task {
     private String title;
 
     @Lob
-    @Column(length=1000)
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String description;
 
     @ManyToMany

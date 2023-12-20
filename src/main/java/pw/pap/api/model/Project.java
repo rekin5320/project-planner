@@ -16,7 +16,7 @@ public class Project {
     private String name;
 
     @Lob
-    @Column(length=1000)
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String description;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
