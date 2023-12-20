@@ -33,41 +33,39 @@ const UserManagementComponent = () => {
     };
 
     return (
-        <div className="flex items-center justify-center">
-            <div className="flex flex-col items-center justify-center overflow-hidden">
-                <h2 className="text-3xl mb-2">Users</h2>
-                {/* Scrollable container for the user list */}
-                <div className="mylist-container">
-                    {users.map(user => (
-                        <div key={user.id} className="mylist-entry" >
-                            <span className="text-gray-800 font-bold">ID: {user.id}</span>
-                            <span className="text-gray-800 ml-2 mr-2">{user.name}</span>
-                            <button
-                                onClick={() => handleDeleteUser(user.id)}
-                                className="mybutton"
-                                >
-                                Delete
-                            </button>
-                        </div>
-                    ))}
-                </div>
-                {/* Form for adding a new user */}
-                <form onSubmit={handleAddUser} className="mb-4">
-                    <input
-                        type="text"
-                        value={newUserName}
-                        onChange={(e) => setNewUserName(e.target.value)}
-                        placeholder="Name"
-                        className="myinput"
-                    />
-                    <button
-                        type="submit"
-                        className="mybutton"
-                        >
-                        Add user
-                    </button>
-                </form>
+        <div className="flex flex-col items-center justify-evenly overflow-hidden">
+            <h2 className="text-3xl mb-2">Users</h2>
+            {/* Scrollable container for the user list */}
+            <div className="mylist-container">
+                {users.map(user => (
+                    <div key={user.id} className="mylist-entry" >
+                        <span className="text-gray-800 font-bold">ID: {user.id}</span>
+                        <span className="text-gray-800 ml-2 mr-2">{user.name}</span>
+                        <button
+                            onClick={() => handleDeleteUser(user.id)}
+                            className="mybutton"
+                            >
+                            Delete
+                        </button>
+                    </div>
+                ))}
             </div>
+            {/* Form for adding a new user */}
+            <form onSubmit={handleAddUser} className="mb-4">
+                <input
+                    type="text"
+                    value={newUserName}
+                    onChange={(e) => setNewUserName(e.target.value)}
+                    placeholder="Name"
+                    className="myinput"
+                />
+                <button
+                    type="submit"
+                    className="mybutton"
+                    >
+                    Add user
+                </button>
+            </form>
         </div>
     );
 };
