@@ -1,4 +1,3 @@
-import "./tailwind.css";
 import React from "react";
 import UserManagementComponent from "./components/UserManagementComponent";
 import ProjectManagementComponent from "./components/ProjectManagementComponent";
