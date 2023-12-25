@@ -17,7 +17,7 @@ class UserTests {
 
     @Test
     public void testSaveRetrieveDeleteUser() {
-        User user = new User("Bob");
+        User user = new User("Bob", "abcd", "abcd");
 
         User savedUser = userRepository.save(user);
 
