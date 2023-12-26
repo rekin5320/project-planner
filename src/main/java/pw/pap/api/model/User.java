@@ -3,8 +3,8 @@ package pw.pap.api.model;
 import jakarta.persistence.*;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -28,16 +28,16 @@ public class User {
     private Date accountCreationDate;
 
     @OneToMany(mappedBy = "owner")
-    private Set<Project> ownedProjects = new HashSet<>();
+    private List<Project> ownedProjects = new ArrayList<>();
 
     @ManyToMany(mappedBy = "members")
-    private Set<Project> memberOfProjects = new HashSet<>();
+    private List<Project> memberOfProjects = new ArrayList<>();
 
     @ManyToMany(mappedBy = "assignees")
-    private Set<Task> assignedTasks = new HashSet<>();
+    private List<Task> assignedTasks = new ArrayList<>();
 
     @OneToMany(mappedBy = "creator")
-    private Set<Task> createdTasks = new HashSet<>();
+    private List<Task> createdTasks = new ArrayList<>();
 
     public User() {
         this.accountCreationDate = new Date();
@@ -90,35 +90,35 @@ public class User {
         this.accountCreationDate = accountCreationDate;
     }
 
-    public Set<Project> getOwnedProjects() {
+    public List<Project> getOwnedProjects() {
         return ownedProjects;
     }
 
-    public void setOwnedProjects(Set<Project> ownedProjects) {
+    public void setOwnedProjects(List<Project> ownedProjects) {
         this.ownedProjects = ownedProjects;
     }
 
-    public Set<Project> getMemberOfProjects() {
+    public List<Project> getMemberOfProjects() {
         return memberOfProjects;
     }
 
-    public void setMemberOfProjects(Set<Project> memberOfProjects) {
+    public void setMemberOfProjects(List<Project> memberOfProjects) {
         this.memberOfProjects = memberOfProjects;
     }
 
-    public Set<Task> getAssignedTasks() {
+    public List<Task> getAssignedTasks() {
         return assignedTasks;
     }
 
-    public void setAssignedTasks(Set<Task> assignedTasks) {
+    public void setAssignedTasks(List<Task> assignedTasks) {
         this.assignedTasks = assignedTasks;
     }
 
-    public Set<Task> getCreatedTasks() {
+    public List<Task> getCreatedTasks() {
         return createdTasks;
     }
 
-    public void setCreatedTasks(Set<Task> createdTasks) {
+    public void setCreatedTasks(List<Task> createdTasks) {
         this.createdTasks = createdTasks;
     }
 }

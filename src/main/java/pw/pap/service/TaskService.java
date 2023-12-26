@@ -10,6 +10,8 @@ import pw.pap.repository.TaskRepository;
 import pw.pap.repository.UserRepository;
 import pw.pap.repository.ProjectRepository;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,11 +27,11 @@ public class TaskService {
         this.projectRepository = projectRepository;
     }
 
-    public Task createTask(Task task, Long projectId) {
-        Project project = projectRepository.findById(projectId)
+    public Task createTask(String title, String description, User creator, Project project, Date taskDeadline) {
+        Project FoundProject = projectRepository.findById(project.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
-        task.setProject(project);
+        Task task = new Task(title, description, creator, FoundProject, taskDeadline);
         return taskRepository.save(task);
     }
 
@@ -51,6 +53,20 @@ public class TaskService {
     }
 
     public void deleteTask(Long taskId) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new IllegalArgumentException("Task not found"));
+
+        Project project = task.getProject();
+        project.getTasks().remove(task);
+
+        User creator = task.getCreator();
+        creator.getCreatedTasks().remove(task);
+
+        List<User> assignees = task.getAssignees();
+        for (User assignee : assignees) {
+            assignee.getAssignedTasks().remove(task);
+        }
+
         taskRepository.deleteById(taskId);
     }
 
@@ -62,8 +78,15 @@ public class TaskService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        task.getAssignees().add(user);
-        taskRepository.save(task);
+        if (!task.getProject().getMembers().contains(user)) {
+            throw new IllegalArgumentException("Member not found");
+        }
+        else {
+            task.getAssignees().add(user);
+            taskRepository.save(task);
+            user.getAssignedTasks().add(task);
+            userRepository.save(user);
+        }
     }
 
     @Transactional
@@ -75,6 +98,7 @@ public class TaskService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         task.getAssignees().remove(user);
+        user.getAssignedTasks().remove(task);
         taskRepository.save(task);
     }
 }

@@ -3,8 +3,8 @@ package pw.pap.api.model;
 import jakarta.persistence.*;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -30,7 +30,7 @@ public class Project {
     private Date projectDeadline;
 
     @ManyToOne
-    @JoinColumn(name = "owner", nullable = false)
+    @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
     @ManyToMany
@@ -38,10 +38,10 @@ public class Project {
         joinColumns = {@JoinColumn(name = "project_id")},
         inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
-    private Set<User> members = new HashSet<>();
+    private List<User> members = new ArrayList<>();
 
     @OneToMany
-    private Set<Task> tasks = new HashSet<>();
+    private List<Task> tasks = new ArrayList<>();
 
     public Project() {
         this.projectCreationDate = new Date();
@@ -87,19 +87,19 @@ public class Project {
         this.owner = owner;
     }
 
-    public Set<User> getMembers() {
+    public List<User> getMembers() {
         return members;
     }
 
-    public void setMembers(Set<User> members) {
+    public void setMembers(List<User> members) {
         this.members = members;
     }
 
-    public Set<Task> getTasks() {
+    public List<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(Set<Task> tasks) {
+    public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
 

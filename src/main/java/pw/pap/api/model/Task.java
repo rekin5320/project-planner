@@ -3,8 +3,8 @@ package pw.pap.api.model;
 import jakarta.persistence.*;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="Tasks")
@@ -33,14 +33,14 @@ public class Task {
             joinColumns = {@JoinColumn(name = "task_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
-    private Set<User> assignees = new HashSet<>();
+    private List<User> assignees = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "creator_id")
     private User creator;
 
     @ManyToOne
-    @JoinColumn(name = "project_id")
+    @JoinColumn(name = "project_id", nullable=false)
     private Project project;
 
     public Task() {
@@ -80,11 +80,11 @@ public class Task {
         this.description = description;
     }
 
-    public Set<User> getAssignees() {
+    public List<User> getAssignees() {
         return assignees;
     }
 
-    public void setAssignees(Set<User> assignees) {
+    public void setAssignees(List<User> assignees) {
         this.assignees = assignees;
     }
 

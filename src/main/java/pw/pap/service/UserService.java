@@ -2,8 +2,13 @@ package pw.pap.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pw.pap.api.model.Project;
 import pw.pap.api.model.User;
@@ -25,6 +30,40 @@ public class UserService {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
         this.taskRepository = taskRepository;
+    }
+
+    private String generateRandomSalt() {
+        SecureRandom random = new SecureRandom();
+        byte[] saltBytes = new byte[16];
+        random.nextBytes(saltBytes);
+
+        return Base64.getEncoder().encodeToString(saltBytes);
+    }
+
+
+    private String hashPassword(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(password);
+    }
+
+
+    public User createUser(String name, String password) {
+        String salt = generateRandomSalt();
+        String saltedPassword = password + salt;
+        String hashedPassword = hashPassword(saltedPassword);
+
+        User user = new User(name, hashedPassword, salt);
+        user.setSalt(salt);
+        user.setPasswordHash(hashedPassword);
+        userRepository.save(user);
+        return user;
+    }
+
+    public boolean authenticateUser(String enteredPassword, User user) {
+        String saltedPassword = enteredPassword + user.getSalt();
+        String hashedEnteredPassword = hashPassword(saltedPassword);
+
+        return new BCryptPasswordEncoder().matches(hashedEnteredPassword, user.getPasswordHash());
     }
 
     public List<User> getAllUsers() {
@@ -51,16 +90,34 @@ public class UserService {
     @Transactional
     public void deleteUser(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
-        // Remove the user from the members set of all projects
-        Iterable<Project> projects = projectRepository.findAll();
-        for (Project project : projects) {
+        List<Project> memberOfProjects = user.getMemberOfProjects();
+        for (Project project : memberOfProjects) {
             project.getMembers().remove(user);
-            if (userId.equals(project.getOwner().getId())) {
+        }
+
+        List<Project> ownerOfProjects = user.getOwnedProjects();
+        for (Project project : ownerOfProjects) {
+            project.getMembers().remove(user);
+            if (project.getMembers().isEmpty()){
                 projectRepository.deleteById(project.getId());
             }
+            else{
+                project.setOwner(project.getMembers().get(0));
+            }
         }
+
+        List<Task> assignedTasks = user.getAssignedTasks();
+        for (Task task : assignedTasks) {
+            task.getAssignees().remove(user);
+        }
+
+        List<Task> createdTasks = user.getCreatedTasks();
+        for (Task task : createdTasks) {
+            task.setCreator(null);
+        }
+
         userRepository.deleteById(userId);
     }
 }
