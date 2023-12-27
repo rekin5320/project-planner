@@ -1,6 +1,6 @@
 package pw.pap.api.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class User {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "account_creation_date", nullable = false, updatable = false)
-    private Date accountCreationDate;
+    private LocalDateTime accountCreationDate;
 
     @OneToMany(mappedBy = "owner")
     private List<Project> ownedProjects = new ArrayList<>();
@@ -41,12 +41,12 @@ public class User {
 
     public User() { }
 
-    public User(String name, Date accountCreationDate) {
+    public User(String name, LocalDateTime accountCreationDate) {
         this.name = name;
-        this.accountCreationDate = new Date();
+        this.accountCreationDate = accountCreationDate;
     }
 
-    public User(String name, String passwordHash, String salt, Date accountCreationDate) {
+    public User(String name, String passwordHash, String salt, LocalDateTime accountCreationDate) {
         this.name = name;
         this.passwordHash = passwordHash;
         this.salt = salt;
@@ -85,11 +85,11 @@ public class User {
         this.salt = salt;
     }
 
-    public Date getAccountCreationDate() {
+    public LocalDateTime getAccountCreationDate() {
         return accountCreationDate;
     }
 
-    public void setAccountCreationDate(Date accountCreationDate) {
+    public void setAccountCreationDate(LocalDateTime accountCreationDate) {
         this.accountCreationDate = accountCreationDate;
     }
 
