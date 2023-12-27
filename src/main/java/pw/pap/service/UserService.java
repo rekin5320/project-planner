@@ -5,11 +5,13 @@ import jakarta.transaction.Transactional;
 
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import pw.pap.api.model.Project;
 import pw.pap.api.model.User;
 import pw.pap.api.model.Task;
@@ -20,13 +22,12 @@ import pw.pap.repository.TaskRepository;
 
 @Service
 public class UserService {
-
     private UserRepository userRepository;
     private ProjectRepository projectRepository;
     private TaskRepository taskRepository;
 
     @Autowired
-    public UserService(ProjectRepository projectRepository, UserRepository userRepository, TaskRepository taskRepository){
+    public UserService(ProjectRepository projectRepository, UserRepository userRepository, TaskRepository taskRepository) {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
         this.taskRepository = taskRepository;
@@ -40,21 +41,21 @@ public class UserService {
         return Base64.getEncoder().encodeToString(saltBytes);
     }
 
-
     private String hashPassword(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode(password);
     }
 
+    private String hashPasswordWithSalt(String password, String salt) {
+        String saltedPassword = password + salt;
+        return hashPassword(saltedPassword);
+    }
 
     public User createUser(String name, String password) {
         String salt = generateRandomSalt();
-        String saltedPassword = password + salt;
-        String hashedPassword = hashPassword(saltedPassword);
-
-        User user = new User(name, hashedPassword, salt);
-        user.setSalt(salt);
-        user.setPasswordHash(hashedPassword);
+        String hashedPassword = hashPasswordWithSalt(password, salt);
+        Date currentDate = new Date();
+        User user = new User(name, hashedPassword, salt, currentDate);
         userRepository.save(user);
         return user;
     }
@@ -100,7 +101,7 @@ public class UserService {
         List<Project> ownerOfProjects = user.getOwnedProjects();
         for (Project project : ownerOfProjects) {
             project.getMembers().remove(user);
-            if (project.getMembers().isEmpty()){
+            if (project.getMembers().isEmpty()) {
                 projectRepository.deleteById(project.getId());
             }
             else{
