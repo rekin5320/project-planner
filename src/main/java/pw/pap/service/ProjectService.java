@@ -32,6 +32,10 @@ public class ProjectService {
         return projectRepository.save(project);
     }
 
+    public Project addProject(Project project){
+        return projectRepository.save(project);
+    }
+
     public Optional<Project> getProjectById(Long projectId) {
         return projectRepository.findById(projectId);
     }

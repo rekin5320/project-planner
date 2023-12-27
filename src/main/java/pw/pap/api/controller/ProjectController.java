@@ -30,7 +30,7 @@ public class ProjectController {
 
     @PostMapping("/add")
     public Project addProject(@RequestBody Project project) {
-        return projectService.createProject(project);
+        return projectService.addProject(project);
     }
 
     @PutMapping("/update/{projectId}")
