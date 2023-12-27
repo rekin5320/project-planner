@@ -10,7 +10,7 @@ import pw.pap.repository.TaskRepository;
 import pw.pap.repository.UserRepository;
 import pw.pap.repository.ProjectRepository;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,18 +21,19 @@ public class ProjectService {
     private final TaskRepository taskRepository;
 
     @Autowired
-    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository, TaskRepository taskRepository){
+    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository, TaskRepository taskRepository) {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
         this.taskRepository = taskRepository;
     }
 
-    public Project createProject(String name, User owner, Date projectDeadline){
-        Project project = new Project(name, owner, projectDeadline);
+    public Project createProject(String name, User owner, LocalDateTime projectDeadline) {
+        LocalDateTime currentDate = LocalDateTime.now();
+        Project project = new Project(name, owner, currentDate, projectDeadline);
         return projectRepository.save(project);
     }
 
-    public Project addProject(Project project){
+    public Project addProject(Project project) {
         return projectRepository.save(project);
     }
 

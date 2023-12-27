@@ -2,7 +2,7 @@ package pw.pap.api.model;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(length=100)
+    @Column(length = 100, nullable = false)
     private String name;
 
     @Lob
@@ -23,11 +23,11 @@ public class Project {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "project_creation_date", nullable = false, updatable = false)
-    private Date projectCreationDate;
+    private LocalDateTime projectCreationDate;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "project_deadline")
-    private Date projectDeadline;
+    private LocalDateTime projectDeadline;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
@@ -43,16 +43,14 @@ public class Project {
     @OneToMany
     private List<Task> tasks = new ArrayList<>();
 
-    public Project() {
-        this.projectCreationDate = new Date();
-    }
+    public Project() { }
 
-    public Project(String name, User owner, Date projectDeadline) {
+    public Project(String name, User owner, LocalDateTime projectCreationDate, LocalDateTime projectDeadline) {
         this.name = name;
         this.members.add(owner);
         this.owner = owner;
+        this.projectCreationDate = projectCreationDate;
         this.projectDeadline = projectDeadline;
-        this.projectCreationDate = new Date();
     }
 
     public Long getId() {
@@ -103,19 +101,19 @@ public class Project {
         this.tasks = tasks;
     }
 
-    public Date getProjectCreationDate() {
+    public LocalDateTime getProjectCreationDate() {
         return projectCreationDate;
     }
 
-    public void setProjectCreationDate(Date projectCreationDate) {
+    public void setProjectCreationDate(LocalDateTime projectCreationDate) {
         this.projectCreationDate = projectCreationDate;
     }
 
-    public Date getProjectDeadline() {
+    public LocalDateTime getProjectDeadline() {
         return projectDeadline;
     }
 
-    public void setProjectDeadline(Date projectDeadline) {
+    public void setProjectDeadline(LocalDateTime projectDeadline) {
         this.projectDeadline = projectDeadline;
     }
 }

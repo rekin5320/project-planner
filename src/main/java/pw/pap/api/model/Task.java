@@ -2,9 +2,10 @@ package pw.pap.api.model;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Entity
 @Table(name="Tasks")
@@ -13,7 +14,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(length=100)
+    @Column(length = 100, nullable = false)
     private String title;
 
     @Lob
@@ -22,38 +23,37 @@ public class Task {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "task_creation_date", nullable = false, updatable = false)
-    private Date taskCreationDate;
+    private LocalDateTime taskCreationDate;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "task_deadline")
-    private Date taskDeadline;
+    private LocalDateTime taskDeadline;
 
     @ManyToMany
-    @JoinTable(name = "task_user",
-            joinColumns = {@JoinColumn(name = "task_id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+    @JoinTable(
+        name = "task_user",
+        joinColumns = {@JoinColumn(name = "task_id")},
+        inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
     private List<User> assignees = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "creator_id")
+    @JoinColumn(name = "creator_id", nullable = false)
     private User creator;
 
     @ManyToOne
-    @JoinColumn(name = "project_id", nullable=false)
+    @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    public Task() {
-        this.taskCreationDate = new Date();
-    }
+    public Task() { }
 
-    public Task(String title, String description, User creator, Project project, Date taskDeadline) {
+    public Task(String title, String description, User creator, Project project, LocalDateTime taskCreationDate, LocalDateTime taskDeadline) {
         this.title = title;
         this.description = description;
         this.creator = creator;
         this.project = project;
+        this.taskCreationDate = taskCreationDate;
         this.taskDeadline = taskDeadline;
-        this.taskCreationDate = new Date();
     }
 
     public Long getId() {
@@ -104,19 +104,19 @@ public class Task {
         this.creator = creator;
     }
 
-    public Date getTaskCreationDate() {
+    public LocalDateTime getTaskCreationDate() {
         return taskCreationDate;
     }
 
-    public void setTaskCreationDate(Date taskCreationDate) {
+    public void setTaskCreationDate(LocalDateTime taskCreationDate) {
         this.taskCreationDate = taskCreationDate;
     }
 
-    public Date getTaskDeadline() {
+    public LocalDateTime getTaskDeadline() {
         return taskDeadline;
     }
 
-    public void setTaskDeadline(Date taskDeadline) {
+    public void setTaskDeadline(LocalDateTime taskDeadline) {
         this.taskDeadline = taskDeadline;
     }
 }

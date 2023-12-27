@@ -1,8 +1,14 @@
 package pw.pap.service;
 
 import jakarta.transaction.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import pw.pap.api.model.Task;
 import pw.pap.api.model.User;
 import pw.pap.api.model.Project;
@@ -10,9 +16,6 @@ import pw.pap.repository.TaskRepository;
 import pw.pap.repository.UserRepository;
 import pw.pap.repository.ProjectRepository;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -27,11 +30,12 @@ public class TaskService {
         this.projectRepository = projectRepository;
     }
 
-    public Task createTask(String title, String description, User creator, Project project, Date taskDeadline) {
-        Project FoundProject = projectRepository.findById(project.getId())
+    public Task createTask(String title, String description, User creator, Project project, LocalDateTime taskDeadline) {
+        Project foundProject = projectRepository.findById(project.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
-        Task task = new Task(title, description, creator, FoundProject, taskDeadline);
+        LocalDateTime currentDate = LocalDateTime.now();
+        Task task = new Task(title, description, creator, foundProject, currentDate, taskDeadline);
         return taskRepository.save(task);
     }
 
