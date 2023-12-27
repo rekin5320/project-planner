@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,8 @@ public class UserService {
     public User createUser(String name, String password) {
         String salt = generateRandomSalt();
         String hashedPassword = hashPasswordWithSalt(password, salt);
-        User user = new User(name, hashedPassword, salt);
+        Date currentDate = new Date();
+        User user = new User(name, hashedPassword, salt, currentDate);
         userRepository.save(user);
         return user;
     }

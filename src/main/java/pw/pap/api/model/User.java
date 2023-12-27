@@ -1,10 +1,10 @@
 package pw.pap.api.model;
 
-import jakarta.persistence.*;
-
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+
+import jakarta.persistence.*;
 
 
 @Entity
@@ -14,13 +14,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(length=100)
+    @Column(length = 100, nullable = false)
     private String name;
 
-    @Column(name = "password_hash", nullable = false)
+    @Column(name = "password_hash")
     private String passwordHash;
 
-    @Column(name = "salt", nullable = false)
+    @Column(name = "salt")
     private String salt;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -39,15 +39,18 @@ public class User {
     @OneToMany(mappedBy = "creator")
     private List<Task> createdTasks = new ArrayList<>();
 
-    public User() {
+    public User() { }
+
+    public User(String name, Date accountCreationDate) {
+        this.name = name;
         this.accountCreationDate = new Date();
     }
 
-    public User(String name, String passwordHash, String salt) {
+    public User(String name, String passwordHash, String salt, Date accountCreationDate) {
         this.name = name;
         this.passwordHash = passwordHash;
         this.salt = salt;
-        this.accountCreationDate = new Date();
+        this.accountCreationDate = accountCreationDate;
     }
 
     public Long getId() {
