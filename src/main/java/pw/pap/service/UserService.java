@@ -53,8 +53,6 @@ public class UserService {
         String hashedPassword = hashPassword(saltedPassword);
 
         User user = new User(name, hashedPassword, salt);
-        user.setSalt(salt);
-        user.setPasswordHash(hashedPassword);
         userRepository.save(user);
         return user;
     }
