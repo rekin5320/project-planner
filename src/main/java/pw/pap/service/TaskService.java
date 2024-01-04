@@ -9,9 +9,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pw.pap.api.model.Task;
-import pw.pap.api.model.User;
-import pw.pap.api.model.Project;
+import pw.pap.model.Task;
+import pw.pap.model.User;
+import pw.pap.model.Project;
 import pw.pap.repository.TaskRepository;
 import pw.pap.repository.UserRepository;
 import pw.pap.repository.ProjectRepository;

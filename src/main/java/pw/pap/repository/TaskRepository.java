@@ -3,7 +3,7 @@ package pw.pap.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import pw.pap.api.model.Task;
+import pw.pap.model.Task;
 
 
 @Repository

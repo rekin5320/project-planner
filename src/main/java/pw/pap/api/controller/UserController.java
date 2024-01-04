@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import pw.pap.api.model.User;
+import pw.pap.model.User;
 import pw.pap.service.UserService;
 
 

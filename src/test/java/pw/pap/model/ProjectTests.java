@@ -1,4 +1,4 @@
-package pw.pap.api.model;
+package pw.pap.model;
 
 public class ProjectTests {
 }
