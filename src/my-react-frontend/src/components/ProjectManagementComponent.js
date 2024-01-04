@@ -7,7 +7,7 @@ const ProjectManagementComponent = () => {
     const [newProjectOwnerId, setNewProjectOwnerId] = useState("");
 
     useEffect(() => {
-        axios.get("http://localhost:8080/api/projects/all")
+        axios.get("/api/projects/all")
             .then(response => {
                 setProjects(response.data);
             })
@@ -17,7 +17,7 @@ const ProjectManagementComponent = () => {
     const handleAddProject = (e) => {
         e.preventDefault();
         const newProject = {name: newProjectName, owner: {id: newProjectOwnerId}};
-        axios.post("http://localhost:8080/api/projects/add", newProject)
+        axios.post("/api/projects/add", newProject)
             .then(response => {
                 setProjects([...projects, response.data]);
                 setNewProjectName("");    // Clear the input field
@@ -27,7 +27,7 @@ const ProjectManagementComponent = () => {
     };
 
     const handleDeleteProject = (projectId) => {
-        axios.delete(`http://localhost:8080/api/projects/delete/${projectId}`)
+        axios.delete(`/api/projects/delete/${projectId}`)
             .then(() => {
                 setProjects(projects.filter(project => project.id !== projectId));
             })

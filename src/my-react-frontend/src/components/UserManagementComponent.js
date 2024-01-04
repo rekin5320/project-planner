@@ -6,7 +6,7 @@ const UserManagementComponent = () => {
     const [newUserName, setNewUserName] = useState("");
 
     useEffect(() => {
-        axios.get("http://localhost:8080/api/users/all")
+        axios.get("/api/users/all")
             .then(response => {
                 setUsers(response.data);
             })
@@ -16,7 +16,7 @@ const UserManagementComponent = () => {
     const handleAddUser = (e) => {
         e.preventDefault();
         const newUser = {name: newUserName};
-        axios.post("http://localhost:8080/api/users/add", newUser)
+        axios.post("/api/users/add", newUser)
             .then(response => {
                 setUsers([...users, response.data]);
                 setNewUserName(""); // Clear the input field
@@ -25,7 +25,7 @@ const UserManagementComponent = () => {
     };
 
     const handleDeleteUser = (userId) => {
-        axios.delete(`http://localhost:8080/api/users/delete/${userId}`)
+        axios.delete(`/api/users/delete/${userId}`)
             .then(() => {
                 setUsers(users.filter(user => user.id !== userId));
             })
