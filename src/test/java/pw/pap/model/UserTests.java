@@ -1,4 +1,4 @@
-package pw.pap.api.model;
+package pw.pap.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

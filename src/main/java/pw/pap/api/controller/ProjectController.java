@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import pw.pap.api.model.Project;
+import pw.pap.model.Project;
 import pw.pap.service.ProjectService;
 
 
