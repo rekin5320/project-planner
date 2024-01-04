@@ -8,7 +8,6 @@ import pw.pap.model.User;
 import pw.pap.service.UserService;
 
 
-@CrossOrigin()
 @RestController
 @RequestMapping("/api/users")
 public class UserController {

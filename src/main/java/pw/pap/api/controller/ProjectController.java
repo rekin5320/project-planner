@@ -10,7 +10,6 @@ import pw.pap.model.Project;
 import pw.pap.service.ProjectService;
 
 
-@CrossOrigin()
 @RestController
 @RequestMapping("/api/projects")
 public class ProjectController {
