@@ -26,8 +26,8 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public User addUser(@RequestBody User user) {
-        return userService.addUser(user);
+    public User addUser(@RequestParam String name, @RequestParam String password) {
+        return userService.createUser(name, password);
     }
 
     @PutMapping("/update/{userId}")
