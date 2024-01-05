@@ -22,7 +22,8 @@ Dodatkowe funkcjonalności, na przykład:
 - możliwość zalogowania się Facebookiem
 
 ## How to use it
-### MySQL database credentials
+### MySQL database
+#### Credentials
 <details>
 <p><summary>Click to expand</summary></p>
 
@@ -37,6 +38,13 @@ user: `myuser`
 password: `2L9(4Evz,9`
 
 </details>
+
+#### Testing connection
+```sh
+pip install mysql-connector-python
+cd src
+python check_db_connection.py
+```
 
 ### Spring backend
 #### Build
