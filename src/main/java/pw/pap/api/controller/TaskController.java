@@ -11,6 +11,8 @@ import pw.pap.model.Project;
 import pw.pap.service.TaskService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -34,12 +36,16 @@ public class TaskController {
             Project project = new Project(); // Assuming you have a method to get the project by ID in the ProjectService
             project.setId(projectId);
 
-            Task createdTask = taskService.createTask(title, description, creator, project, LocalDateTime.parse(taskDeadline));
+            // Additional parameter: List<User> assignees (empty list for now)
+            List<User> assignees = new ArrayList<>();
+
+            Task createdTask = taskService.createTask(title, description, creator, project, assignees, LocalDateTime.parse(taskDeadline));
             return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
 
     @GetMapping("/{taskId}")
     public ResponseEntity<Task> getTask(@PathVariable Long taskId) {
