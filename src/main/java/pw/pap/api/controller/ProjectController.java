@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import pw.pap.api.model.Project;
+import pw.pap.model.Project;
 import pw.pap.service.ProjectService;
 
 

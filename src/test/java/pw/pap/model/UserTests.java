@@ -1,4 +1,4 @@
-package pw.pap.api.model;
+package pw.pap.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,7 +21,6 @@ class UserTests {
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final LocalDateTime date = LocalDateTime.parse("2023-10-11 13:37:42", formatter);
-    private final LocalDateTime date2 = LocalDateTime.parse("2023-10-11 13:51:53", formatter);
 
     @Test
     public void testEmptyConstructor() {
@@ -38,10 +37,12 @@ class UserTests {
 
     @Test
     public void testFullConstructor() {
-        User user = new User("Rob", "abcd", "dcba", date);
+        User user = new User("Rob", "abcd", "dcba", "abc@cba", "111", date);
         assertEquals("Rob", user.getName());
         assertEquals("abcd", user.getPasswordHash());
         assertEquals("dcba", user.getSalt());
+        assertEquals("abc@cba", user.getEmail());
+        assertEquals("111", user.getGoogleId());
         assertEquals(date, user.getAccountCreationDate());
     }
 
@@ -49,7 +50,7 @@ class UserTests {
     @Transactional
     @Rollback
     public void testSaveRetrieveDeleteUser() {
-        User user = new User("Bob", "abcd", "dcba", date);
+        User user = new User("Bob", "abcd", "dcba", "abc@cba", "111", date);
         User savedUser = userRepository.save(user);
         User retrievedUser = userRepository
             .findById(savedUser.getId())
@@ -59,6 +60,8 @@ class UserTests {
         assertEquals("Bob", retrievedUser.getName());
         assertEquals("abcd", retrievedUser.getPasswordHash());
         assertEquals("dcba", retrievedUser.getSalt());
+        assertEquals("abc@cba", retrievedUser.getEmail());
+        assertEquals("111", retrievedUser.getGoogleId());
         assertEquals(date, user.getAccountCreationDate());
 
         userRepository.deleteById(retrievedUser.getId());
@@ -67,25 +70,4 @@ class UserTests {
             .orElse(null);
         assertNull(retrievedUser);
     }
-
-    // TODO: probably it should not be possible to change accountCreationDate, updatable=false
-    /* @Test
-    @Transactional
-    @Rollback
-    public void testAccountCreationDateNotUpdatable() {
-        User user = new User();
-        user.setName("Dave");
-        user.setAccountCreationDate(date);
-        userRepository.save(user);
-
-        user.setAccountCreationDate(date2);
-        userRepository.save(user);
-
-        // maybe it should throw an error
-        // assertThrows(DataIntegrityViolationException.class, () -> userRepository.save(user));
-
-        // if above doesn't throw error, maybe it should not really be saved to database
-        User retrievedUser = userRepository.findById(user.getId()).orElse(null);
-        assertEquals(date, retrievedUser.getAccountCreationDate());
-    } */
 }

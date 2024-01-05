@@ -3,9 +3,9 @@ package pw.pap.service;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pw.pap.api.model.Project;
-import pw.pap.api.model.User;
-import pw.pap.api.model.Task;
+import pw.pap.model.Project;
+import pw.pap.model.User;
+import pw.pap.model.Task;
 import pw.pap.repository.TaskRepository;
 import pw.pap.repository.UserRepository;
 import pw.pap.repository.ProjectRepository;
@@ -27,9 +27,9 @@ public class ProjectService {
         this.taskRepository = taskRepository;
     }
 
-    public Project createProject(String name, User owner, LocalDateTime projectDeadline) {
+    public Project createProject(String name, String description, LocalDateTime projectDeadline, User owner, List<User> members) {
         LocalDateTime currentDate = LocalDateTime.now();
-        Project project = new Project(name, owner, currentDate, projectDeadline);
+        Project project = new Project(name, description, currentDate, projectDeadline, owner, members);
         return projectRepository.save(project);
     }
 

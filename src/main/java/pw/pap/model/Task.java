@@ -1,4 +1,4 @@
-package pw.pap.api.model;
+package pw.pap.model;
 
 import jakarta.persistence.*;
 
@@ -47,13 +47,21 @@ public class Task {
 
     public Task() { }
 
-    public Task(String title, String description, User creator, Project project, LocalDateTime taskCreationDate, LocalDateTime taskDeadline) {
+    public Task(String title, LocalDateTime taskCreationDate, User creator, Project project) {
         this.title = title;
-        this.description = description;
+        this.taskCreationDate = taskCreationDate;
         this.creator = creator;
         this.project = project;
+    }
+
+    public Task(String title, String description, LocalDateTime taskCreationDate, LocalDateTime taskDeadline, List<User> assignees, User creator, Project project) {
+        this.title = title;
+        this.description = description;
         this.taskCreationDate = taskCreationDate;
         this.taskDeadline = taskDeadline;
+        this.assignees = assignees;
+        this.creator = creator;
+        this.project = project;
     }
 
     public Long getId() {
