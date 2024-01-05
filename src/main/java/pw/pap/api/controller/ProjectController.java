@@ -4,6 +4,8 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import pw.pap.api.model.Project;
@@ -18,39 +20,71 @@ public class ProjectController {
     private ProjectService projectService;
 
     @GetMapping("/all")
-    public List<Project> getAllProjects() {
-        return (List<Project>) projectService.getAllProjects();
+    public ResponseEntity<List<Project>> getAllProjects() {
+        List<Project> projects = (List<Project>) projectService.getAllProjects();
+        return new ResponseEntity<>(projects, HttpStatus.OK);
     }
-
     @GetMapping("/{projectId}")
-    public Optional<Project> getProject(@PathVariable Long projectId) {
-        return projectService.getProjectById(projectId);
+    public ResponseEntity<Project> getProject(@PathVariable Long projectId) {
+        Optional<Project> project = projectService.getProjectById(projectId);
+        return project.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
     @PostMapping("/add")
-    public Project addProject(@RequestBody Project project) {
-        return projectService.addProject(project);
+    public ResponseEntity<Project> addProject(@RequestBody Project project) {
+        Project addedProject = projectService.addProject(project);
+        return new ResponseEntity<>(addedProject, HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{projectId}")
-    public Project updateProject(@PathVariable Long projectId, @RequestBody Project updatedProject) {
-        return projectService.updateProject(projectId, updatedProject);
+    public ResponseEntity<Project> updateProject(@PathVariable Long projectId, @RequestBody Project updatedProject) {
+        try {
+            Project updated = projectService.updateProject(projectId, updatedProject);
+            return new ResponseEntity<>(updated, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/delete/{projectId}")
-    public void deleteProject(@PathVariable Long projectId) {
-        projectService.deleteProject(projectId);
+    public ResponseEntity<Void> deleteProject(@PathVariable Long projectId) {
+        try {
+            projectService.deleteProject(projectId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
-
     @Transactional
     @PostMapping("/assignUser/{projectId}/{userId}")
-    public void assignUserToProject(@PathVariable Long projectId, @PathVariable Long userId) {
-        projectService.assignUserToProject(projectId, userId);
+    public ResponseEntity<Void> assignUserToProject(@PathVariable Long projectId, @PathVariable Long userId) {
+        try {
+            projectService.assignUserToProject(projectId, userId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Transactional
     @PostMapping("/removeUser/{projectId}/{userId}")
-    public void removeUserFromProject(@PathVariable Long projectId, @PathVariable Long userId) {
-        projectService.removeUserFromProject(projectId, userId);
+    public ResponseEntity<Void> removeUserFromProject(@PathVariable Long projectId, @PathVariable Long userId) {
+        try {
+            projectService.removeUserFromProject(projectId, userId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Transactional
+    @PostMapping("/removeTask/{projectId}/{taskId}")
+    public ResponseEntity<Void> removeTaskFromProject(@PathVariable Long projectId, @PathVariable Long taskId) {
+        try {
+            projectService.removeTaskFromProject(projectId, taskId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
