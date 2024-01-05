@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import pw.pap.model.User;
 import pw.pap.service.UserService;
+import pw.pap.api.dto.UserAddRequest;
 
 
 @RestController
@@ -33,10 +34,10 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<User> addUser(@RequestBody User user) {
-        User addedUser = userService.addUser(user);
-        return new ResponseEntity<>(addedUser, HttpStatus.CREATED);
+    public User addUser(@RequestBody UserAddRequest userAddRequest) {
+        return userService.createUser(userAddRequest.getName(), userAddRequest.getPassword());
     }
+
     @PutMapping("/update/{userId}")
     public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
         User user = userService.updateUser(userId, updatedUser);

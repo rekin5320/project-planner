@@ -52,6 +52,13 @@ public class User {
         this.accountCreationDate = accountCreationDate;
     }
 
+    public User(String name, String passwordHash, String salt, LocalDateTime accountCreationDate) {
+        this.name = name;
+        this.passwordHash = passwordHash;
+        this.salt = salt;
+        this.accountCreationDate = accountCreationDate;
+    }
+
     public User(String name, String passwordHash, String salt, String email, String googleId, LocalDateTime accountCreationDate) {
         this.name = name;
         this.passwordHash = passwordHash;

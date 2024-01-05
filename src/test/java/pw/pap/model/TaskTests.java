@@ -120,4 +120,3 @@ public class TaskTests {
         userRepository.deleteById(retrievedUser.getId());
     }
 }
-
