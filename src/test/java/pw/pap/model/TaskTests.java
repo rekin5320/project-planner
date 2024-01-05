@@ -68,7 +68,7 @@ public class TaskTests {
     @Transactional
     @Rollback
     public void testSaveTaskWithoutSavedProject() {
-        User user = new User("Bob", "abcd", "dcba", date);
+        User user = new User("Rob", date);
         Project project = new Project("Shop", user,  date);
         List<User> assignees = new ArrayList<>(Arrays.asList(user));
         Task task = new Task("Entrance", "Get new doors", date, deadlineDate, assignees, user, project);
@@ -81,7 +81,7 @@ public class TaskTests {
     @Transactional
     @Rollback
     public void testSaveRetrieveDeleteProject() {
-        User user = new User("Bob", "abcd", "dcba", date);
+        User user = new User("Rob", date);
         Project project = new Project("Shop", user,  date);
         List<User> assignees = new ArrayList<>(Arrays.asList(user));
         Task task = new Task("Entrance", "Get new doors", date, deadlineDate, assignees, user, project);

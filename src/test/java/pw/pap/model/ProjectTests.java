@@ -62,7 +62,7 @@ public class ProjectTests {
     @Transactional
     @Rollback
     public void testSaveProjectWithoutSavedUser() {
-        User user = new User("Bob", "abcd", "dcba", date);
+        User user = new User("Rob", date);
         List<User> members = new ArrayList<>(Arrays.asList(user));
         Project project = new Project("Shop", "A clothes shop", date, deadlineDate, user, members);
         assertThrows(InvalidDataAccessApiUsageException.class, () -> projectRepository.save(project));
@@ -72,7 +72,7 @@ public class ProjectTests {
     @Transactional
     @Rollback
     public void testSaveRetrieveDeleteProject() {
-        User user = new User("Bob", "abcd", "dcba", date);
+        User user = new User("Rob", date);
         List<User> members = new ArrayList<>(Arrays.asList(user));
         Project project = new Project("Shop", "A clothes shop", date, deadlineDate, user, members);
         User savedUser = userRepository.save(user);

@@ -55,7 +55,7 @@ public class UserService {
         String salt = generateRandomSalt();
         String hashedPassword = hashPasswordWithSalt(password, salt);
         LocalDateTime currentDate = LocalDateTime.now();
-        User user = new User(name, hashedPassword, salt, currentDate);
+        User user = new User(name, currentDate);
         userRepository.save(user);
         return user;
     }
