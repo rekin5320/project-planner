@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import pw.pap.api.model.Task;
-import pw.pap.api.model.User;
-import pw.pap.api.model.Project;
+import pw.pap.model.Task;
+import pw.pap.model.User;
+import pw.pap.model.Project;
 import pw.pap.service.TaskService;
 
 import java.time.LocalDateTime;
