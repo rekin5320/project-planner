@@ -50,7 +50,7 @@ public class UserService {
         Optional<User> optionalUser = findByName(name);
 
         if (optionalUser.isPresent()) {
-            throw new IllegalArgumentException("Login already in database");
+            throw new IllegalArgumentException("Name already in database");
         }
         String salt = generateRandomSalt();
         String hashedPassword = hashPasswordWithSalt(password, salt);
@@ -86,15 +86,6 @@ public class UserService {
         return hashPassword(saltedPassword);
     }
 
-    public User createUser(String name, String password) {
-        String salt = generateRandomSalt();
-        String hashedPassword = hashPasswordWithSalt(password, salt);
-        LocalDateTime currentDate = LocalDateTime.now();
-        User user = new User(name, hashedPassword, salt, currentDate);
-        userRepository.save(user);
-        return user;
-    }
-
     public boolean authenticateUser(String enteredPassword, User user) {
         String saltedPassword = enteredPassword + user.getSalt();
         String hashedEnteredPassword = hashPassword(saltedPassword);
@@ -108,10 +99,6 @@ public class UserService {
 
     public User getUserById(Long userId) {
         return userRepository.findById(userId).orElse(null);
-    }
-
-    public User addUser(User user) {
-        return userRepository.save(user);
     }
 
     public User updateUser(Long userId, User updatedUser) {

@@ -35,7 +35,7 @@ public class UserController {
 
     @PostMapping("/add")
     public User addUser(@RequestBody UserAddRequest userAddRequest) {
-        return userService.createUser(userAddRequest.getName(), userAddRequest.getPassword());
+        return userService.register(userAddRequest.getName(), userAddRequest.getPassword());
     }
 
     @PutMapping("/update/{userId}")
@@ -56,11 +56,6 @@ public class UserController {
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }
-    @PostMapping("/create")
-    public ResponseEntity<User> createUser(@RequestParam String name, @RequestParam String password) {
-        User createdUser = userService.createUser(name, password);
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     @PostMapping("/authenticate")
