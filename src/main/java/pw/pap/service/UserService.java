@@ -7,6 +7,7 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,6 +32,40 @@ public class UserService {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
         this.taskRepository = taskRepository;
+    }
+
+    public User login(String name, String enteredPassword) {
+        User user = findByName(name)
+                .orElseThrow(() -> new IllegalArgumentException("User not in database"));
+
+        String saltedPassword = enteredPassword + user.getSalt();
+        String hashedEnteredPassword = hashPassword(saltedPassword);
+        if (new BCryptPasswordEncoder().matches(hashedEnteredPassword, user.getPasswordHash())) {
+            return user;
+        }
+        throw new IllegalArgumentException("Wrong password");
+    }
+
+    public User register(String name, String password) {
+        Optional<User> optionalUser = findByName(name);
+
+        if (optionalUser.isPresent()) {
+            throw new IllegalArgumentException("Login already in database");
+        }
+        String salt = generateRandomSalt();
+        String hashedPassword = hashPasswordWithSalt(password, salt);
+        LocalDateTime currentDate = LocalDateTime.now();
+        User user = new User(name, hashedPassword, salt, currentDate);
+        userRepository.save(user);
+        return user;
+    }
+
+    public Optional<User> findByName(String name) {
+        for(User user : userRepository.findAll())
+            if(user.getName().equals(name)){
+                return Optional.of(user);
+            }
+        return Optional.empty();
     }
 
     private String generateRandomSalt() {
