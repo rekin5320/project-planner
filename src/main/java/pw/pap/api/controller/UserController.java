@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import pw.pap.model.User;
 import pw.pap.service.UserService;
+import pw.pap.api.dto.UserAddRequest;
 
 
 @RestController
@@ -26,8 +27,8 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public User addUser(@RequestParam String name, @RequestParam String password) {
-        return userService.createUser(name, password);
+    public User addUser(@RequestBody UserAddRequest userAddRequest) {
+        return userService.createUser(userAddRequest.getName(), userAddRequest.getPassword());
     }
 
     @PutMapping("/update/{userId}")
