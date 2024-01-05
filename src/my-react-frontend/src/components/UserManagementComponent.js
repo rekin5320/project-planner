@@ -21,6 +21,7 @@ const UserManagementComponent = () => {
             .then(response => {
                 setUsers([...users, response.data]);
                 setNewUserName(""); // Clear the input field
+                setNewUserPassword(""); // Clear the input field
             })
             .catch(error => console.error("Error adding user:", error));
     };
