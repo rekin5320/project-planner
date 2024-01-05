@@ -40,7 +40,7 @@ public class UserService {
 
         String saltedPassword = enteredPassword + user.getSalt();
         String hashedEnteredPassword = hashPassword(saltedPassword);
-        if (new BCryptPasswordEncoder().matches(hashedEnteredPassword, user.getPasswordHash())) {
+        if (authenticateUser(hashedEnteredPassword, user)) {
             return user;
         }
         throw new IllegalArgumentException("Wrong password");
