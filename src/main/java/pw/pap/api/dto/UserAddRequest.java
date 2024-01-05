@@ -5,9 +5,7 @@ public class UserAddRequest {
     private String name;
     private String password;
 
-    public UserAddRequest() {
-        // Default constructor for deserialization
-    }
+    public UserAddRequest() { }
 
     public UserAddRequest(String name, String password) {
         this.name = name;
