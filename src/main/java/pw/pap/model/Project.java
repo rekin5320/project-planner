@@ -45,12 +45,19 @@ public class Project {
 
     public Project() { }
 
-    public Project(String name, User owner, LocalDateTime projectCreationDate, LocalDateTime projectDeadline) {
+    public Project(String name, User owner, LocalDateTime projectCreationDate) {
         this.name = name;
-        this.members.add(owner);
         this.owner = owner;
         this.projectCreationDate = projectCreationDate;
+    }
+
+    public Project(String name, String description, LocalDateTime projectCreationDate, LocalDateTime projectDeadline, User owner, List<User> members) {
+        this.name = name;
+        this.description = description;
+        this.projectCreationDate = projectCreationDate;
         this.projectDeadline = projectDeadline;
+        this.owner = owner;
+        this.members = members;
     }
 
     public Long getId() {

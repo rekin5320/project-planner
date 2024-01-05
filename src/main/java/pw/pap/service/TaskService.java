@@ -30,12 +30,27 @@ public class TaskService {
         this.projectRepository = projectRepository;
     }
 
-    public Task createTask(String title, String description, User creator, Project project, LocalDateTime taskDeadline) {
+    public Task createTask(String title, String description, User creator, Project project, List<User> assignees, LocalDateTime taskDeadline) {
         Project foundProject = projectRepository.findById(project.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
+        User user = userRepository.findById(creator.getId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        if (!project.getMembers().contains(creator)) {
+            throw new IllegalArgumentException("Member not found");
+        }
+
+        for (User assignee : assignees){
+            user = userRepository.findById(assignee.getId())
+                    .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+            if (!project.getMembers().contains(user)) {
+                throw new IllegalArgumentException("Member not found");
+            }
+        }
         LocalDateTime currentDate = LocalDateTime.now();
-        Task task = new Task(title, description, creator, foundProject, currentDate, taskDeadline);
+        Task task = new Task(title, description, currentDate, taskDeadline, assignees, creator, foundProject);
         return taskRepository.save(task);
     }
 
