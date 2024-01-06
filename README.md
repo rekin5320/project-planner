@@ -21,6 +21,12 @@ Dodatkowe funkcjonalności, na przykład:
 - zintegrowanie się z kalendarzem Google
 - możliwość zalogowania się Facebookiem
 
+## Członkowie zespołu
+- Piotr Lenczewski
+- Michał Machnikowski
+- Jakub Pęk
+- Tomasz Truszkowski
+
 ## How to use it
 ### MySQL database
 #### Credentials
