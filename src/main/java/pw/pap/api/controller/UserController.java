@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import pw.pap.model.User;
 import pw.pap.service.UserService;
-import pw.pap.api.dto.UserAddRequest;
+import pw.pap.api.dto.UserAndPasswordDTO;
 
 
 @RestController
@@ -34,8 +34,8 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public User addUser(@RequestBody UserAddRequest userAddRequest) {
-        return userService.register(userAddRequest.getName(), userAddRequest.getPassword());
+    public User addUser(@RequestBody UserAndPasswordDTO userAndPasswordDTO) {
+        return userService.register(userAndPasswordDTO.getName(), userAndPasswordDTO.getPassword());
     }
 
     @PutMapping("/update/{userId}")
