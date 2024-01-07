@@ -13,10 +13,18 @@ const Register = ({ onRegister }) => {
         axios.post("/api/users/add", newUser)
             .then(response => {
                 alert('User added successfully!'); // Notify user
+                alert(response.data.id)
                 onRegister(newUserName, newUserPassword);
                 navigate('/home'); // Navigate to the HomePage
             })
-            .catch(error => console.error("Error adding user:", error));
+            .catch(error => {
+                // Check if the error is due to the username being taken
+                if (error.response && error.response.status === 500) { // Assuming 409 status code for conflict
+                    alert("Username taken");
+                } else {
+                    console.error("Error adding user:", error);
+                }
+            });
     };
 
     return (

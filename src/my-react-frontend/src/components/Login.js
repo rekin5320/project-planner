@@ -24,10 +24,19 @@ function Login({ onLogin }) {
             };
 
             const response = await axios.post("/api/users/authenticate", requestBody);
-
+            //alert(response.data);
             if (response.status === 200) {
-                onLogin(username, password); // Update App state if authentication is successful
-                navigate('/home'); // Navigate to HomePage
+                if (response.data)
+                {
+                    onLogin(username, password); // Update App state if authentication is successful
+                    navigate('/home'); // Navigate to HomePage
+                }
+                else
+                {
+                    setPassword('');
+                    alert('Wrong Password');
+                }
+
             } else {
                 throw new Error('Authentication failed'); // Rzuć wyjątek, jeśli autoryzacja nie powiedzie się
             }
