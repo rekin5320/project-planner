@@ -27,7 +27,7 @@ function Login({ onLogin }) {
             };
 
             // Make the POST request to the authenticate endpoint
-            const response = await axios.post('http://localhost:8080/api/users/authenticate', requestBody, requestParams);
+            const response = await axios.post("/api/users/authenticate", requestBody, requestParams);
 
             if (response.data) {
                 onLogin(username, password); // Update App state if authentication is successful
