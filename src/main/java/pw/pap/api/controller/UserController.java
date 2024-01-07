@@ -59,8 +59,9 @@ public class UserController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<Boolean> authenticateUser(@RequestParam String enteredPassword, @RequestBody User user) {
-        boolean isAuthenticated = userService.authenticateUser(enteredPassword, user);
+    public ResponseEntity<Boolean> authenticateUser(@RequestBody UserAndPasswordDTO userAndPasswordDTO) {
+        User user = userService.findByName(userAndPasswordDTO.getName()).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        boolean isAuthenticated = userService.authenticateUser(user, userAndPasswordDTO.getPassword());
         return new ResponseEntity<>(isAuthenticated, HttpStatus.OK);
     }
 }

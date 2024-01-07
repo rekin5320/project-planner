@@ -19,15 +19,12 @@ function Login({ onLogin }) {
         try {
             // Prepare the request body and parameters for the authentication request
             const requestBody = {
-                name: username, // Assuming this is the expected format for your User object
-                // ... include other User fields if necessary
-            };
-            const requestParams = {
-                params: { enteredPassword: password }
+                name: username,
+                password: password,
             };
 
             // Make the POST request to the authenticate endpoint
-            const response = await axios.post("/api/users/authenticate", requestBody, requestParams);
+            const response = await axios.post("/api/users/authenticate", requestBody);
 
             if (response.data) {
                 onLogin(username, password); // Update App state if authentication is successful

@@ -40,7 +40,7 @@ public class UserService {
 
         String saltedPassword = enteredPassword + user.getSalt();
         String hashedEnteredPassword = hashPassword(saltedPassword);
-        if (authenticateUser(hashedEnteredPassword, user)) {
+        if (authenticateUser(user, hashedEnteredPassword)) {
             return user;
         }
         throw new IllegalArgumentException("Wrong password");
@@ -86,7 +86,7 @@ public class UserService {
         return hashPassword(saltedPassword);
     }
 
-    public boolean authenticateUser(String enteredPassword, User user) {
+    public boolean authenticateUser(User user, String enteredPassword) {
         String saltedPassword = enteredPassword + user.getSalt();
         String hashedEnteredPassword = hashPassword(saltedPassword);
 
