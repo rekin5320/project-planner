@@ -1,5 +1,6 @@
 package pw.pap.service;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
@@ -36,11 +37,9 @@ public class UserService {
 
     public User login(String name, String enteredPassword) {
         User user = findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("User not in database"));
+                .orElseThrow(() -> new EntityNotFoundException("User not in database"));
 
-        String saltedPassword = enteredPassword + user.getSalt();
-        String hashedEnteredPassword = hashPassword(saltedPassword);
-        if (authenticateUser(user, hashedEnteredPassword)) {
+        if (authenticateUser(user, enteredPassword)) {
             return user;
         }
         throw new IllegalArgumentException("Wrong password");
@@ -50,7 +49,7 @@ public class UserService {
         Optional<User> optionalUser = findByName(name);
 
         if (optionalUser.isPresent()) {
-            throw new IllegalArgumentException("Name already in database");
+            throw new EntityExistsException("User with the same name already in the database");
         }
         String salt = generateRandomSalt();
         String hashedPassword = hashPasswordWithSalt(password, salt);
@@ -58,52 +57,6 @@ public class UserService {
         User user = new User(name, hashedPassword, salt, currentDate);
         userRepository.save(user);
         return user;
-    }
-
-    public Optional<User> findByName(String name) {
-        for(User user : userRepository.findAll())
-            if(user.getName().equals(name)){
-                return Optional.of(user);
-            }
-        return Optional.empty();
-    }
-
-    private String generateRandomSalt() {
-        SecureRandom random = new SecureRandom();
-        byte[] saltBytes = new byte[16];
-        random.nextBytes(saltBytes);
-
-        return Base64.getEncoder().encodeToString(saltBytes);
-    }
-
-    private String hashPassword(String password) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder.encode(password);
-    }
-
-    private String hashPasswordWithSalt(String password, String salt) {
-        String saltedPassword = password + salt;
-        return hashPassword(saltedPassword);
-    }
-
-    public boolean authenticateUser(User user, String enteredPassword) {
-        System.out.println("Authenticating user in service: " + user.getName()); // Print the username
-
-        String saltedPassword = enteredPassword + user.getSalt();
-        String hashedEnteredPassword = hashPassword(saltedPassword);
-        boolean isMatch = new BCryptPasswordEncoder().matches(hashedEnteredPassword, user.getPasswordHash());
-
-        System.out.println("Password match result for " + user.getName() + ": " + isMatch); // Print the result of password matching
-
-        return isMatch;
-    }
-
-    public List<User> getAllUsers() {
-        return (List<User>) userRepository.findAll();
-    }
-
-    public User getUserById(Long userId) {
-        return userRepository.findById(userId).orElse(null);
     }
 
     public User updateUser(Long userId, User updatedUser) {
@@ -147,5 +100,45 @@ public class UserService {
         }
 
         userRepository.deleteById(userId);
+    }
+
+    public List<User> getAllUsers() {
+        return (List<User>) userRepository.findAll();
+    }
+
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
+
+
+    public Optional<User> findByName(String name) {
+        for(User user : userRepository.findAll())
+            if(user.getName().equals(name)){
+                return Optional.of(user);
+            }
+        return Optional.empty();
+    }
+
+    private String generateRandomSalt() {
+        SecureRandom random = new SecureRandom();
+        byte[] saltBytes = new byte[16];
+        random.nextBytes(saltBytes);
+
+        return Base64.getEncoder().encodeToString(saltBytes);
+    }
+
+    private String hashPassword(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(password);
+    }
+
+    private String hashPasswordWithSalt(String password, String salt) {
+        String saltedPassword = password + salt;
+        return hashPassword(saltedPassword);
+    }
+
+    public boolean authenticateUser(User user, String enteredPassword) {
+        String saltedPassword = enteredPassword + user.getSalt();
+        return new BCryptPasswordEncoder().matches(saltedPassword, user.getPasswordHash());
     }
 }
