@@ -23,8 +23,8 @@ function Login({ onLogin }) {
                 password: password,
             };
 
-            const response = await axios.post("/api/users/authenticate", requestBody);
-            //alert(response.data);
+            const response = await axios.post("/api/users/login", requestBody);
+            alert(response.data);
             if (response.status === 200) {
                 if (response.data)
                 {
@@ -49,8 +49,7 @@ function Login({ onLogin }) {
                 setLoginError('An error occurred during login'); // Ustaw błąd dla innych błędów
             }
             alert(loginError); // Teraz alert wyświetli aktualny błąd
-        }
-        ;
+        };
     }
 
     return (

@@ -10,7 +10,7 @@ const Register = ({ onRegister }) => {
     const handleRegisterUser = (e) => {
         e.preventDefault();
         const newUser = { name: newUserName, password: newUserPassword };
-        axios.post("/api/users/add", newUser)
+        axios.post("/api/users/register", newUser)
             .then(response => {
                 alert('User added successfully!'); // Notify user
                 alert(response.data.id)
