@@ -60,8 +60,18 @@ public class UserController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<Boolean> authenticateUser(@RequestBody UserAndPasswordDTO userAndPasswordDTO) {
-        User user = userService.findByName(userAndPasswordDTO.getName()).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        boolean isAuthenticated = userService.authenticateUser(user, userAndPasswordDTO.getPassword());
-        return new ResponseEntity<>(isAuthenticated, HttpStatus.OK);
+        System.out.println("Authenticating user: " + userAndPasswordDTO.getName()); // Print the username being authenticated
+        System.out.println("Password passed: : " + userAndPasswordDTO.getPassword()); // Print the password being authenticated
+        try {
+            User user = userService.findByName(userAndPasswordDTO.getName())
+                    .orElseThrow(() -> new IllegalArgumentException("User not found"));
+            boolean isAuthenticated = userService.authenticateUser(user, userAndPasswordDTO.getPassword());
+            System.out.println("Authentication result for " + userAndPasswordDTO.getName() + ": " + isAuthenticated); // Print the result of authentication
+
+            return new ResponseEntity<>(isAuthenticated, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error during authentication: " + e.getMessage()); // Print the error message
+            return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED); // Return an appropriate status code for unauthorized access
+        }
     }
 }

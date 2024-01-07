@@ -23,22 +23,26 @@ function Login({ onLogin }) {
                 password: password,
             };
 
-            // Make the POST request to the authenticate endpoint
             const response = await axios.post("/api/users/authenticate", requestBody);
 
-            if (response.data) {
+            if (response.status === 200) {
                 onLogin(username, password); // Update App state if authentication is successful
                 navigate('/home'); // Navigate to HomePage
             } else {
-                setLoginError('Wrong username or password'); // Set error message if authentication fails
-                alert(loginError);
+                throw new Error('Authentication failed'); // Rzuć wyjątek, jeśli autoryzacja nie powiedzie się
             }
         } catch (error) {
             console.error('Login error:', error);
-            alert(loginError);
-            setLoginError('An error occurred during login'); // Set error message for other types of errors
+            if (error.response && error.response.status === 500) {
+                alert('Wrong Username');
+                setLoginError('Internal Server Error'); // Ustaw błąd dla błędów serwera
+            } else {
+                setLoginError('An error occurred during login'); // Ustaw błąd dla innych błędów
+            }
+            alert(loginError); // Teraz alert wyświetli aktualny błąd
         }
-    };
+        ;
+    }
 
     return (
         <div className="flex justify-center items-center h-screen">

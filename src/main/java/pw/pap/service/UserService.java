@@ -87,10 +87,15 @@ public class UserService {
     }
 
     public boolean authenticateUser(User user, String enteredPassword) {
+        System.out.println("Authenticating user in service: " + user.getName()); // Print the username
+
         String saltedPassword = enteredPassword + user.getSalt();
         String hashedEnteredPassword = hashPassword(saltedPassword);
+        boolean isMatch = new BCryptPasswordEncoder().matches(hashedEnteredPassword, user.getPasswordHash());
 
-        return new BCryptPasswordEncoder().matches(hashedEnteredPassword, user.getPasswordHash());
+        System.out.println("Password match result for " + user.getName() + ": " + isMatch); // Print the result of password matching
+
+        return isMatch;
     }
 
     public List<User> getAllUsers() {
