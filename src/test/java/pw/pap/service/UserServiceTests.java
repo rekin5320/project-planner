@@ -20,7 +20,6 @@ public class UserServiceTests {
     private UserService userService;
 
     @Test
-    @Transactional
     public void testRegister() {
         String username = "testBob";
         String password = "reallySecurePassword";
@@ -35,7 +34,6 @@ public class UserServiceTests {
     }
 
     @Test
-    @Transactional
     public void testRegisterExistingName() {
         String username = "testBob";
         String password = "reallySecurePassword";
@@ -45,7 +43,6 @@ public class UserServiceTests {
     }
 
     @Test
-    @Transactional
     public void testLogin() {
         String username = "testBob";
         String password = "reallySecurePassword";
@@ -62,13 +59,11 @@ public class UserServiceTests {
     }
 
     @Test
-    @Transactional
     public void testLoginUserNotInDatabase() {
         assertThrows(EntityNotFoundException.class, () -> userService.login("hvdfi14iicvg6575xzhccd342scjba574sgu87xscgas7vhc", "Password"));
     }
 
     @Test
-    @Transactional
     public void testLoginWrongPassword() {
         String username = "testBob";
         String password = "reallySecurePassword";

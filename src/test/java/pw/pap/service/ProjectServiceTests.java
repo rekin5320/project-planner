@@ -27,7 +27,6 @@ public class ProjectServiceTests {
     private final LocalDateTime date = LocalDateTime.parse("2023-10-11 13:37:42", formatter);
 
     @Test
-    @Transactional
     public void testCreateProject() {
         String username = "testBob";
         String password = "reallySecurePassword";
