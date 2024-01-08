@@ -53,10 +53,10 @@ public class UserController {
         }
     }
 
-   @GetMapping("/all")
-   public List<User> getAllUsers() {
-       return userService.getAllUsers();
-   }
+   // @GetMapping("/all")
+   // public List<User> getAllUsers() {
+   //     return userService.getAllUsers();
+   // }
 
     @PutMapping("/update/{userId}")
     public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
