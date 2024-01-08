@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -57,6 +58,19 @@ public class UserService {
         User user = new User(name, hashedPassword, salt, currentDate);
         userRepository.save(user);
         return user;
+    }
+
+    public List<Project> getMemberProjects(Long memberId){
+        List<Project> memberProjects = new ArrayList<>();
+        for (Project project : projectRepository.findAll()){
+            for (User member : project.getMembers()){
+                if(member.getId().equals(memberId)){
+                    memberProjects.add(project);
+                    break;
+                }
+            }
+        }
+        return memberProjects;
     }
 
     public User updateUser(Long userId, User updatedUser) {

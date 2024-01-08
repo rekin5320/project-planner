@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import pw.pap.model.Project;
 import pw.pap.model.User;
 import pw.pap.service.UserService;
 import pw.pap.api.dto.UserAndPasswordDTO;
@@ -41,6 +42,12 @@ public class UserController {
         } catch (EntityExistsException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }
+    }
+
+    @GetMapping("/{userId}/projects")
+    public ResponseEntity<List<Project>> getMemberProjects(@PathVariable Long userId) {
+        List<Project> memberProjects = userService.getMemberProjects(userId);
+        return new ResponseEntity<>(memberProjects, HttpStatus.OK);
     }
 
     @GetMapping("/{userId}")
