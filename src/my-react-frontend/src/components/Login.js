@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,6 +7,35 @@ function Login({ onLogin }) {
     const [password, setPassword] = useState('');
     const [loginError, setLoginError] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // Initialize Google Sign-In once the component is mounted
+        google.accounts.id.initialize({
+            client_id: "653829545632-s1tg9di96ernst657soqhvtdt37vssp8.apps.googleusercontent.com",
+            callback: handleCallbackResponse,
+            // auto_select: true,
+        });
+
+        // Render the Google Sign-In button
+        google.accounts.id.renderButton(
+            document.getElementById("signInDiv"),
+            {
+                theme: "outline",
+                size: "large",
+                text: "Sign in with Google",
+                shape: "rectangular",
+                width: "auto",
+                height: 40,
+            }
+        );
+
+        // Cleanup function when the component is unmounted
+        return () => {
+            // Perform any cleanup or removal of resources
+            // For example, you can remove the Google Sign-In button if needed
+        };
+    }, []); // The empty dependency array ensures that this effect runs only once when the component mounts
+
 
     const handleRegisterClick = () => {
         navigate('/register');
@@ -48,6 +77,11 @@ function Login({ onLogin }) {
         };
     }
 
+    function handleCallbackResponse(response) {
+        console.log("Encoded JWT ID token: " + response.credential);
+        // Handle the Google Sign-In callback response if needed
+    }
+
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="w-full max-w-xs flex flex-col items-center">
@@ -80,6 +114,7 @@ function Login({ onLogin }) {
                 >
                     Register
                 </button>
+                <div id="signInDiv"></div>
             </div>
         </div>
     );
