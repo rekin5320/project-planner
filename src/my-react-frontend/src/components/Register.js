@@ -35,6 +35,7 @@ const Register = ({ onRegister }) => {
                     onChange={(e) => setNewUserName(e.target.value)}
                     placeholder="Username"
                     className="myinput mb-2" // Add margin-bottom for spacing
+                    autoFocus
                 />
                 <input
                     type="password"

@@ -54,6 +54,7 @@ function Login({ onLogin }) {
                 <form onSubmit={handleLoginSubmit} className="w-full flex flex-col">
                     <input
                         className="px-3 py-2 mb-3 border rounded shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        autoFocus
                         type="text"
                         placeholder="Username"
                         value={username}
