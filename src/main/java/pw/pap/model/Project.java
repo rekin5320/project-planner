@@ -39,9 +39,6 @@ public class Project {
     )
     private List<User> members = new ArrayList<>();
 
-    @OneToMany
-    private List<Task> tasks = new ArrayList<>();
-
     public Project() { }
 
     public Project(String name, User owner, LocalDateTime projectCreationDate) {
@@ -98,14 +95,6 @@ public class Project {
 
     public void setMembers(List<User> members) {
         this.members = members;
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
     }
 
     public LocalDateTime getProjectCreationDate() {
