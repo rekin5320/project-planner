@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -61,16 +63,11 @@ public class UserService {
     }
 
     public List<Project> getMemberProjects(Long memberId){
-        List<Project> memberProjects = new ArrayList<>();
-        for (Project project : projectRepository.findAll()){
-            for (User member : project.getMembers()){
-                if(member.getId().equals(memberId)){
-                    memberProjects.add(project);
-                    break;
-                }
-            }
-        }
-        return memberProjects;
+        Iterable<Project> allProjects = projectRepository.findAll();
+
+        return StreamSupport.stream(allProjects.spliterator(), false)
+                .filter(project -> project.getMembers().stream().anyMatch(member -> member.getId().equals(memberId)))
+                .collect(Collectors.toList());
     }
 
     public User updateUser(Long userId, User updatedUser) {
