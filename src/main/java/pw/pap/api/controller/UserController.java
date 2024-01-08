@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> loginUser(@RequestBody UserAndPasswordDTO userAndPasswordDTO) {
+    public ResponseEntity<AuthResponseDTO> loginUser(@RequestBody UserAndPasswordDTO userAndPasswordDTO) {
         try {
             User user = userService.login(userAndPasswordDTO.getName(), userAndPasswordDTO.getPassword());
             AuthResponseDTO authResponse = new AuthResponseDTO(userAuthenticationProvider.generateToken(user), user);
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody UserAndPasswordDTO userAndPasswordDTO) {
+    public ResponseEntity<AuthResponseDTO> registerUser(@RequestBody UserAndPasswordDTO userAndPasswordDTO) {
         try {
             User user = userService.register(userAndPasswordDTO.getName(), userAndPasswordDTO.getPassword());
             AuthResponseDTO authResponse = new AuthResponseDTO(userAuthenticationProvider.generateToken(user), user);

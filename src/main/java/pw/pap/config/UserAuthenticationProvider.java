@@ -3,7 +3,7 @@ package pw.pap.config;
 import io.jsonwebtoken.*;
 import org.springframework.security.core.userdetails.UserDetails;
 import jakarta.annotation.PostConstruct;
-import lombok.RequiredArgsConstructor;
+//import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,7 +13,7 @@ import pw.pap.service.UserService;
 
 import java.util.*;
 
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Component
 public class UserAuthenticationProvider {
 
@@ -21,6 +21,10 @@ public class UserAuthenticationProvider {
     private String secretKey;
 
     private final UserService userService;
+
+    public UserAuthenticationProvider(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostConstruct
     protected void init() {
