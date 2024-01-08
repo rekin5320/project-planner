@@ -104,9 +104,9 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    public List<User> getAllUsers() {
-        return (List<User>) userRepository.findAll();
-    }
+    // public List<User> getAllUsers() {
+    //     return (List<User>) userRepository.findAll();
+    // }
 
     public User getUserById(Long userId) {
         return userRepository.findById(userId).orElse(null);
