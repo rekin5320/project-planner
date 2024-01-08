@@ -75,7 +75,7 @@ public class UserService {
 
         Iterable<Project> projects = projectRepository.findAll();
         for (Project project : projects) {
-            if (project.getOwner().equals(user)){
+            if (project.getOwner().getId().equals(userId)){
                 if (project.getMembers().isEmpty()) {
                     projectRepository.deleteById(project.getId());
                 }
@@ -88,7 +88,7 @@ public class UserService {
 
         Iterable<Task> tasks = taskRepository.findAll();
          for (Task task : tasks) {
-             if(task.getCreator().equals(user)){
+             if(task.getCreator().getId().equals(userId)){
                  task.setCreator(null);
              }
              task.getAssignees().remove(user);

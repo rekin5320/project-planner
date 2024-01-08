@@ -76,7 +76,6 @@ public class TaskService {
                 .orElseThrow(() -> new IllegalArgumentException("Task not found"));
 
         Project project = task.getProject();
-        project.getTasks().remove(task);
 
         taskRepository.deleteById(taskId);
     }
