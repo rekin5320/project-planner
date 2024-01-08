@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 
-const ProjectManagementComponent = () => {
+const ProjectManagementComponent = ( {user}) => {
     const [projects, setProjects] = useState([]);
     const [newProjectName, setNewProjectName] = useState("");
-    const [newProjectOwnerId, setNewProjectOwnerId] = useState("");
 
     useEffect(() => {
         axios.get("/api/projects/all")
@@ -16,12 +15,16 @@ const ProjectManagementComponent = () => {
 
     const handleAddProject = (e) => {
         e.preventDefault();
-        const newProject = {name: newProjectName, owner: {id: newProjectOwnerId}};
+        alert(user.name);
+        alert(newProjectName);
+        //alert(newProjectOwnerId);
+
+        const newProject = {name: newProjectName, owner: user};
         axios.post("/api/projects/add", newProject)
             .then(response => {
+                alert('Nie poszło');
                 setProjects([...projects, response.data]);
                 setNewProjectName("");    // Clear the input field
-                setNewProjectOwnerId(""); // Clear the input field
             })
             .catch(error => console.error("Error adding project:", error));
     };
@@ -61,13 +64,6 @@ const ProjectManagementComponent = () => {
                     value={newProjectName}
                     onChange={(e) => setNewProjectName(e.target.value)}
                     placeholder="Name"
-                    className="myinput"
-                />
-                <input
-                    type="text"
-                    value={newProjectOwnerId}
-                    onChange={(e) => setNewProjectOwnerId(e.target.value)}
-                    placeholder="Owner ID"
                     className="myinput"
                 />
                 <button

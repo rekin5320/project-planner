@@ -13,8 +13,7 @@ const Register = ({ onRegister }) => {
         axios.post("/api/users/register", newUser)
             .then(response => {
                 alert('User added successfully!'); // Notify user
-                alert(response.data.id)
-                onRegister(newUserName, newUserPassword);
+                onRegister(response.data);
                 navigate('/home'); // Navigate to the HomePage
             })
             .catch(error => {

@@ -6,15 +6,17 @@ import HomePage from './components/HomePage';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userCredentials, setUserCredentials] = useState({ username: '', password: '' });
+    const [user, setUser] = useState();
 
-    const handleLogin = (username, password) => {
-        setUserCredentials({ username, password });
+    const handleLogin = (user) => {
+        setUser(user);
         setIsLoggedIn(true);
     };
 
-    const handleRegister = (username, password) => {
-        setUserCredentials({ username, password });
+    const handleRegister = (user) => {
+        setUser(user);
+        alert(user.id);
+        alert(user.name);
         setIsLoggedIn(true);
     };
 
@@ -24,7 +26,7 @@ function App() {
                 <Route path="/" element={<Navigate to="/login" />} />
                 <Route path="/login" element={<Login onLogin={handleLogin} />} />
                 <Route path="/register" element={<Register onRegister={handleRegister} />} />
-                <Route path="/home" element={isLoggedIn ? <HomePage userCredentials={userCredentials} /> : <Navigate to="/login" />} />
+                <Route path="/home" element={isLoggedIn ? <HomePage user={user} /> : <Navigate to="/login" />} />
             </Routes>
         </Router>
     );

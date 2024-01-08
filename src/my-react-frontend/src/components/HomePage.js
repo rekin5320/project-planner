@@ -1,17 +1,21 @@
 import React from 'react';
-import UserManagementComponent from "./UserManagementComponent.js";
 import ProjectManagementComponent from "./ProjectManagementComponent";
 
-function HomePage({ userCredentials }) {
+function HomePage({ user }) {
+    alert(user.id);
+    alert(user.name);
     return (
         <div>
             <div className="min-h-screen bg-custom-background">
-                <p>Username: {userCredentials.username}</p>
-                <p>Password: {userCredentials.password}</p> {/* Be cautious about displaying passwords */}
 
+                <div>
+                    {user && user.name ? <p>User: {user.name}</p> : <p>No user data</p>}
+                </div>
+                <div>
+                    {user && user.id ? <p>User: {user.id}</p> : <p>No user data</p>}
+                </div>
                 <div className="flex flex-wrap justify-evenly content-evenly">
-                    <UserManagementComponent/>
-                    <ProjectManagementComponent/>
+                    <ProjectManagementComponent user={user}/>
                 </div>
             </div>
         </div>
