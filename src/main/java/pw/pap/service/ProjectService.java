@@ -34,6 +34,7 @@ public class ProjectService {
     }
 
     public Project addProject(Project project) {
+        project.setProjectCreationDate(LocalDateTime.now());
         return projectRepository.save(project);
     }
 
