@@ -45,9 +45,11 @@ const ProjectManagementComponent = ( {user}) => {
                 {projects.map(project => (
                     <div key={project.id} className="mylist-entry" >
                         <span className="text-gray-800">
-                            <span className="font-bold">ID: {project.id}</span>, owner: {project.owner.name}
+                            <span className="font-bold">{project.name}</span>
+                            <span className="ml-2">id: {project.id}</span>
+                            <span className="ml-2">owner: {project.owner.name}</span>
+                            <span className="ml-2">members: {project.members}</span>
                         </span>
-                        <span className="text-gray-800 ml-2 mr-2">{project.name}</span>
                         <button
                             onClick={() => handleDeleteProject(project.id)}
                             className="mybutton"
