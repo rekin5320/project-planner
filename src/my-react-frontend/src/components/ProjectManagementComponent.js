@@ -19,7 +19,7 @@ const ProjectManagementComponent = ( {user}) => {
         //alert(newProjectName);
         //alert(newProjectOwnerId);
 
-        const newProject = {name: newProjectName, owner: user};
+        const newProject = {name: newProjectName, owner: {id: user}};
         axios.post("/api/projects/add", newProject)
             .then(response => {
                 //alert('Nie poszło');
