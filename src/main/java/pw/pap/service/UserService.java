@@ -73,33 +73,26 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
-        // TODO: usunięcie usuwanego użytkownika z projektów
-        // List<Project> memberOfProjects = user.getMemberOfProjects();
-        // for (Project project : memberOfProjects) {
-        //     project.getMembers().remove(user);
-        // }
-        //
-        // TODO: usuwanie projektów przy usuwaniu użytkowników
-        // List<Project> ownerOfProjects = user.getOwnedProjects();
-        // for (Project project : ownerOfProjects) {
-        //     project.getMembers().remove(user);
-        //     if (project.getMembers().isEmpty()) {
-        //         projectRepository.deleteById(project.getId());
-        //     }
-        //     else{
-        //         project.setOwner(project.getMembers().get(0));
-        //     }
-        // }
+        Iterable<Project> projects = projectRepository.findAll();
+        for (Project project : projects) {
+            if (project.getOwner().equals(user)){
+                if (project.getMembers().isEmpty()) {
+                    projectRepository.deleteById(project.getId());
+                }
+                else{
+                    project.setOwner(project.getMembers().get(0));
+                }
+            }
+            project.getMembers().remove(user);
+        }
 
-        // List<Task> assignedTasks = user.getAssignedTasks();
-        // for (Task task : assignedTasks) {
-        //     task.getAssignees().remove(user);
-        // }
-        //
-        // List<Task> createdTasks = user.getCreatedTasks();
-        // for (Task task : createdTasks) {
-        //     task.setCreator(null);
-        // }
+        Iterable<Task> tasks = taskRepository.findAll();
+         for (Task task : tasks) {
+             if(task.getCreator().equals(user)){
+                 task.setCreator(null);
+             }
+             task.getAssignees().remove(user);
+         }
 
         userRepository.deleteById(userId);
     }
