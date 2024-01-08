@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import pw.pap.model.User;
 
@@ -20,6 +21,8 @@ public class UserServiceTests {
     private UserService userService;
 
     @Test
+    @Transactional
+    @Rollback
     public void testRegister() {
         String username = "testBob";
         String password = "reallySecurePassword";
@@ -34,6 +37,8 @@ public class UserServiceTests {
     }
 
     @Test
+    @Transactional
+    @Rollback
     public void testRegisterExistingName() {
         String username = "testBob";
         String password = "reallySecurePassword";
@@ -43,6 +48,8 @@ public class UserServiceTests {
     }
 
     @Test
+    @Transactional
+    @Rollback
     public void testLogin() {
         String username = "testBob";
         String password = "reallySecurePassword";
@@ -59,11 +66,15 @@ public class UserServiceTests {
     }
 
     @Test
+    @Transactional
+    @Rollback
     public void testLoginUserNotInDatabase() {
         assertThrows(EntityNotFoundException.class, () -> userService.login("hvdfi14iicvg6575xzhccd342scjba574sgu87xscgas7vhc", "Password"));
     }
 
     @Test
+    @Transactional
+    @Rollback
     public void testLoginWrongPassword() {
         String username = "testBob";
         String password = "reallySecurePassword";

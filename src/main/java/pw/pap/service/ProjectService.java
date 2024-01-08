@@ -59,14 +59,6 @@ public class ProjectService {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
-        User owner = project.getOwner();
-        owner.getOwnedProjects().remove(project);
-
-        List<User> members = project.getMembers();
-        for (User member : members) {
-            member.getMemberOfProjects().remove(project);
-        }
-
         List<Task> tasks = project.getTasks();
         for (Task task : tasks) {
             taskRepository.deleteById(task.getId());
@@ -83,8 +75,6 @@ public class ProjectService {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        user.getMemberOfProjects().add(project);
-        userRepository.save(user);
         project.getMembers().add(user);
         projectRepository.save(project);
     }
@@ -97,12 +87,12 @@ public class ProjectService {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        List<Task> assignedTasks = user.getAssignedTasks();
-        for (Task task : assignedTasks) {
-            if (task.getProject().equals(project)) {
-                task.getAssignees().remove(user);
-            }
-        }
+        // List<Task> assignedTasks = user.getAssignedTasks();
+        // for (Task task : assignedTasks) {
+        //     if (task.getProject().equals(project)) {
+        //         task.getAssignees().remove(user);
+        //     }
+        // }
 
         project.getMembers().remove(user);
         projectRepository.save(project);
@@ -116,13 +106,13 @@ public class ProjectService {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new IllegalArgumentException("Task not found"));
 
-        User creator = task.getCreator();
-        creator.getCreatedTasks().remove(task);
-
-        List<User> assignees = task.getAssignees();
-        for (User assignee : assignees) {
-            assignee.getAssignedTasks().remove(task);
-        }
+        // User creator = task.getCreator();
+        // creator.getCreatedTasks().remove(task);
+        //
+        // List<User> assignees = task.getAssignees();
+        // for (User assignee : assignees) {
+        //     assignee.getAssignedTasks().remove(task);
+        // }
 
         project.getTasks().remove(task);
         taskRepository.deleteById(taskId);

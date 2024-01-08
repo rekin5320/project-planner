@@ -78,13 +78,13 @@ public class TaskService {
         Project project = task.getProject();
         project.getTasks().remove(task);
 
-        User creator = task.getCreator();
-        creator.getCreatedTasks().remove(task);
-
-        List<User> assignees = task.getAssignees();
-        for (User assignee : assignees) {
-            assignee.getAssignedTasks().remove(task);
-        }
+        // User creator = task.getCreator();
+        // creator.getCreatedTasks().remove(task);
+        //
+        // List<User> assignees = task.getAssignees();
+        // for (User assignee : assignees) {
+        //     assignee.getAssignedTasks().remove(task);
+        // }
 
         taskRepository.deleteById(taskId);
     }
@@ -103,7 +103,6 @@ public class TaskService {
         else {
             task.getAssignees().add(user);
             taskRepository.save(task);
-            user.getAssignedTasks().add(task);
             userRepository.save(user);
         }
     }
@@ -117,7 +116,6 @@ public class TaskService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         task.getAssignees().remove(user);
-        user.getAssignedTasks().remove(task);
         taskRepository.save(task);
     }
 }
