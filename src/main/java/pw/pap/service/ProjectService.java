@@ -87,12 +87,12 @@ public class ProjectService {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        // List<Task> assignedTasks = user.getAssignedTasks();
-        // for (Task task : assignedTasks) {
-        //     if (task.getProject().equals(project)) {
-        //         task.getAssignees().remove(user);
-        //     }
-        // }
+        Iterable<Task> tasks = taskRepository.findAll();
+         for (Task task : tasks) {
+             if (task.getProject().equals(project)) {
+                 task.getAssignees().remove(user);
+             }
+         }
 
         project.getMembers().remove(user);
         projectRepository.save(project);
@@ -105,14 +105,6 @@ public class ProjectService {
 
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new IllegalArgumentException("Task not found"));
-
-        // User creator = task.getCreator();
-        // creator.getCreatedTasks().remove(task);
-        //
-        // List<User> assignees = task.getAssignees();
-        // for (User assignee : assignees) {
-        //     assignee.getAssignedTasks().remove(task);
-        // }
 
         project.getTasks().remove(task);
         taskRepository.deleteById(taskId);
