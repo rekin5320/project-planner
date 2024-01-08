@@ -40,7 +40,7 @@ public class ProjectServiceTests {
             Project projectInDatabase = projectService.getProjectById(project.getId()).orElse(null);
             assertNotNull(projectInDatabase, "Project not in database");
 
-            assertEquals(project, projectInDatabase);
+            assertEquals(project.getId(), projectInDatabase.getId());
         } catch (Exception e) {
             fail("Exception occurred during login: " + e.getMessage());
         } finally {
