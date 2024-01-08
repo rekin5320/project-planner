@@ -48,6 +48,7 @@ public class Project {
     public Project(String name, User owner, LocalDateTime projectCreationDate) {
         this.name = name;
         this.owner = owner;
+        this.members.add(owner);
         this.projectCreationDate = projectCreationDate;
     }
 
