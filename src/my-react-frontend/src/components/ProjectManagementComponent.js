@@ -15,14 +15,14 @@ const ProjectManagementComponent = ( {user}) => {
 
     const handleAddProject = (e) => {
         e.preventDefault();
-        alert(user.name);
-        alert(newProjectName);
+        //alert(user.name);
+        //alert(newProjectName);
         //alert(newProjectOwnerId);
 
         const newProject = {name: newProjectName, owner: user};
         axios.post("/api/projects/add", newProject)
             .then(response => {
-                alert('Nie poszło');
+                //alert('Nie poszło');
                 setProjects([...projects, response.data]);
                 setNewProjectName("");    // Clear the input field
             })

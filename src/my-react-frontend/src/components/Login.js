@@ -29,7 +29,7 @@ function Login({ onLogin }) {
             if (response.status === 200) {
                 if (response.data)
                 {
-                    alert(response.data.id)
+                    //alert(response.data.id)
                     onLogin(response.data.id); // Update App state if authentication is successful
                     navigate('/home'); // Navigate to HomePage
                 }

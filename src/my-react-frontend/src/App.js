@@ -15,8 +15,8 @@ function App() {
 
     const handleRegister = (user) => {
         setUser(user);
-        alert(user.id);
-        alert(user.name);
+        //alert(user.id);
+        //alert(user.name);
         setIsLoggedIn(true);
     };
 

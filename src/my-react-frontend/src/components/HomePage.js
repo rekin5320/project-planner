@@ -2,8 +2,8 @@ import React from 'react';
 import ProjectManagementComponent from "./ProjectManagementComponent";
 
 function HomePage({ user }) {
-    alert(user.id);
-    alert(user.name);
+    //alert(user.id);
+    //alert(user.name);
     return (
         <div>
             <div className="min-h-screen bg-custom-background">
