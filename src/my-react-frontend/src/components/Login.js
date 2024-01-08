@@ -30,7 +30,7 @@ function Login({ onLogin }) {
                 if (response.data)
                 {
                     //alert(response.data.id)
-                    onLogin(response.data.id); // Update App state if authentication is successful
+                    onLogin(response.data); // Update App state if authentication is successful
                     navigate('/home'); // Navigate to HomePage
                 }
             } else {
