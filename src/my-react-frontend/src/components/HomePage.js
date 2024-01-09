@@ -16,7 +16,6 @@ function HomePage({ user, onLogout }) {
     return (
         <div>
             <div className="min-h-screen bg-custom-background">
-
                 <div>
                     {user && user.name ? <p>User: {user.name}</p> : <p>No user data</p>}
                 </div>
@@ -29,10 +28,17 @@ function HomePage({ user, onLogout }) {
                     <h4>{user.email}</h4>
                     <img src={user.picture} alt="User Avatar" />
                 </div>
+
+                <button
+                    className="mybutton"
+                    onClick={(e) => handleLogoutClick(e)}
+                >
+                    Sign out
+                </button>
+
                 <div className="flex flex-wrap justify-evenly content-evenly">
                     <ProjectManagementComponent user={user}/>
                 </div>
-                <button onClick={(e) => handleLogoutClick(e)}>Sign Out</button>
             </div>
         </div>
     );
