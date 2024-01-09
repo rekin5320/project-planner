@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import pw.pap.model.Project;
 import pw.pap.service.ProjectService;
+import pw.pap.api.dto.ProjectAddDTO;
 
 
 @RestController
@@ -31,8 +32,8 @@ public class ProjectController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     @PostMapping("/add")
-    public ResponseEntity<Project> addProject(@RequestBody Project project) {
-        Project addedProject = projectService.addProject(project);
+    public ResponseEntity<Project> addProject(@RequestBody ProjectAddDTO projectAddDTO) {
+        Project addedProject = projectService.createProject(projectAddDTO.getName(), projectAddDTO.getOwner());
         return new ResponseEntity<>(addedProject, HttpStatus.CREATED);
     }
 

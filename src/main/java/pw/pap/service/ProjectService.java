@@ -27,14 +27,9 @@ public class ProjectService {
         this.taskRepository = taskRepository;
     }
 
-    public Project createProject(String name, String description, LocalDateTime projectDeadline, User owner, List<User> members) {
+    public Project createProject(String name, User owner) {
         LocalDateTime currentDate = LocalDateTime.now();
-        Project project = new Project(name, description, currentDate, projectDeadline, owner, members);
-        return projectRepository.save(project);
-    }
-
-    public Project addProject(Project project) {
-        project.setProjectCreationDate(LocalDateTime.now());
+        Project project = new Project(name, owner, currentDate);
         return projectRepository.save(project);
     }
 
