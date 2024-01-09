@@ -17,9 +17,8 @@ const Register = ({ onRegister }) => {
                 navigate('/home'); // Navigate to the HomePage
             })
             .catch(error => {
-                // Check if the error is due to the username being taken
-                if (error.response && error.response.status === 500) { // Assuming 409 status code for conflict
-                    alert("Username taken");
+                if (error.response && error.response.status === 409) {
+                    alert("User with this name exists");
                 } else {
                     console.error("Error adding user:", error);
                 }
