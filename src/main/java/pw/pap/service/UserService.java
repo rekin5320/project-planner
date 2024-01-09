@@ -49,11 +49,19 @@ public class UserService {
     }
 
     public User register(String name, String password) {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("Empty user name is not allowed");
+        }
+        if (password.isBlank()) {
+            throw new IllegalArgumentException("Empty password is not allowed");
+        }
+
         Optional<User> optionalUser = findByName(name);
 
         if (optionalUser.isPresent()) {
             throw new EntityExistsException("User with the same name already in the database");
         }
+
         String salt = generateRandomSalt();
         String hashedPassword = hashPasswordWithSalt(password, salt);
         LocalDateTime currentDate = LocalDateTime.now();
