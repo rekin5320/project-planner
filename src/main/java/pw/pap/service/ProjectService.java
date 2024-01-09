@@ -58,10 +58,10 @@ public class ProjectService {
 
     public Project updateProject(Long projectId, Project updatedProject) {
         Project existingProject = projectRepository.findById(projectId)
-            .orElseThrow(() -> new IllegalArgumentException("Project not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
         String newName = updatedProject.getName();
-        if(updatedProject.getName().isBlank()){
+        if (updatedProject.getName().isBlank()) {
             throw new IllegalArgumentException("Project name cannot be empty");
         }
         existingProject.setName(newName);
@@ -80,12 +80,14 @@ public class ProjectService {
                 .orElseThrow(() -> new EntityNotFoundException("New owner not in database"));
         existingProject.setOwner(newOwner);
 
-        List<User> newMembers = updatedProject.getMembers();
-        for (User member : newMembers) {
-            userRepository.findById(member.getId())
+        if (!updatedProject.getMembers().equals(existingProject.getMembers())){
+            List<User> newMembers = updatedProject.getMembers();
+            for (User member : newMembers) {
+                userRepository.findById(member.getId())
                     .orElseThrow(() -> new EntityNotFoundException("One of new members not in database"));
+            }
+            existingProject.setMembers(newMembers);
         }
-        existingProject.setMembers(newMembers);
 
         projectRepository.deleteById(projectId);
         updatedProject.setId(projectId);

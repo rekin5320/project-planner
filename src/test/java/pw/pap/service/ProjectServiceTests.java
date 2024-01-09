@@ -27,11 +27,9 @@ public class ProjectServiceTests {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final LocalDateTime date = LocalDateTime.parse("2023-10-11 13:37:42", formatter);
 
-    // TODO: usuwanie projektów przy usuwaniu użytkowników
      @Test
      @Rollback
      public void testCreateProject() {
-         userService.deleteUser(1902L);
          String username = "testBob";
          String password = "reallySecurePassword";
          User user = userService.register(username, password);
