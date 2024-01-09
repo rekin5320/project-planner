@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
+import { GoogleLogin } from '@react-oauth/google';
 
+const clientId = "653829545632-s1tg9di96ernst657soqhvtdt37vssp8.apps.googleusercontent.com";
 
 function Login({ onLogin }) {
     const [user, setUser] = useState('');
@@ -10,36 +12,6 @@ function Login({ onLogin }) {
     const [password, setPassword] = useState('');
     const [loginError, setLoginError] = useState('');
     const navigate = useNavigate();
-
-    useEffect(() => {
-        // Initialize Google Sign-In once the component is mounted
-        google.accounts.id.initialize({
-            client_id: "653829545632-s1tg9di96ernst657soqhvtdt37vssp8.apps.googleusercontent.com",
-            callback: handleCallbackResponse,
-            // auto_select: true,
-        });
-
-        // Render the Google Sign-In button
-        google.accounts.id.renderButton(
-            document.getElementById("signInDiv"),
-            {
-                theme: "outline",
-                size: "large",
-                text: "Sign in with Google",
-                shape: "rectangular",
-                width: "auto",
-                height: 40,
-            }
-        );
-
-        google.accounts.id.prompt();
-
-        // Cleanup function when the component is unmounted
-        return () => {
-            // Perform any cleanup or removal of resources
-            // For example, you can remove the Google Sign-In button if needed
-        };
-    }, []); // The empty dependency array ensures that this effect runs only once when the component mounts
 
 
     const handleRegisterClick = () => {
@@ -81,15 +53,9 @@ function Login({ onLogin }) {
         }
     }
 
-    function handleCallbackResponse(response) {
+    const onSuccess = (response) => {
+        console.log('Login Success: currentUser:', response);
         console.log("Encoded JWT ID token: " + response.credential);
-        // Handle the Google Sign-In callback response if needed
-        // For example, you can use the response to:
-        // - Obtain the Google user ID
-        // - Obtain an ID token for the user (which may be used with Google services)
-        // - See the Google Sign-In documentation for more details
-        //alert(response.credential)
-
         try {
             const userObject = jwtDecode(response.credential);
             console.log("Decoded JWT ID token:", userObject);
@@ -99,6 +65,10 @@ function Login({ onLogin }) {
         } catch (error) {
             console.error("Error decoding JWT:", error);
         }
+    };
+
+    const onFailure = (response) => {
+        console.log('Login failed: ', response);
     }
 
     return (
@@ -138,6 +108,18 @@ function Login({ onLogin }) {
                     Register here
                 </button>
                 <div id="signInDiv"></div>
+                <div>
+                    <GoogleLogin clientId={clientId}
+                                 buttonText="Login"
+                                 onSuccess={onSuccess}
+                                 onFailure={onFailure}
+                                 cookiePolicy={'single_host_origin'}
+                                 isSignedIn={true}
+                                 theme={"dark"}
+                                    className={"w-full"}
+                    />
+
+                </div>
             </div>
         </div>
     );
