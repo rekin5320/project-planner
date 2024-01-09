@@ -3,10 +3,11 @@ import ProjectManagementComponent from "./ProjectManagementComponent";
 import {useNavigate} from "react-router-dom";
 
 
-function HomePage({ user }) {
+function HomePage({ user, onLogout }) {
     const navigate = useNavigate();
 
     const handleLogoutClick = (e) => {
+        onLogout(); // Call the handleLogout function from props
         navigate('/login'); // Navigate to LoginPage
     }
 
