@@ -80,15 +80,6 @@ public class ProjectService {
                 .orElseThrow(() -> new EntityNotFoundException("New owner not in database"));
         existingProject.setOwner(newOwner);
 
-        if (!updatedProject.getMembers().equals(existingProject.getMembers())){
-            List<User> newMembers = updatedProject.getMembers();
-            for (User member : newMembers) {
-                userRepository.findById(member.getId())
-                    .orElseThrow(() -> new EntityNotFoundException("One of new members not in database"));
-            }
-            existingProject.setMembers(newMembers);
-        }
-
         projectRepository.deleteById(projectId);
         updatedProject.setId(projectId);
         return projectRepository.save(updatedProject);

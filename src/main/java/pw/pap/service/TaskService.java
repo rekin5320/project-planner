@@ -83,13 +83,6 @@ public class TaskService {
         }
         existingTask.setTaskDeadline(newDeadline);
 
-        List<User> newAssignees = updatedTask.getAssignees();
-        for (User assignee : newAssignees) {
-            userRepository.findById(assignee.getId())
-                    .orElseThrow(() -> new EntityNotFoundException("One of new assignees not in database"));
-        }
-        existingTask.setAssignees(newAssignees);
-
         taskRepository.deleteById(taskId);
         updatedTask.setId(taskId);
         return taskRepository.save(updatedTask);
