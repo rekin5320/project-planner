@@ -84,14 +84,16 @@ public class UserService {
 
         // Changing name
         String newName = updatedUser.getName();
-        if(newName.isBlank()){
-            throw new IllegalArgumentException("User name cannot be empty");
-        }
-        if(!newName.equals(existingUser.getName())){
+        if(newName != null && !newName.equals(existingUser.getName())){
+            if(newName.isBlank()){
+                throw new IllegalArgumentException("User name cannot be empty");
+            }
+
             Optional<User> optionalUser = findByName(updatedUser.getName());
             if (optionalUser.isPresent()) {
                 throw new EntityExistsException("User with the same name already in the database");
             }
+
             existingUser.setName(updatedUser.getName());
         }
 
