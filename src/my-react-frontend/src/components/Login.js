@@ -32,8 +32,6 @@ function Login({ onLogin }) {
             }
         );
 
-        google.accounts.id.prompt();
-
         // Cleanup function when the component is unmounted
         return () => {
             // Perform any cleanup or removal of resources
