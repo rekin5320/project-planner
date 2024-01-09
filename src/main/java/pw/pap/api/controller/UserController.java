@@ -67,8 +67,16 @@ public class UserController {
 
     @PutMapping("/update/{userId}")
     public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
-        User updated = userService.updateUser(userId, updatedUser);
-        return new ResponseEntity<>(updated, HttpStatus.OK);
+        try {
+            User updated = userService.updateUser(userId, updatedUser);
+            return new ResponseEntity<>(updated, HttpStatus.OK);
+        } catch (EntityExistsException e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/delete/{userId}")
