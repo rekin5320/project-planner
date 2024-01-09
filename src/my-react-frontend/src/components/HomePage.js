@@ -18,6 +18,7 @@ function HomePage({ user }) {
                     <h1>Home Page</h1>
                     <h3>{user.name}</h3>
                     <h4>{user.email}</h4>
+                    <img src={user.picture} alt="User Avatar" />
                 </div>
                 <div className="flex flex-wrap justify-evenly content-evenly">
                     <ProjectManagementComponent user={user}/>
