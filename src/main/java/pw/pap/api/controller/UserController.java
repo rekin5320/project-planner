@@ -50,6 +50,11 @@ public class UserController {
         return new ResponseEntity<>(memberProjects, HttpStatus.OK);
     }
 
+    // @GetMapping("/all")
+    // public List<User> getAllUsers() {
+    //     return userService.getAllUsers();
+    // }
+
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUser(@PathVariable Long userId) {
         User user = userService.getUserById(userId);
@@ -59,11 +64,6 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-   // @GetMapping("/all")
-   // public List<User> getAllUsers() {
-   //     return userService.getAllUsers();
-   // }
 
     @PutMapping("/update/{userId}")
     public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
