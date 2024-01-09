@@ -60,36 +60,32 @@ public class ProjectService {
         Project existingProject = projectRepository.findById(projectId)
             .orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
-        if(!updatedProject.getId().equals(existingProject.getId())){
-            throw new IllegalArgumentException("Cannot change project id");
-        }
-
-        if(updatedProject.getName().isEmpty()){
+        String newName = updatedProject.getName();
+        if(updatedProject.getName().isBlank()){
             throw new IllegalArgumentException("Project name cannot be empty");
         }
+        existingProject.setName(newName);
 
-        if(!updatedProject.getProjectCreationDate().equals(existingProject.getProjectCreationDate())){
-            throw new IllegalArgumentException("Cannot change project creation date");
-        }
+        String newDescription = updatedProject.getDescription();
+        existingProject.setDescription(newDescription);
 
-        if(!updatedProject.getProjectDeadline().equals(existingProject.getProjectDeadline())){
-            LocalDateTime currentDate = LocalDateTime.now();
-            if (updatedProject.getProjectDeadline().isBefore(currentDate)) {
-                throw new IllegalArgumentException("New deadline must be after current time");
-            }
+        LocalDateTime newDeadline = updatedProject.getProjectDeadline();
+        LocalDateTime currentDate = LocalDateTime.now();
+        if (!newDeadline.isAfter(currentDate)) {
+            throw new IllegalArgumentException("New deadline must be after current time");
         }
+        existingProject.setProjectDeadline(newDeadline);
 
-        if(!updatedProject.getOwner().getId().equals(existingProject.getOwner().getId())){
-            userRepository.findById(updatedProject.getOwner().getId())
-                    .orElseThrow(() -> new EntityNotFoundException("New owner not in database"));
-        }
+        User newOwner = userRepository.findById(updatedProject.getOwner().getId())
+                .orElseThrow(() -> new EntityNotFoundException("New owner not in database"));
+        existingProject.setOwner(newOwner);
 
-        if(!updatedProject.getMembers().equals(existingProject.getMembers())){
-            for (User member : updatedProject.getMembers()) {
-                userRepository.findById(member.getId())
-                        .orElseThrow(() -> new EntityNotFoundException("One of new members not in database"));
-            }
+        List<User> newMembers = updatedProject.getMembers();
+        for (User member : newMembers) {
+            userRepository.findById(member.getId())
+                    .orElseThrow(() -> new EntityNotFoundException("One of new members not in database"));
         }
+        existingProject.setMembers(newMembers);
 
         projectRepository.deleteById(projectId);
         updatedProject.setId(projectId);

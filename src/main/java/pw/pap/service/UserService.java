@@ -82,7 +82,6 @@ public class UserService {
         User existingUser = userRepository.findById(userId)
             .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        // Changing name
         String newName = updatedUser.getName();
         if(newName != null && !newName.equals(existingUser.getName())){
             if(newName.isBlank()){
