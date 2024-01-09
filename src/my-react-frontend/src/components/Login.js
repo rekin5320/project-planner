@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
 import { GoogleLogin } from '@react-oauth/google';
+import './Style/Login.css';
 
 const clientId = "653829545632-s1tg9di96ernst657soqhvtdt37vssp8.apps.googleusercontent.com";
 
@@ -81,7 +82,7 @@ function Login({ onLogin }) {
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="w-full max-w-xs flex flex-col items-center">
-                <h2 className="text-3xl mb-2">Login</h2>
+                <h2 className="text-3xl mb-2">Welcome to Project Planner</h2>
                 <form onSubmit={handleLoginSubmit} className="w-full flex flex-col mb-4">
                     <input
                         className="myinput mb-2"
