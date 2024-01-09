@@ -27,7 +27,6 @@ function Login({ onLogin }) {
                 size: "large",
                 text: "Sign in with Google",
                 shape: "rectangular",
-                width: "auto",
                 height: 40,
             }
         );
