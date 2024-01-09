@@ -16,11 +16,19 @@ function HomePage({ user, onLogout }) {
 
     return (
         <div className="min-h-screen bg-custom-background">
-            <div>
-                <h1>Welcome {user.name}</h1>
-                <h2>{user.email}</h2>
+            <div className="wrapper">
+                <div>
+                    <h1>Welcome {user.name}</h1>
+                    <h2>{user.email}</h2>
+
+                </div>
+
+                <div className="flex flex-wrap justify-evenly content-evenly">
+                    <ProjectManagementComponent user={user} />
+                </div>
 
             </div>
+
 
             <div className="user-section">
                 <img src={user.picture || './Images/npc_face.jpg'} alt="User Avatar" />
@@ -30,10 +38,6 @@ function HomePage({ user, onLogout }) {
                 >
                     Sign out
                 </button>
-            </div>
-
-            <div className="flex flex-wrap justify-evenly content-evenly">
-                <ProjectManagementComponent user={user} />
             </div>
         </div>
     );
