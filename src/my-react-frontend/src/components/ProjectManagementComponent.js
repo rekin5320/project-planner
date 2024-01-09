@@ -66,7 +66,7 @@ const ProjectManagementComponent = ( {user}) => {
                     value={newProjectName}
                     onChange={(e) => setNewProjectName(e.target.value)}
                     placeholder="Name"
-                    className="myinput"
+                    className="myinput mr-2"
                 />
                 <button
                     type="submit"

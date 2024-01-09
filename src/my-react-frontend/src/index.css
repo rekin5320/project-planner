@@ -10,7 +10,7 @@
         @apply bg-custom-blue shadow-md flex items-center justify-between rounded-md w-full mr-2 mb-2 p-4 hover:bg-custom-blue-hov transition duration-150 ease-in-out;
     }
     .myinput {
-        @apply bg-custom-lightgray rounded border border-custom-lightgray mr-2 mb-2 p-2;
+        @apply rounded border border-custom-myinput-bor p-2;
     }
     .mybutton {
         @apply bg-custom-gray hover:bg-pink-600 text-white rounded px-3 py-2;

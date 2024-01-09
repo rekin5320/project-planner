@@ -52,7 +52,7 @@ function Login({ onLogin }) {
             <div className="w-full max-w-xs flex flex-col items-center">
                 <form onSubmit={handleLoginSubmit} className="w-full flex flex-col">
                     <input
-                        className="px-3 py-2 mb-3 border rounded shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="myinput mb-2"
                         autoFocus
                         required
                         type="text"
@@ -61,7 +61,7 @@ function Login({ onLogin }) {
                         onChange={(e) => setUsername(e.target.value)}
                     />
                     <input
-                        className="px-3 py-2 mb-3 border rounded shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="myinput mb-2"
                         required
                         type="password"
                         placeholder="Password"
