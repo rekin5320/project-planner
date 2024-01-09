@@ -14,6 +14,11 @@ function HomePage({ user }) {
                 <div>
                     {user && user.id ? <p>User: {user.id}</p> : <p>No user data</p>}
                 </div>
+                <div>
+                    <h1>Home Page</h1>
+                    <h3>{user.name}</h3>
+                    <h4>{user.email}</h4>
+                </div>
                 <div className="flex flex-wrap justify-evenly content-evenly">
                     <ProjectManagementComponent user={user}/>
                 </div>
