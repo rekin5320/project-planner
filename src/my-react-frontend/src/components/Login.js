@@ -56,6 +56,13 @@ function Login({ onLogin }) {
     const onSuccess = (response) => {
         console.log('Login Success: currentUser:', response);
         console.log("Encoded JWT ID token: " + response.credential);
+        // Handle the Google Sign-In callback response if needed
+        // For example, you can use the response to:
+        // - Obtain the Google user ID
+        // - Obtain an ID token for the user (which may be used with Google services)
+        // - See the Google Sign-In documentation for more details
+        //alert(response.credential)
+
         try {
             const userObject = jwtDecode(response.credential);
             console.log("Decoded JWT ID token:", userObject);
@@ -75,7 +82,7 @@ function Login({ onLogin }) {
         <div className="flex justify-center items-center h-screen">
             <div className="w-full max-w-xs flex flex-col items-center">
                 <h2 className="text-3xl mb-2">Login</h2>
-                <form onSubmit={handleLoginSubmit} className="w-full flex flex-col mb-8">
+                <form onSubmit={handleLoginSubmit} className="w-full flex flex-col mb-4">
                     <input
                         className="myinput mb-2"
                         autoFocus
@@ -101,8 +108,9 @@ function Login({ onLogin }) {
                     </button>
 
                 </form>
+
                 <button
-                    className="loginbutton loginbutton-other w-full"
+                    className="loginbutton loginbutton-other w-full mb-4"
                     onClick={handleRegisterClick}
                 >
                     Register here
