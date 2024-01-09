@@ -69,6 +69,7 @@ public class UserService {
         }
         LocalDateTime currentDate = LocalDateTime.now();
         User newUser = new User(name, email, currentDate);
+        userRepository.save(newUser);
         return newUser;
     }
 
