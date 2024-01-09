@@ -11,6 +11,7 @@ import pw.pap.repository.UserRepository;
 import pw.pap.repository.ProjectRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +32,18 @@ public class ProjectService {
         LocalDateTime currentDate = LocalDateTime.now();
         Project project = new Project(name, owner, currentDate);
         return projectRepository.save(project);
+    }
+
+    public List<Task> getProjectTasks(Long projectId){
+        List<Task> projectTasks = new ArrayList<>();
+        Iterable<Task> tasks = taskRepository.findAll();
+
+        for (Task task : tasks){
+            if(task.getProject().getId().equals(projectId)){
+                projectTasks.add(task);
+            }
+        }
+        return projectTasks;
     }
 
     public Optional<Project> getProjectById(Long projectId) {
