@@ -83,7 +83,7 @@ public class UserService {
             .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         String newName = updatedUser.getName();
-        if(newName != null && !newName.equals(existingUser.getName())){
+        if (newName != null && !newName.equals(existingUser.getName())){
             if(newName.isBlank()){
                 throw new IllegalArgumentException("User name cannot be empty");
             }

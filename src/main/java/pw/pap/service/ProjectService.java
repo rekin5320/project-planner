@@ -57,32 +57,38 @@ public class ProjectService {
     }
 
     public Project updateProject(Long projectId, Project updatedProject) {
+        LocalDateTime currentDate = LocalDateTime.now();
         Project existingProject = projectRepository.findById(projectId)
-                .orElseThrow(() -> new IllegalArgumentException("Project not found"));
+            .orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
         String newName = updatedProject.getName();
-        if (updatedProject.getName().isBlank()) {
-            throw new IllegalArgumentException("Project name cannot be empty");
+        if (newName != null && !newName.equals(existingProject.getName())){
+            if (updatedProject.getName().isBlank()) {
+                throw new IllegalArgumentException("Project name cannot be empty");
+            }
+            existingProject.setName(newName);
         }
-        existingProject.setName(newName);
 
         String newDescription = updatedProject.getDescription();
-        existingProject.setDescription(newDescription);
+        if (newDescription != null) {
+            existingProject.setDescription(newDescription);
+        }
 
         LocalDateTime newDeadline = updatedProject.getProjectDeadline();
-        LocalDateTime currentDate = LocalDateTime.now();
-        if (!newDeadline.isAfter(currentDate)) {
-            throw new IllegalArgumentException("New deadline must be after current time");
+        if (newDeadline != null) {
+            if (!newDeadline.isAfter(currentDate)) {
+                throw new IllegalArgumentException("New deadline must be after current time");
+            }
+            existingProject.setProjectDeadline(newDeadline);
         }
-        existingProject.setProjectDeadline(newDeadline);
 
-        User newOwner = userRepository.findById(updatedProject.getOwner().getId())
+        if (updatedProject.getOwner() != null) {
+            User newOwner = userRepository.findById(updatedProject.getOwner().getId())
                 .orElseThrow(() -> new EntityNotFoundException("New owner not in database"));
-        existingProject.setOwner(newOwner);
+            existingProject.setOwner(newOwner);
+        }
 
-        projectRepository.deleteById(projectId);
-        updatedProject.setId(projectId);
-        return projectRepository.save(updatedProject);
+        return projectRepository.save(existingProject);
     }
 
     public void deleteProject(Long projectId) {

@@ -50,6 +50,8 @@ public class ProjectController {
         try {
             Project updated = projectService.updateProject(projectId, updatedProject);
             return new ResponseEntity<>(updated, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
