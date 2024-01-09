@@ -38,22 +38,6 @@
     box-shadow: 0 0 10px rgba(0,0,0,.2);
 }
 
-.mybutton {
-    margin-top: 10px; /* Adjust the margin as needed */
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #3498db; /* Set your preferred button background color */
-    color: #ffffff; /* Set your preferred button text color */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.mybutton:hover {
-    background-color: #2980b9; /* Set your preferred button background color on hover */
-}
-
 h1{
     font-size: 48px;
     font-weight: 700;
