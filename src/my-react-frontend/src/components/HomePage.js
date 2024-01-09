@@ -7,7 +7,7 @@ import './Style/HomePage.css';
 function HomePage({ user, onLogout }) {
     const navigate = useNavigate();
 
-    const handleLogoutClick = (e) => {
+    const handleLogoutClick = () => {
         onLogout(); // Call the handleLogout function from props
         googleLogout();
         navigate('/login'); // Navigate to LoginPage
@@ -23,7 +23,7 @@ function HomePage({ user, onLogout }) {
             </div>
 
             <div className="user-section">
-                <img src={user.picture || '/npc_face.jpg'} alt="User Avatar" />
+                <img src={user.picture || './Images/npc_face.jpg'} alt="User Avatar" />
                 <button
                     className="mybutton"
                     onClick={(e) => handleLogoutClick(e)}
