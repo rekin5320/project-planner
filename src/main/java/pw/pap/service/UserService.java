@@ -80,45 +80,22 @@ public class UserService {
 
     public User updateUser(Long userId, User updatedUser) {
         User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+            .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        if(!updatedUser.getId().equals(existingUser.getId())){
-            throw new IllegalArgumentException("Cannot change user id");
+        // Changing name
+        String newName = updatedUser.getName();
+        if(newName.isBlank()){
+            throw new IllegalArgumentException("User name cannot be empty");
         }
-
-        if(!updatedUser.getName().equals(existingUser.getName())){
-            if(updatedUser.getName().isEmpty()){
-                throw new IllegalArgumentException("User name cannot be empty");
-            }
+        if(!newName.equals(existingUser.getName())){
             Optional<User> optionalUser = findByName(updatedUser.getName());
             if (optionalUser.isPresent()) {
                 throw new EntityExistsException("User with the same name already in the database");
             }
+            existingUser.setName(updatedUser.getName());
         }
 
-        if(!updatedUser.getPasswordHash().equals(existingUser.getPasswordHash())){
-            throw new IllegalArgumentException("Cannot change user password");
-        }
-
-        if(!updatedUser.getSalt().equals(existingUser.getSalt())){
-            throw new IllegalArgumentException("Cannot change user salt");
-        }
-
-        if(!updatedUser.getEmail().equals(existingUser.getEmail())){
-            throw new IllegalArgumentException("Cannot change user email");
-        }
-
-        if(!updatedUser.getGoogleId().equals(existingUser.getGoogleId())){
-            throw new IllegalArgumentException("Cannot change user google id");
-        }
-
-        if(!updatedUser.getAccountCreationDate().equals(existingUser.getAccountCreationDate())){
-            throw new IllegalArgumentException("Cannot change user account creation date");
-        }
-
-        userRepository.deleteById(userId);
-        updatedUser.setId(userId);
-        return userRepository.save(updatedUser);
+        return userRepository.save(existingUser);
     }
 
     @Transactional
