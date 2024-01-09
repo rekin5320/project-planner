@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import pw.pap.model.Project;
+import pw.pap.model.Task;
 import pw.pap.service.ProjectService;
 import pw.pap.api.dto.ProjectAddDTO;
 
@@ -35,6 +36,12 @@ public class ProjectController {
     public ResponseEntity<Project> addProject(@RequestBody ProjectAddDTO projectAddDTO) {
         Project addedProject = projectService.createProject(projectAddDTO.getName(), projectAddDTO.getOwner());
         return new ResponseEntity<>(addedProject, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{userId}/tasks")
+    public ResponseEntity<List<Task>> getProjectTasks(@PathVariable Long projectId) {
+        List<Task> projectTasks = projectService.getProjectTasks(projectId);
+        return new ResponseEntity<>(projectTasks, HttpStatus.OK);
     }
 
     @PutMapping("/update/{projectId}")
