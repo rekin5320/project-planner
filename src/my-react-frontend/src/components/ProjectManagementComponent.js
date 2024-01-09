@@ -50,8 +50,8 @@ const ProjectManagementComponent = ( {user}) => {
                             <span className="ml-2">owner: {project.owner.name}</span>
                             <span className="ml-2">
                                 <span>members: </span>
-                                {project.members.map(member => (
-                                     <span>{member.name} </span>
+                                {project.members.map((member, index) => (
+                                     <span>{member.name + (index + 1 != project.members.length ? ', ' : '')}</span>
                                 ))}
                             </span>
                         </span>
