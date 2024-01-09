@@ -20,6 +20,7 @@ const Register = ({ onRegister }) => {
                 if (error.response && error.response.status === 409) {
                     alert("User with this name exists");
                 } else {
+                    alert("Error adding user");
                     console.error("Error adding user:", error);
                 }
             });
