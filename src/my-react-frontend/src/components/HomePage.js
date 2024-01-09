@@ -2,7 +2,7 @@ import React from 'react';
 import ProjectManagementComponent from "./ProjectManagementComponent";
 import { useNavigate } from "react-router-dom";
 import { googleLogout } from '@react-oauth/google';
-
+import './Style/HomePage.css';
 
 function HomePage({ user, onLogout }) {
     const navigate = useNavigate();
@@ -14,34 +14,26 @@ function HomePage({ user, onLogout }) {
         alert("User logged out");
     }
 
-    //alert(user.id);
-    //alert(user.name);
     return (
-        <div>
-            <div className="min-h-screen bg-custom-background">
-                <div>
-                    {user && user.name ? <p>User: {user.name}</p> : <p>No user data</p>}
-                </div>
-                <div>
-                    {user && user.id ? <p>User: {user.id}</p> : <p>No user data</p>}
-                </div>
-                <div>
-                    <h1>Home Page</h1>
-                    <h3>{user.name}</h3>
-                    <h4>{user.email}</h4>
-                    <img src={user.picture} alt="User Avatar" />
-                </div>
+        <div className="min-h-screen bg-custom-background">
+            <div>
+                <h1>Welcome {user.name}</h1>
+                <h2>{user.email}</h2>
 
+            </div>
+
+            <div className="user-section">
+                <img src={user.picture || '/npc_face.jpg'} alt="User Avatar" />
                 <button
                     className="mybutton"
                     onClick={(e) => handleLogoutClick(e)}
                 >
                     Sign out
                 </button>
+            </div>
 
-                <div className="flex flex-wrap justify-evenly content-evenly">
-                    <ProjectManagementComponent user={user} />
-                </div>
+            <div className="flex flex-wrap justify-evenly content-evenly">
+                <ProjectManagementComponent user={user} />
             </div>
         </div>
     );
