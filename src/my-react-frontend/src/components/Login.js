@@ -21,7 +21,7 @@ function Login({ onLogin }) {
 
         // Render the Google Sign-In button
         google.accounts.id.renderButton(
-            document.getElementById("signInDiv"),
+            document.getElementById("google-login-button"),
             {
                 theme: "outline",
                 size: "large",
@@ -139,7 +139,7 @@ function Login({ onLogin }) {
                     Register here
                 </button>
 
-                <div id="signInDiv"></div> {/* Google login*/}
+                <div id="google-login-button"></div>
             </div>
         </div>
     );
