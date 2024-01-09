@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import ProjectManagementComponent from "./ProjectManagementComponent";
 import { useNavigate } from "react-router-dom";
 import { googleLogout } from '@react-oauth/google';

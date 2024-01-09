@@ -49,11 +49,19 @@ public class UserService {
     }
 
     public User register(String name, String password) {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("Empty user name is not allowed");
+        }
+        if (password.isBlank()) {
+            throw new IllegalArgumentException("Empty password is not allowed");
+        }
+
         Optional<User> optionalUser = findByName(name);
 
         if (optionalUser.isPresent()) {
             throw new EntityExistsException("User with the same name already in the database");
         }
+
         String salt = generateRandomSalt();
         String hashedPassword = hashPasswordWithSalt(password, salt);
         LocalDateTime currentDate = LocalDateTime.now();
@@ -83,11 +91,23 @@ public class UserService {
 
     public User updateUser(Long userId, User updatedUser) {
         User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+            .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        userRepository.deleteById(userId);
-        updatedUser.setId(userId);
-        return userRepository.save(updatedUser);
+        String newName = updatedUser.getName();
+        if (newName != null && !newName.equals(existingUser.getName())){
+            if(newName.isBlank()){
+                throw new IllegalArgumentException("User name cannot be empty");
+            }
+
+            Optional<User> optionalUser = findByName(updatedUser.getName());
+            if (optionalUser.isPresent()) {
+                throw new EntityExistsException("User with the same name already in the database");
+            }
+
+            existingUser.setName(updatedUser.getName());
+        }
+
+        return userRepository.save(existingUser);
     }
 
     @Transactional
@@ -97,6 +117,7 @@ public class UserService {
 
         Iterable<Project> projects = projectRepository.findAll();
         for (Project project : projects) {
+            project.getMembers().remove(user);
             if (project.getOwner().getId().equals(userId)){
                 if (project.getMembers().isEmpty()) {
                     projectRepository.deleteById(project.getId());
@@ -105,7 +126,6 @@ public class UserService {
                     project.setOwner(project.getMembers().get(0));
                 }
             }
-            project.getMembers().remove(user);
         }
 
         Iterable<Task> tasks = taskRepository.findAll();

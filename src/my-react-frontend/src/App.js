@@ -25,16 +25,18 @@ function App() {
     };
 
     return (
-        <Router>
-            <GoogleOAuthProvider clientId="653829545632-s1tg9di96ernst657soqhvtdt37vssp8.apps.googleusercontent.com">
-                <Routes>
-                    <Route path="/" element={<Navigate to="/login" />} />
-                    <Route path="/login" element={<Login onLogin={handleLogin} />} />
-                    <Route path="/register" element={<Register onRegister={handleRegister} />} />
-                    <Route path="/home" element={isLoggedIn ? <HomePage user={user} onLogout={handleLogout} /> : <Navigate to="/login" />} />
-                </Routes>
-            </GoogleOAuthProvider>
-        </Router>
+        <div className="bg-custom-background">
+            <Router>
+                <GoogleOAuthProvider clientId="653829545632-s1tg9di96ernst657soqhvtdt37vssp8.apps.googleusercontent.com">
+                    <Routes>
+                        <Route path="/" element={<Navigate to="/login"/>}/>
+                        <Route path="/login" element={<Login onLogin={handleLogin}/>}/>
+                        <Route path="/register" element={<Register onRegister={handleRegister}/>}/>
+                        <Route path="/home" element={isLoggedIn ? <HomePage user={user} onLogout={handleLogout}/> : <Navigate to="/login"/>}/>
+                    </Routes>
+                </GoogleOAuthProvider>
+            </Router>
+        </div>
     );
 }
 
