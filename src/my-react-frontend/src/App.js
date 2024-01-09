@@ -15,9 +15,12 @@ function App() {
 
     const handleRegister = (user) => {
         setUser(user);
-        //alert(user.id);
-        //alert(user.name);
         setIsLoggedIn(true);
+    };
+
+    const handleLogout = () => {
+        setUser(null);
+        setIsLoggedIn(false);
     };
 
     return (
@@ -26,7 +29,7 @@ function App() {
                 <Route path="/" element={<Navigate to="/login" />} />
                 <Route path="/login" element={<Login onLogin={handleLogin} />} />
                 <Route path="/register" element={<Register onRegister={handleRegister} />} />
-                <Route path="/home" element={isLoggedIn ? <HomePage user={user} /> : <Navigate to="/login" />} />
+                <Route path="/home" element={isLoggedIn ? <HomePage user={user} onLogout={handleLogout} /> : <Navigate to="/login" />} />
             </Routes>
         </Router>
     );
