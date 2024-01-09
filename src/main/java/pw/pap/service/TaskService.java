@@ -67,39 +67,28 @@ public class TaskService {
         Task existingTask = taskRepository.findById(taskId)
                 .orElseThrow(() -> new IllegalArgumentException("Task not found"));
 
-        if(!updatedTask.getId().equals(existingTask.getId())){
-            throw new IllegalArgumentException("Cannot change task id");
-        }
-
-        if(updatedTask.getTitle().isEmpty()){
+        String newTitle = updatedTask.getTitle();
+        if(newTitle.isBlank()){
             throw new IllegalArgumentException("Task title cannot be empty");
         }
+        existingTask.setTitle(newTitle);
 
-        if(!updatedTask.getTaskCreationDate().equals(existingTask.getTaskCreationDate())){
-            throw new IllegalArgumentException("Cannot change task creation date");
-        }
+        String newDescription = updatedTask.getDescription();
+        existingTask.setDescription(newDescription);
 
-        if(!updatedTask.getTaskDeadline().equals(existingTask.getTaskDeadline())){
-            LocalDateTime currentDate = LocalDateTime.now();
-            if (updatedTask.getTaskDeadline().isBefore(currentDate)) {
-                throw new IllegalArgumentException("New deadline must be after current time");
-            }
+        LocalDateTime newDeadline = updatedTask.getTaskDeadline();
+        LocalDateTime currentDate = LocalDateTime.now();
+        if (!newDeadline.isAfter(currentDate)) {
+            throw new IllegalArgumentException("New deadline must be after current time");
         }
+        existingTask.setTaskDeadline(newDeadline);
 
-        if(!updatedTask.getAssignees().equals(existingTask.getAssignees())){
-            for (User assignee : updatedTask.getAssignees()) {
-                userRepository.findById(assignee.getId())
-                        .orElseThrow(() -> new EntityNotFoundException("One of new assignees not in database"));
-            }
+        List<User> newAssignees = updatedTask.getAssignees();
+        for (User assignee : newAssignees) {
+            userRepository.findById(assignee.getId())
+                    .orElseThrow(() -> new EntityNotFoundException("One of new assignees not in database"));
         }
-
-        if(!updatedTask.getCreator().getId().equals(existingTask.getCreator().getId())){
-            throw new IllegalArgumentException("Cannot change task creator");
-        }
-
-        if(!updatedTask.getProject().getId().equals(existingTask.getProject().getId())){
-            throw new IllegalArgumentException("Cannot change task project");
-        }
+        existingTask.setAssignees(newAssignees);
 
         taskRepository.deleteById(taskId);
         updatedTask.setId(taskId);
