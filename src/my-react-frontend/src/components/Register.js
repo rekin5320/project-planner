@@ -28,6 +28,7 @@ const Register = ({ onRegister }) => {
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="w-full max-w-xs flex flex-col items-center">
+                <h2 className="text-3xl mb-2">Register</h2>
                 <form onSubmit={handleRegisterUser} className="w-full flex flex-col">
                     <input
                         className="myinput mb-3"
