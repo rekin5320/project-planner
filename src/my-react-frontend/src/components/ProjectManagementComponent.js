@@ -51,7 +51,7 @@ const ProjectManagementComponent = ( {user}) => {
                             <span className="ml-2">
                                 <span>members: </span>
                                 {project.members.map((member, index) => (
-                                     <span>{member.name + (index + 1 != project.members.length ? ', ' : '')}</span>
+                                     <span>{member.name + (index + 1 !== project.members.length ? ', ' : '')}</span>
                                 ))}
                             </span>
                         </span>
