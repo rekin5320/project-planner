@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping("/googleLogin")
-    public ResponseEntity<User> loginUser(@RequestBody UserAndEmailDTO userAndEmailDTO) {
+    public ResponseEntity<User> googleLoginUser(@RequestBody UserAndEmailDTO userAndEmailDTO) {
         User user = userService.googleLogin(userAndEmailDTO.getName(), userAndEmailDTO.getEmail());
         return ResponseEntity.ok(user);
     }
