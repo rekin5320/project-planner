@@ -1,7 +1,15 @@
 import React from 'react';
 import ProjectManagementComponent from "./ProjectManagementComponent";
+import {useNavigate} from "react-router-dom";
+
 
 function HomePage({ user }) {
+    const navigate = useNavigate();
+
+    const handleLogoutClick = (e) => {
+        navigate('/login'); // Navigate to LoginPage
+    }
+
     //alert(user.id);
     //alert(user.name);
     return (
@@ -23,6 +31,7 @@ function HomePage({ user }) {
                 <div className="flex flex-wrap justify-evenly content-evenly">
                     <ProjectManagementComponent user={user}/>
                 </div>
+                <button onClick={(e) => handleLogoutClick(e)}>Sign Out</button>
             </div>
         </div>
     );
