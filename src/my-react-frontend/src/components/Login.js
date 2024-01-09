@@ -50,7 +50,7 @@ function Login({ onLogin }) {
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="w-full max-w-xs flex flex-col items-center">
-                <form onSubmit={handleLoginSubmit} className="w-full flex flex-col">
+                <form onSubmit={handleLoginSubmit} className="w-full flex flex-col mb-5">
                     <input
                         className="myinput mb-2"
                         autoFocus
@@ -70,14 +70,14 @@ function Login({ onLogin }) {
                     />
                     <button
                         type="submit"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
+                        className="loginbutton loginbutton-submit"
                     >
                         Login
                     </button>
 
                 </form>
                 <button
-                    className="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    className="loginbutton loginbutton-other w-full"
                     onClick={handleRegisterClick}
                 >
                     Register
