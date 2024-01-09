@@ -60,20 +60,22 @@ const ProjectManagementComponent = ( {user}) => {
                 ))}
             </div>
             {/* Form for adding a new project */}
-            <form onSubmit={handleAddProject} className="mb-4">
-                <input
-                    type="text"
-                    value={newProjectName}
-                    onChange={(e) => setNewProjectName(e.target.value)}
-                    placeholder="Name"
-                    className="myinput mr-2"
-                />
-                <button
-                    type="submit"
-                    className="mybutton"
-                    >
-                    Add project
-                </button>
+            <form onSubmit={handleAddProject} className="w-full">
+                <div className="flex">
+                    <input
+                        type="text"
+                        value={newProjectName}
+                        onChange={(e) => setNewProjectName(e.target.value)}
+                        placeholder="Name"
+                        className="myinput mr-2 grow"
+                    />
+                    <button
+                        type="submit"
+                        className="mybutton"
+                        >
+                        Add project
+                    </button>
+                </div>
             </form>
         </div>
     );
