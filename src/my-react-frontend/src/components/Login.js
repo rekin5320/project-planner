@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
 import { GoogleLogin } from '@react-oauth/google';
+import { FaUser, FaLock } from "react-icons/fa";
 import './Style/Login.css';
 
 const clientId = "653829545632-s1tg9di96ernst657soqhvtdt37vssp8.apps.googleusercontent.com";
@@ -93,6 +94,7 @@ function Login({ onLogin }) {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
+                    <FaUser className="icon"/>
                     <input
                         className="myinput mb-2"
                         required
@@ -101,6 +103,7 @@ function Login({ onLogin }) {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    <FaLock className="icon"/>
                     <button
                         type="submit"
                         className="loginbutton loginbutton-submit"
