@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 
-const ProjectManagementComponent = () => {
+const ProjectManagementComponent = ( {user}) => {
     const [projects, setProjects] = useState([]);
     const [newProjectName, setNewProjectName] = useState("");
-    const [newProjectOwnerId, setNewProjectOwnerId] = useState("");
 
     useEffect(() => {
-        axios.get("http://localhost:8080/api/projects/all")
+        axios.get("/api/projects/all")
             .then(response => {
                 setProjects(response.data);
             })
@@ -16,18 +15,22 @@ const ProjectManagementComponent = () => {
 
     const handleAddProject = (e) => {
         e.preventDefault();
-        const newProject = {name: newProjectName, owner: {id: newProjectOwnerId}};
-        axios.post("http://localhost:8080/api/projects/add", newProject)
+        //alert(user.name);
+        //alert(newProjectName);
+        //alert(newProjectOwnerId);
+
+        const newProject = {name: newProjectName, owner: {id: user.id}};
+        axios.post("/api/projects/add", newProject)
             .then(response => {
+                //alert('Nie poszło');
                 setProjects([...projects, response.data]);
                 setNewProjectName("");    // Clear the input field
-                setNewProjectOwnerId(""); // Clear the input field
             })
             .catch(error => console.error("Error adding project:", error));
     };
 
     const handleDeleteProject = (projectId) => {
-        axios.delete(`http://localhost:8080/api/projects/delete/${projectId}`)
+        axios.delete(`/api/projects/delete/${projectId}`)
             .then(() => {
                 setProjects(projects.filter(project => project.id !== projectId));
             })
@@ -42,9 +45,11 @@ const ProjectManagementComponent = () => {
                 {projects.map(project => (
                     <div key={project.id} className="mylist-entry" >
                         <span className="text-gray-800">
-                            <span className="font-bold">ID: {project.id}</span>, owner: {project.owner.name}
+                            <span className="font-bold">{project.name}</span>
+                            <span className="ml-2">id: {project.id}</span>
+                            <span className="ml-2">owner: {project.owner.name}</span>
+                            <span className="ml-2">members: {project.members}</span>
                         </span>
-                        <span className="text-gray-800 ml-2 mr-2">{project.name}</span>
                         <button
                             onClick={() => handleDeleteProject(project.id)}
                             className="mybutton"
@@ -61,13 +66,6 @@ const ProjectManagementComponent = () => {
                     value={newProjectName}
                     onChange={(e) => setNewProjectName(e.target.value)}
                     placeholder="Name"
-                    className="myinput"
-                />
-                <input
-                    type="text"
-                    value={newProjectOwnerId}
-                    onChange={(e) => setNewProjectOwnerId(e.target.value)}
-                    placeholder="Owner ID"
                     className="myinput"
                 />
                 <button

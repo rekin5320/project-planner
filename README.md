@@ -21,8 +21,15 @@ Dodatkowe funkcjonalności, na przykład:
 - zintegrowanie się z kalendarzem Google
 - możliwość zalogowania się Facebookiem
 
+## Członkowie zespołu
+- Piotr Lenczewski
+- Michał Machnikowski
+- Jakub Pęk
+- Tomasz Truszkowski
+
 ## How to use it
-### MySQL database credentials
+### MySQL database
+#### Credentials
 <details>
 <p><summary>Click to expand</summary></p>
 
@@ -37,6 +44,13 @@ user: `myuser`
 password: `2L9(4Evz,9`
 
 </details>
+
+#### Testing connection
+```sh
+pip install mysql-connector-python
+cd src
+python check_db_connection.py
+```
 
 ### Spring backend
 #### Build

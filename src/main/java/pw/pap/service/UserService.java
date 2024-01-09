@@ -1,26 +1,100 @@
 package pw.pap.service;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+
+import java.security.SecureRandom;
+import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import pw.pap.api.model.Project;
-import pw.pap.api.model.User;
+
+import pw.pap.model.Project;
+import pw.pap.model.User;
+import pw.pap.model.Task;
 import pw.pap.repository.ProjectRepository;
 import pw.pap.repository.UserRepository;
+import pw.pap.repository.TaskRepository;
 
 
 @Service
 public class UserService {
-
     private UserRepository userRepository;
     private ProjectRepository projectRepository;
+    private TaskRepository taskRepository;
 
     @Autowired
-    public UserService(ProjectRepository projectRepository, UserRepository userRepository){
+    public UserService(ProjectRepository projectRepository, UserRepository userRepository, TaskRepository taskRepository) {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
+        this.taskRepository = taskRepository;
+    }
+
+    public User login(String name, String enteredPassword) {
+        User user = findByName(name)
+                .orElseThrow(() -> new EntityNotFoundException("User not in database"));
+
+        if (authenticateUser(user, enteredPassword)) {
+            return user;
+        }
+        throw new IllegalArgumentException("Wrong password");
+    }
+
+    public User register(String name, String password) {
+        Optional<User> optionalUser = findByName(name);
+
+        if (optionalUser.isPresent()) {
+            throw new EntityExistsException("User with the same name already in the database");
+        }
+        String salt = generateRandomSalt();
+        String hashedPassword = hashPasswordWithSalt(password, salt);
+        LocalDateTime currentDate = LocalDateTime.now();
+        User user = new User(name, hashedPassword, salt, currentDate);
+        userRepository.save(user);
+        return user;
+    }
+
+    public User updateUser(Long userId, User updatedUser) {
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        userRepository.deleteById(userId);
+        updatedUser.setId(userId);
+        return userRepository.save(updatedUser);
+    }
+
+    @Transactional
+    public void deleteUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        Iterable<Project> projects = projectRepository.findAll();
+        for (Project project : projects) {
+            if (project.getOwner().getId().equals(userId)){
+                if (project.getMembers().isEmpty()) {
+                    projectRepository.deleteById(project.getId());
+                }
+                else{
+                    project.setOwner(project.getMembers().get(0));
+                }
+            }
+            project.getMembers().remove(user);
+        }
+
+        Iterable<Task> tasks = taskRepository.findAll();
+         for (Task task : tasks) {
+             if(task.getCreator().getId().equals(userId)){
+                 task.setCreator(null);
+             }
+             task.getAssignees().remove(user);
+         }
+
+        userRepository.deleteById(userId);
     }
 
     public List<User> getAllUsers() {
@@ -31,34 +105,35 @@ public class UserService {
         return userRepository.findById(userId).orElse(null);
     }
 
-    public User addUser(User user) {
-        return userRepository.save(user);
-    }
 
-    public User updateUser(Long userId, User updatedUser) {
-        User existingUser = userRepository.findById(userId).orElse(null);
-        if (existingUser != null) {
-            existingUser.setName(updatedUser.getName());
-            return userRepository.save(existingUser);
-        }
-        else {
-            return null;
-        }
-    }
-
-    @Transactional
-    public void deleteUser(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
-
-        // Remove the user from the members set of all projects
-        Iterable<Project> projects = projectRepository.findAll();
-        for (Project project : projects) {
-            project.getMembers().remove(user);
-            if (userId.equals(project.getOwner().getId())) {
-                projectRepository.deleteById(project.getId());
+    public Optional<User> findByName(String name) {
+        for(User user : userRepository.findAll())
+            if(user.getName().equals(name)){
+                return Optional.of(user);
             }
-        }
-        userRepository.deleteById(userId);
+        return Optional.empty();
+    }
+
+    private String generateRandomSalt() {
+        SecureRandom random = new SecureRandom();
+        byte[] saltBytes = new byte[16];
+        random.nextBytes(saltBytes);
+
+        return Base64.getEncoder().encodeToString(saltBytes);
+    }
+
+    private String hashPassword(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(password);
+    }
+
+    private String hashPasswordWithSalt(String password, String salt) {
+        String saltedPassword = password + salt;
+        return hashPassword(saltedPassword);
+    }
+
+    public boolean authenticateUser(User user, String enteredPassword) {
+        String saltedPassword = enteredPassword + user.getSalt();
+        return new BCryptPasswordEncoder().matches(saltedPassword, user.getPasswordHash());
     }
 }

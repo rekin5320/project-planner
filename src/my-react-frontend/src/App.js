@@ -1,13 +1,34 @@
-import React from "react";
-import UserManagementComponent from "./components/UserManagementComponent";
-import ProjectManagementComponent from "./components/ProjectManagementComponent";
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './components/Login';
+import Register from './components/Register';
+import HomePage from './components/HomePage';
 
 function App() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [user, setUser] = useState();
+
+    const handleLogin = (user) => {
+        setUser(user);
+        setIsLoggedIn(true);
+    };
+
+    const handleRegister = (user) => {
+        setUser(user);
+        //alert(user.id);
+        //alert(user.name);
+        setIsLoggedIn(true);
+    };
+
     return (
-        <div className="flex flex-wrap justify-evenly content-evenly min-h-screen bg-custom-background">
-            <UserManagementComponent/>
-            <ProjectManagementComponent/>
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/" element={<Navigate to="/login" />} />
+                <Route path="/login" element={<Login onLogin={handleLogin} />} />
+                <Route path="/register" element={<Register onRegister={handleRegister} />} />
+                <Route path="/home" element={isLoggedIn ? <HomePage user={user} /> : <Navigate to="/login" />} />
+            </Routes>
+        </Router>
     );
 }
 

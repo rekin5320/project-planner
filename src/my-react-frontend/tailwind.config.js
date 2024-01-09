@@ -7,6 +7,7 @@ module.exports = {
                 "custom-background": "#e6ffff",
                 "custom-gray": "#60656f",
                 "custom-blue": "#b7c9e2",
+                "custom-blue-hov": "#95a9c0",
                 "custom-lightgray": "#e9e9e9",
             },
         },

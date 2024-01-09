@@ -4,9 +4,10 @@ import axios from "axios";
 const UserManagementComponent = () => {
     const [users, setUsers] = useState([]);
     const [newUserName, setNewUserName] = useState("");
+    const [newUserPassword, setNewUserPassword] = useState("");
 
     useEffect(() => {
-        axios.get("http://localhost:8080/api/users/all")
+        axios.get("/api/users/all")
             .then(response => {
                 setUsers(response.data);
             })
@@ -15,17 +16,18 @@ const UserManagementComponent = () => {
 
     const handleAddUser = (e) => {
         e.preventDefault();
-        const newUser = {name: newUserName};
-        axios.post("http://localhost:8080/api/users/add", newUser)
+        const newUser = {name: newUserName, password: newUserPassword};
+        axios.post("/api/users/add", newUser)
             .then(response => {
                 setUsers([...users, response.data]);
                 setNewUserName(""); // Clear the input field
+                setNewUserPassword(""); // Clear the input field
             })
             .catch(error => console.error("Error adding user:", error));
     };
 
     const handleDeleteUser = (userId) => {
-        axios.delete(`http://localhost:8080/api/users/delete/${userId}`)
+        axios.delete(`/api/users/delete/${userId}`)
             .then(() => {
                 setUsers(users.filter(user => user.id !== userId));
             })
@@ -57,6 +59,13 @@ const UserManagementComponent = () => {
                     value={newUserName}
                     onChange={(e) => setNewUserName(e.target.value)}
                     placeholder="Name"
+                    className="myinput"
+                />
+                <input
+                    type="text"
+                    value={newUserPassword}
+                    onChange={(e) => setNewUserPassword(e.target.value)}
+                    placeholder="Password"
                     className="myinput"
                 />
                 <button

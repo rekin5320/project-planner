@@ -7,7 +7,7 @@
         @apply overflow-y-auto overflow-x-hidden max-h-[calc(100vh-150px)] w-full;
     }
     .mylist-entry {
-        @apply bg-custom-blue shadow-md flex items-center justify-between rounded-md w-full mr-2 mb-2 p-4 hover:w-[calc(100%-0.75rem)] hover:ml-3;
+        @apply bg-custom-blue shadow-md flex items-center justify-between rounded-md w-full mr-2 mb-2 p-4 hover:bg-custom-blue-hov transition duration-150 ease-in-out;
     }
     .myinput {
         @apply bg-custom-lightgray rounded border border-custom-lightgray mr-2 mb-2 p-2;

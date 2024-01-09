@@ -3,26 +3,38 @@ package pw.pap.service;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pw.pap.api.model.Project;
-import pw.pap.api.model.User;
+import pw.pap.model.Project;
+import pw.pap.model.User;
+import pw.pap.model.Task;
+import pw.pap.repository.TaskRepository;
 import pw.pap.repository.UserRepository;
 import pw.pap.repository.ProjectRepository;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+    private final TaskRepository taskRepository;
 
     @Autowired
-    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository){
+    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository, TaskRepository taskRepository) {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
+        this.taskRepository = taskRepository;
     }
 
-    public Project createProject(Project project){
-        User owner = project.getOwner();
+    public Project createProject(String name, String description, LocalDateTime projectDeadline, User owner, List<User> members) {
+        LocalDateTime currentDate = LocalDateTime.now();
+        Project project = new Project(name, description, currentDate, projectDeadline, owner, members);
+        return projectRepository.save(project);
+    }
+
+    public Project addProject(Project project) {
+        project.setProjectCreationDate(LocalDateTime.now());
         return projectRepository.save(project);
     }
 
@@ -44,6 +56,16 @@ public class ProjectService {
     }
 
     public void deleteProject(Long projectId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("Project not found"));
+
+        Iterable<Task> tasks = taskRepository.findAll();
+        for (Task task : tasks) {
+            if(task.getProject().getId().equals(projectId)){
+                taskRepository.deleteById(task.getId());
+            }
+        }
+
         projectRepository.deleteById(projectId);
     }
 
@@ -67,7 +89,26 @@ public class ProjectService {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
+        Iterable<Task> tasks = taskRepository.findAll();
+         for (Task task : tasks) {
+             if (task.getProject().getId().equals(projectId)) {
+                 task.getAssignees().remove(user);
+             }
+         }
+
         project.getMembers().remove(user);
+        projectRepository.save(project);
+    }
+
+    @Transactional
+    public void removeTaskFromProject(Long projectId, Long taskId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("Project not found"));
+
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new IllegalArgumentException("Task not found"));
+
+        taskRepository.deleteById(taskId);
         projectRepository.save(project);
     }
 }
