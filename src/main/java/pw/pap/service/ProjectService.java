@@ -27,14 +27,9 @@ public class ProjectService {
         this.taskRepository = taskRepository;
     }
 
-    public Project createProject(String name, String description, LocalDateTime projectDeadline, User owner, List<User> members) {
+    public Project createProject(String name, User owner) {
         LocalDateTime currentDate = LocalDateTime.now();
-        Project project = new Project(name, description, currentDate, projectDeadline, owner, members);
-        return projectRepository.save(project);
-    }
-
-    public Project addProject(Project project) {
-        project.setProjectCreationDate(LocalDateTime.now());
+        Project project = new Project(name, owner, currentDate);
         return projectRepository.save(project);
     }
 
@@ -59,9 +54,11 @@ public class ProjectService {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
-        List<Task> tasks = project.getTasks();
+        Iterable<Task> tasks = taskRepository.findAll();
         for (Task task : tasks) {
-            taskRepository.deleteById(task.getId());
+            if(task.getProject().getId().equals(projectId)){
+                taskRepository.deleteById(task.getId());
+            }
         }
 
         projectRepository.deleteById(projectId);
@@ -87,12 +84,12 @@ public class ProjectService {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        // List<Task> assignedTasks = user.getAssignedTasks();
-        // for (Task task : assignedTasks) {
-        //     if (task.getProject().equals(project)) {
-        //         task.getAssignees().remove(user);
-        //     }
-        // }
+        Iterable<Task> tasks = taskRepository.findAll();
+         for (Task task : tasks) {
+             if (task.getProject().getId().equals(projectId)) {
+                 task.getAssignees().remove(user);
+             }
+         }
 
         project.getMembers().remove(user);
         projectRepository.save(project);
@@ -106,15 +103,6 @@ public class ProjectService {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new IllegalArgumentException("Task not found"));
 
-        // User creator = task.getCreator();
-        // creator.getCreatedTasks().remove(task);
-        //
-        // List<User> assignees = task.getAssignees();
-        // for (User assignee : assignees) {
-        //     assignee.getAssignedTasks().remove(task);
-        // }
-
-        project.getTasks().remove(task);
         taskRepository.deleteById(taskId);
         projectRepository.save(project);
     }

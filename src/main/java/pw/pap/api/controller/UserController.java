@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import pw.pap.api.dto.UserAndEmailDTO;
+import pw.pap.model.Project;
 import pw.pap.model.User;
 import pw.pap.service.UserService;
 import pw.pap.api.dto.UserAndPasswordDTO;
@@ -43,6 +45,18 @@ public class UserController {
         }
     }
 
+    @PostMapping("/googleLogin")
+    public ResponseEntity<User> googleLoginUser(@RequestBody UserAndEmailDTO userAndEmailDTO) {
+        User user = userService.googleLogin(userAndEmailDTO.getName(), userAndEmailDTO.getEmail());
+        return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/{userId}/projects")
+    public ResponseEntity<List<Project>> getMemberProjects(@PathVariable Long userId) {
+        List<Project> memberProjects = userService.getMemberProjects(userId);
+        return new ResponseEntity<>(memberProjects, HttpStatus.OK);
+    }
+
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUser(@PathVariable Long userId) {
         User user = userService.getUserById(userId);
@@ -53,10 +67,10 @@ public class UserController {
         }
     }
 
-   @GetMapping("/all")
-   public List<User> getAllUsers() {
-       return userService.getAllUsers();
-   }
+   // @GetMapping("/all")
+   // public List<User> getAllUsers() {
+   //     return userService.getAllUsers();
+   // }
 
     @PutMapping("/update/{userId}")
     public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {

@@ -6,9 +6,12 @@ import jakarta.transaction.Transactional;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -59,6 +62,25 @@ public class UserService {
         return user;
     }
 
+    public User googleLogin(String name, String email){
+        Optional<User> user = findByEmail(email);
+        if(user.isPresent()){
+            return user.get();
+        }
+        LocalDateTime currentDate = LocalDateTime.now();
+        User newUser = new User(name, email, currentDate);
+        userRepository.save(newUser);
+        return newUser;
+    }
+
+    public List<Project> getMemberProjects(Long memberId){
+        Iterable<Project> allProjects = projectRepository.findAll();
+
+        return StreamSupport.stream(allProjects.spliterator(), false)
+                .filter(project -> project.getMembers().stream().anyMatch(member -> member.getId().equals(memberId)))
+                .collect(Collectors.toList());
+    }
+
     public User updateUser(Long userId, User updatedUser) {
         User existingUser = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
@@ -73,33 +95,26 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
-        // TODO: usunięcie usuwanego użytkownika z projektów
-        // List<Project> memberOfProjects = user.getMemberOfProjects();
-        // for (Project project : memberOfProjects) {
-        //     project.getMembers().remove(user);
-        // }
-        //
-        // TODO: usuwanie projektów przy usuwaniu użytkowników
-        // List<Project> ownerOfProjects = user.getOwnedProjects();
-        // for (Project project : ownerOfProjects) {
-        //     project.getMembers().remove(user);
-        //     if (project.getMembers().isEmpty()) {
-        //         projectRepository.deleteById(project.getId());
-        //     }
-        //     else{
-        //         project.setOwner(project.getMembers().get(0));
-        //     }
-        // }
+        Iterable<Project> projects = projectRepository.findAll();
+        for (Project project : projects) {
+            if (project.getOwner().getId().equals(userId)){
+                if (project.getMembers().isEmpty()) {
+                    projectRepository.deleteById(project.getId());
+                }
+                else{
+                    project.setOwner(project.getMembers().get(0));
+                }
+            }
+            project.getMembers().remove(user);
+        }
 
-        // List<Task> assignedTasks = user.getAssignedTasks();
-        // for (Task task : assignedTasks) {
-        //     task.getAssignees().remove(user);
-        // }
-        //
-        // List<Task> createdTasks = user.getCreatedTasks();
-        // for (Task task : createdTasks) {
-        //     task.setCreator(null);
-        // }
+        Iterable<Task> tasks = taskRepository.findAll();
+         for (Task task : tasks) {
+             if(task.getCreator().getId().equals(userId)){
+                 task.setCreator(null);
+             }
+             task.getAssignees().remove(user);
+         }
 
         userRepository.deleteById(userId);
     }
@@ -120,6 +135,15 @@ public class UserService {
             }
         return Optional.empty();
     }
+
+    public Optional<User> findByEmail(String email) {
+        for(User user : userRepository.findAll())
+            if(user.getEmail().equals(email)){
+                return Optional.of(user);
+            }
+        return Optional.empty();
+    }
+
 
     private String generateRandomSalt() {
         SecureRandom random = new SecureRandom();

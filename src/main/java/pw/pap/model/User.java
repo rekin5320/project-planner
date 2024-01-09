@@ -40,6 +40,12 @@ public class User {
         this.accountCreationDate = accountCreationDate;
     }
 
+    public User(String name, String email, LocalDateTime accountCreationDate) {
+        this.name = name;
+        this.email = email;
+        this.accountCreationDate = accountCreationDate;
+    }
+
     public User(String name, String passwordHash, String salt, LocalDateTime accountCreationDate) {
         this.name = name;
         this.passwordHash = passwordHash;
