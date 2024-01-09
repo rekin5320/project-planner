@@ -17,10 +17,9 @@ function HomePage({ user, onLogout }) {
     return (
         <div className="min-h-screen bg-custom-background">
             <div className="wrapper">
-                <div>
+                <div className="text-white">
                     <h1>Welcome {user.name}</h1>
                     <h2>{user.email}</h2>
-
                 </div>
 
                 <div className="flex flex-wrap justify-evenly content-evenly">

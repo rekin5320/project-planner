@@ -39,7 +39,7 @@ const ProjectManagementComponent = ( {user}) => {
 
     return (
         <div className="flex flex-col items-center justify-center overflow-hidden">
-            <h2 className="text-3xl mb-2">Your Projects</h2>
+            <h2 className="text-3xl text-white mb-2">Your Projects</h2>
             {/* Scrollable container for the project list */}
             <div className="mylist-container">
                 {projects.map(project => (
