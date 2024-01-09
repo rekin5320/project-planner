@@ -105,7 +105,7 @@ function Login({ onLogin }) {
         <div className="flex justify-center items-center h-screen">
             <div className="w-full max-w-xs flex flex-col items-center">
                 <h2 className="text-3xl mb-2">Login</h2>
-                <form onSubmit={handleLoginSubmit} className="w-full flex flex-col mb-8">
+                <form onSubmit={handleLoginSubmit} className="w-full flex flex-col mb-4">
                     <input
                         className="myinput mb-2"
                         autoFocus
@@ -131,13 +131,15 @@ function Login({ onLogin }) {
                     </button>
 
                 </form>
+
                 <button
-                    className="loginbutton loginbutton-other w-full"
+                    className="loginbutton loginbutton-other w-full mb-4"
                     onClick={handleRegisterClick}
                 >
                     Register here
                 </button>
-                <div id="signInDiv"></div>
+
+                <div id="signInDiv"></div> {/* Google login*/}
             </div>
         </div>
     );
