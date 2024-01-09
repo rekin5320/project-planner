@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode";
+
 
 function Login({ onLogin }) {
+    const [user, setUser] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loginError, setLoginError] = useState('');
@@ -80,6 +83,21 @@ function Login({ onLogin }) {
     function handleCallbackResponse(response) {
         console.log("Encoded JWT ID token: " + response.credential);
         // Handle the Google Sign-In callback response if needed
+        // For example, you can use the response to:
+        // - Obtain the Google user ID
+        // - Obtain an ID token for the user (which may be used with Google services)
+        // - See the Google Sign-In documentation for more details
+        //alert(response.credential)
+
+        try {
+            const userObject = jwtDecode(response.credential);
+            console.log("Decoded JWT ID token:", userObject);
+            setUser(userObject);
+            onLogin(userObject); // Update App state if authentication is successful
+            navigate('/home'); // Navigate to HomePage
+        } catch (error) {
+            console.error("Error decoding JWT:", error);
+        }
     }
 
     return (
