@@ -28,24 +28,24 @@ public class ProjectServiceTests {
     private final LocalDateTime date = LocalDateTime.parse("2023-10-11 13:37:42", formatter);
 
     // TODO: usuwanie projektów przy usuwaniu użytkowników
-    // @Test
-    // @Rollback
-    // public void testCreateProject() {
-    //     String username = "testBob";
-    //     String password = "reallySecurePassword";
-    //     User user = userService.register(username, password);
-    //
-    //     List<User> members = new ArrayList<>(Arrays.asList(user));
-    //     try {
-    //         Project project = projectService.createProject("roller coaster", "Create entrance", date, user, members);
-    //         Project projectInDatabase = projectService.getProjectById(project.getId()).orElse(null);
-    //         assertNotNull(projectInDatabase, "Project not in database");
-    //
-    //         assertEquals(project.getId(), projectInDatabase.getId());
-    //     } catch (Exception e) {
-    //         fail("Exception occurred during login: " + e.getMessage());
-    //     } finally {
-    //         userService.deleteUser(user.getId());
-    //     }
-    // }
+     @Test
+     @Rollback
+     public void testCreateProject() {
+         userService.deleteUser(1902L);
+         String username = "testBob";
+         String password = "reallySecurePassword";
+         User user = userService.register(username, password);
+
+         try {
+             Project project = projectService.createProject("roller coaster", user);
+             Project projectInDatabase = projectService.getProjectById(project.getId()).orElse(null);
+             assertNotNull(projectInDatabase, "Project not in database");
+
+             assertEquals(project.getId(), projectInDatabase.getId());
+         } catch (Exception e) {
+             fail("Exception occurred during login: " + e.getMessage());
+         } finally {
+             userService.deleteUser(user.getId());
+         }
+     }
 }
