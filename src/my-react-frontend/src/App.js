@@ -21,14 +21,16 @@ function App() {
     };
 
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Navigate to="/login" />} />
-                <Route path="/login" element={<Login onLogin={handleLogin} />} />
-                <Route path="/register" element={<Register onRegister={handleRegister} />} />
-                <Route path="/home" element={isLoggedIn ? <HomePage user={user} /> : <Navigate to="/login" />} />
-            </Routes>
-        </Router>
+        <div className="bg-custom-background">
+            <Router>
+                <Routes>
+                    <Route path="/" element={<Navigate to="/login"/>}/>
+                    <Route path="/login" element={<Login onLogin={handleLogin}/>}/>
+                    <Route path="/register" element={<Register onRegister={handleRegister}/>}/>
+                    <Route path="/home" element={isLoggedIn ? <HomePage user={user}/> : <Navigate to="/login"/>}/>
+                </Routes>
+            </Router>
+        </div>
     );
 }
 
