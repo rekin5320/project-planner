@@ -87,6 +87,9 @@ public class UserService {
         }
 
         if(!updatedUser.getName().equals(existingUser.getName())){
+            if(updatedUser.getName().isEmpty()){
+                throw new IllegalArgumentException("User name cannot be empty");
+            }
             Optional<User> optionalUser = findByName(updatedUser.getName());
             if (optionalUser.isPresent()) {
                 throw new EntityExistsException("User with the same name already in the database");

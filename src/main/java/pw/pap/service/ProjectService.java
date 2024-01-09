@@ -64,6 +64,10 @@ public class ProjectService {
             throw new IllegalArgumentException("Cannot change project id");
         }
 
+        if(updatedProject.getName().isEmpty()){
+            throw new IllegalArgumentException("Project name cannot be empty");
+        }
+
         if(!updatedProject.getProjectCreationDate().equals(existingProject.getProjectCreationDate())){
             throw new IllegalArgumentException("Cannot change project creation date");
         }
