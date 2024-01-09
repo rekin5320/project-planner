@@ -38,9 +38,8 @@ function Login({ onLogin }) {
             }
         } catch (error) {
             console.error('Login error:', error);
-            if (error.response && error.response.status === 500) {
-                alert('Wrong Username');
-                setLoginError('Internal Server Error'); // Ustaw błąd dla błędów serwera
+            if (error.response && error.response.status === 404) {
+                setLoginError("User not found"); // Ustaw błąd dla błędnej nazwy użytkownika
             } else {
                 setLoginError('An error occurred during login'); // Ustaw błąd dla innych błędów
             }
