@@ -30,19 +30,21 @@ const Register = ({ onRegister }) => {
         <div className="flex justify-center items-center h-screen">
             <form onSubmit={handleRegisterUser} className="flex flex-col items-center mb-4">
                 <input
+                    className="myinput mb-2"
+                    autoFocus
+                    required
                     type="text"
+                    placeholder="Username"
                     value={newUserName}
                     onChange={(e) => setNewUserName(e.target.value)}
-                    placeholder="Username"
-                    className="myinput mb-2" // Add margin-bottom for spacing
-                    autoFocus
                 />
                 <input
+                    className="myinput mb-2"
+                    required
                     type="password"
+                    placeholder="Password"
                     value={newUserPassword}
                     onChange={(e) => setNewUserPassword(e.target.value)}
-                    placeholder="Password"
-                    className="myinput mb-2" // Add margin-bottom for spacing
                 />
                 <button
                     type="submit"

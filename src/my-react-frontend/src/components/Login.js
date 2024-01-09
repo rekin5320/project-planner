@@ -55,6 +55,7 @@ function Login({ onLogin }) {
                     <input
                         className="px-3 py-2 mb-3 border rounded shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         autoFocus
+                        required
                         type="text"
                         placeholder="Username"
                         value={username}
@@ -62,6 +63,7 @@ function Login({ onLogin }) {
                     />
                     <input
                         className="px-3 py-2 mb-3 border rounded shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        required
                         type="password"
                         placeholder="Password"
                         value={password}
