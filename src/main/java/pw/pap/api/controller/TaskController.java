@@ -65,7 +65,7 @@ public class TaskController {
         try {
             Task updated = taskService.updateTask(taskId, updatedTask);
             return new ResponseEntity<>(updated, HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

@@ -1,5 +1,6 @@
 package pw.pap.api.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +50,7 @@ public class ProjectController {
         try {
             Project updated = projectService.updateProject(projectId, updatedProject);
             return new ResponseEntity<>(updated, HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
