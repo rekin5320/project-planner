@@ -78,7 +78,7 @@ function Login({ onLogin }) {
                 setLoginError('An error occurred during login'); // Ustaw błąd dla innych błędów
             }
             alert(loginError); // Teraz alert wyświetli aktualny błąd
-        };
+        }
     }
 
     function handleCallbackResponse(response) {
