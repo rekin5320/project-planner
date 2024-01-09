@@ -82,7 +82,7 @@ function Login({ onLogin }) {
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="w-full max-w-xs flex flex-col items-center">
-                <h2 className="text-3xl mb-2">Welcome to Project Planner</h2>
+                <h2 className="text-3xl text-white mb-2">Welcome to Project Planner</h2>
                 <form onSubmit={handleLoginSubmit} className="w-full flex flex-col mb-4">
                     <input
                         className="myinput mb-2"
