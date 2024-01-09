@@ -62,7 +62,7 @@ function Login({ onLogin }) {
                 if (response.data)
                 {
                     //alert(response.data.id)
-                    onLogin(response.data.id); // Update App state if authentication is successful
+                    onLogin(response.data); // Update App state if authentication is successful
                     navigate('/home'); // Navigate to HomePage
                 }
             } else {
@@ -70,9 +70,8 @@ function Login({ onLogin }) {
             }
         } catch (error) {
             console.error('Login error:', error);
-            if (error.response && error.response.status === 500) {
-                alert('Wrong Username');
-                setLoginError('Internal Server Error'); // Ustaw błąd dla błędów serwera
+            if (error.response && error.response.status === 404) {
+                setLoginError("User not found"); // Ustaw błąd dla błędnej nazwy użytkownika
             } else {
                 setLoginError('An error occurred during login'); // Ustaw błąd dla innych błędów
             }
@@ -103,16 +102,20 @@ function Login({ onLogin }) {
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="w-full max-w-xs flex flex-col items-center">
-                <form onSubmit={handleLoginSubmit} className="w-full flex flex-col">
+                <h2 className="text-3xl mb-2">Login</h2>
+                <form onSubmit={handleLoginSubmit} className="w-full flex flex-col mb-8">
                     <input
-                        className="px-3 py-2 mb-3 border rounded shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="myinput mb-2"
+                        autoFocus
+                        required
                         type="text"
                         placeholder="Username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
                     <input
-                        className="px-3 py-2 mb-3 border rounded shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="myinput mb-2"
+                        required
                         type="password"
                         placeholder="Password"
                         value={password}
@@ -120,17 +123,17 @@ function Login({ onLogin }) {
                     />
                     <button
                         type="submit"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
+                        className="loginbutton loginbutton-submit"
                     >
                         Login
                     </button>
 
                 </form>
                 <button
-                    className="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    className="loginbutton loginbutton-other w-full"
                     onClick={handleRegisterClick}
                 >
-                    Register
+                    Register here
                 </button>
                 <div id="signInDiv"></div>
             </div>
