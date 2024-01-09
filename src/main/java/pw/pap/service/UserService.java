@@ -62,6 +62,16 @@ public class UserService {
         return user;
     }
 
+    public User googleLogin(String name, String email){
+        Optional<User> user = findByEmail(email);
+        if(user.isPresent()){
+            return user.get();
+        }
+        LocalDateTime currentDate = LocalDateTime.now();
+        User newUser = new User(name, email, currentDate);
+        return newUser;
+    }
+
     public List<Project> getMemberProjects(Long memberId){
         Iterable<Project> allProjects = projectRepository.findAll();
 
@@ -124,6 +134,15 @@ public class UserService {
             }
         return Optional.empty();
     }
+
+    public Optional<User> findByEmail(String email) {
+        for(User user : userRepository.findAll())
+            if(user.getEmail().equals(email)){
+                return Optional.of(user);
+            }
+        return Optional.empty();
+    }
+
 
     private String generateRandomSalt() {
         SecureRandom random = new SecureRandom();

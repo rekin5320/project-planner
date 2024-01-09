@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import pw.pap.api.dto.UserAndEmailDTO;
 import pw.pap.model.Project;
 import pw.pap.model.User;
 import pw.pap.service.UserService;
@@ -42,6 +43,12 @@ public class UserController {
         } catch (EntityExistsException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }
+    }
+
+    @PostMapping("/googleLogin")
+    public ResponseEntity<User> loginUser(@RequestBody UserAndEmailDTO userAndEmailDTO) {
+        User user = userService.login(userAndEmailDTO.getName(), userAndEmailDTO.getEmail());
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/{userId}/projects")
