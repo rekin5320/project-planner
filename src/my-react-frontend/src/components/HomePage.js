@@ -3,6 +3,8 @@ import ProjectManagementComponent from "./ProjectManagementComponent";
 import { useNavigate } from "react-router-dom";
 import { googleLogout } from '@react-oauth/google';
 import './Style/HomePage.css';
+import default_profile_pic from "./Images/npc_face.jpg";
+
 
 function HomePage({ user, onLogout }) {
     const navigate = useNavigate();
@@ -30,7 +32,7 @@ function HomePage({ user, onLogout }) {
 
 
             <div className="user-section">
-                <img src={user.picture || './Images/npc_face.jpg'} alt="User Avatar" />
+                <img src={user.picture || default_profile_pic} alt="User Avatar" className="profile-pic rounded-lg"/>
                 <button
                     className="mybutton"
                     onClick={(e) => handleLogoutClick(e)}
