@@ -1,5 +1,7 @@
 package pw.pap.service;
 
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,6 +59,33 @@ public class ProjectService {
     public Project updateProject(Long projectId, Project updatedProject) {
         Project existingProject = projectRepository.findById(projectId)
             .orElseThrow(() -> new IllegalArgumentException("Project not found"));
+
+        if(!updatedProject.getId().equals(existingProject.getId())){
+            throw new IllegalArgumentException("Cannot change project id");
+        }
+
+        if(!updatedProject.getProjectCreationDate().equals(existingProject.getProjectCreationDate())){
+            throw new IllegalArgumentException("Cannot change project creation date");
+        }
+
+        if(!updatedProject.getProjectDeadline().equals(existingProject.getProjectDeadline())){
+            LocalDateTime currentDate = LocalDateTime.now();
+            if (updatedProject.getProjectDeadline().isBefore(currentDate)) {
+                throw new IllegalArgumentException("New deadline must be after current time");
+            }
+        }
+
+        if(!updatedProject.getOwner().getId().equals(existingProject.getOwner().getId())){
+            userRepository.findById(updatedProject.getOwner().getId())
+                    .orElseThrow(() -> new EntityNotFoundException("New owner not in database"));
+        }
+
+        if(!updatedProject.getMembers().equals(existingProject.getMembers())){
+            for (User member : updatedProject.getMembers()) {
+                userRepository.findById(member.getId())
+                        .orElseThrow(() -> new EntityNotFoundException("One of new members not in database"));
+            }
+        }
 
         projectRepository.deleteById(projectId);
         updatedProject.setId(projectId);
