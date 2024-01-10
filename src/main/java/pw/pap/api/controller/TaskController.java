@@ -23,15 +23,15 @@ public class TaskController {
     private TaskService taskService;
 
     @PostMapping("/create")
-    public ResponseEntity<Task> createTask(@RequestParam TaskCreateDTO taskCreateDTO) {
+    public ResponseEntity<Task> createTask(@RequestBody TaskCreateDTO taskCreateDTO) {
         try {
-
             Task createdTask = taskService.createTask(taskCreateDTO.getTitle(), taskCreateDTO.getCreatorId(), taskCreateDTO.getProjectId());
             return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
 
 
     @GetMapping("/{taskId}")
