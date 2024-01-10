@@ -1,6 +1,9 @@
 package pw.pap.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +46,15 @@ public class TaskController {
     public ResponseEntity<Iterable<Task>> getAllTasks() {
         Iterable<Task> tasks = taskService.getAllTasks();
         return new ResponseEntity<>(tasks, HttpStatus.OK);
+    }
+
+    @GetMapping("/{taskId}/assignees")
+    public ResponseEntity<Page<User>> getAssignees(@PathVariable Long taskId,
+                                                 @RequestParam(defaultValue = "0") int page,
+                                                 @RequestParam(defaultValue = "5") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<User> assignees = taskService.getAssigneesWithPaging(taskId, pageable);
+        return new ResponseEntity<>(assignees, HttpStatus.OK);
     }
 
     @PutMapping("/update/{taskId}")

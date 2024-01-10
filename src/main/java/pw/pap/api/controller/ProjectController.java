@@ -48,7 +48,7 @@ public class ProjectController {
     @GetMapping("/{projectId}/members")
     public ResponseEntity<Page<User>> getMembers(@PathVariable Long projectId,
                                                       @RequestParam(defaultValue = "0") int page,
-                                                      @RequestParam(defaultValue = "10") int size) {
+                                                      @RequestParam(defaultValue = "5") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<User> members = projectService.getMembersWithPaging(projectId, pageable);
         return new ResponseEntity<>(members, HttpStatus.OK);
@@ -57,7 +57,7 @@ public class ProjectController {
     @GetMapping("/{projectId}/tasks")
     public ResponseEntity<Page<Task>> getProjectTasks(@PathVariable Long projectId,
                                                       @RequestParam(defaultValue = "0") int page,
-                                                      @RequestParam(defaultValue = "10") int size) {
+                                                      @RequestParam(defaultValue = "5") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Task> projectTasks = projectService.getProjectTasksWithPaging(projectId, pageable);
         return new ResponseEntity<>(projectTasks, HttpStatus.OK);
