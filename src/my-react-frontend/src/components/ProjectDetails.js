@@ -5,10 +5,11 @@ import axios from 'axios';
 const ProjectDetails = ({ project }) => {
     // Use state for the description
     const [tasks, setTasks] = useState([]);
+    const [members, setMembers] = useState([]);
+    const [newMember, setNewMember] = useState([]);
     const [description, setDescription] = useState(project.description);
     const [newDescription, setNewDescription] = useState(project.description);
     const [newTaskTitle, setNewTaskTitle] = useState("");
-    const [userIdToAdd, setUserIdToAdd] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -67,10 +68,11 @@ const ProjectDetails = ({ project }) => {
     };
 
     const handleAssignUser = () => {
-        axios.post(`/api/projects/assignUser/${project.id}/${userIdToAdd}`)
-            .then(() => {
+        axios.post(`/api/projects/assignUser/${project.id}/${newMember}`)
+            .then(response => {
+                setMembers([...members, response.data])
+                setNewMember("");
                 alert('User assigned successfully');
-                // You may want to update your project's member list here
             })
             .catch(error => {
                 console.error('Error assigning user:', error);
@@ -105,8 +107,8 @@ const ProjectDetails = ({ project }) => {
                     <div className="flex mt-2">
                         <input
                             type="text"
-                            value={userIdToAdd}
-                            onChange={(e) => setUserIdToAdd(e.target.value)}
+                            value={newMember}
+                            onChange={(e) => setNewMember(e.target.value)}
                             placeholder="Enter User ID"
                             className="bg-gray-200 p-2 rounded w-full"
                         />
