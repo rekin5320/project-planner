@@ -82,13 +82,13 @@ const ProjectDetails = ({ project }) => {
                             type="text"
                             value={newDescription}
                             onChange={handleDescriptionChange}
-                            className="bg-gray-200 p-2 rounded w-full mt-2"
+                            className="bg-gray-200 p-2 rounded w-full"
                         />
                         <button
                             onClick={updateProjectDescription}
-                            className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+                            className="mybutton px-1 w-full"
                         >
-                            Change Description
+                            Change description
                         </button>
                     </div>
                 </div>
@@ -114,12 +114,12 @@ const ProjectDetails = ({ project }) => {
                             type="text"
                             value={newTaskTitle}
                             onChange={(e) => setNewTaskTitle(e.target.value)}
-                            placeholder="New Task Title"
-                            className="bg-gray-200 p-2 rounded w-full mt-2"
+                            placeholder="New Task title"
+                            className="bg-gray-200 p-2 rounded w-full"
                         />
                         <button
                             onClick={handleAddTask}
-                            className="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full"
+                            className="mybutton-green px-1 w-full"
                         >
                             Add Task
                         </button>
