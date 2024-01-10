@@ -108,11 +108,11 @@ const ProjectDetails = ({ project }) => {
                             value={userIdToAdd}
                             onChange={(e) => setUserIdToAdd(e.target.value)}
                             placeholder="Enter User ID"
-                            className="bg-gray-200 p-2 rounded w-full mt-2"
+                            className="bg-gray-200 p-2 rounded w-full"
                         />
                         <button
                             onClick={handleAssignUser}
-                            className="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full ml-2"
+                            className="mybutton-green px-1 w-full"
                         >
                             Assign User to Project
                         </button>
