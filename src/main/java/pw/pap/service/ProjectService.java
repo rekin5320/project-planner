@@ -1,5 +1,6 @@
 package pw.pap.service;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,15 +108,21 @@ public class ProjectService {
     }
 
     @Transactional
-    public void assignUserToProject(Long projectId, String userName) {
+    public User assignUserToProject(Long projectId, String userName) {
         Project project = projectRepository.findById(projectId)
             .orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
         User user = userService.findByName(userName)
             .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
+        if (project.getMembers().contains(user)) {
+            throw new EntityExistsException("User is already a member");
+        }
+
         project.getMembers().add(user);
         projectRepository.save(project);
+
+        return user;
     }
 
     @Transactional
