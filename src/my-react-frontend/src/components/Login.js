@@ -76,6 +76,7 @@ function Login({ onLogin }) {
 
             const response2 = await axios.post("/api/users/googleLogin", requestBody);
             if (response2.status === 200 && response2.data) {
+                response2.data.google = userObject
                 onLogin(response2.data); // Update App state if authentication is successful
             } else {
                 throw new Error("Authentication failed");

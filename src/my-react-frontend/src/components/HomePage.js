@@ -27,12 +27,10 @@ function HomePage({ user, onLogout }) {
                 <div className="flex flex-wrap justify-evenly content-evenly">
                     <ProjectManagementComponent user={user} />
                 </div>
-
             </div>
 
-
             <div className="user-section">
-                <img src={user.picture || default_profile_pic} alt="User Avatar" className="profile-pic rounded-lg"/>
+                <img src={(user.google && user.google.picture) || default_profile_pic} alt="User avatar" className="profile-pic rounded-lg"/>
                 <button
                     className="mybutton"
                     onClick={(e) => handleLogoutClick(e)}
