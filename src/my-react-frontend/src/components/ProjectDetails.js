@@ -133,7 +133,7 @@ const ProjectDetails = ({ project }) => {
                             type="text"
                             value={newMember}
                             onChange={(e) => setNewMember(e.target.value)}
-                            placeholder="Enter User ID"
+                            placeholder="Enter User name"
                             className="bg-gray-200 p-2 rounded w-full"
                         />
                         <button
