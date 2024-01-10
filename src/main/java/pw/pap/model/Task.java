@@ -14,15 +14,16 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column()
-    private Boolean isDone;
-
     @Column(length = 100, nullable = false)
     private String title;
 
     @Lob
     @Column(columnDefinition = "MEDIUMTEXT")
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "project_id", nullable = false)
+    private Project project;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "task_creation_date", nullable = false, updatable = false)
@@ -32,6 +33,10 @@ public class Task {
     @Column(name = "task_deadline")
     private LocalDateTime taskDeadline;
 
+    @ManyToOne
+    @JoinColumn(name = "creator_id", nullable = false)
+    private User creator;
+
     @ManyToMany
     @JoinTable(
         name = "task_user",
@@ -40,13 +45,8 @@ public class Task {
     )
     private List<User> assignees = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "creator_id", nullable = false)
-    private User creator;
-
-    @ManyToOne
-    @JoinColumn(name = "project_id", nullable = false)
-    private Project project;
+    @Column()
+    private Boolean isDone;
 
     public Task() {
         this.isDone = false;
@@ -77,14 +77,6 @@ public class Task {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Boolean getDone() {
-        return isDone;
-    }
-
-    public void setDone(Boolean done) {
-        isDone = done;
     }
 
     public String getTitle() {
@@ -141,5 +133,13 @@ public class Task {
 
     public void setTaskDeadline(LocalDateTime taskDeadline) {
         this.taskDeadline = taskDeadline;
+    }
+
+    public Boolean getDone() {
+        return isDone;
+    }
+
+    public void setDone(Boolean done) {
+        isDone = done;
     }
 }

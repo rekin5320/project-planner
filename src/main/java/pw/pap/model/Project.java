@@ -20,6 +20,10 @@ public class Project {
     @Column(columnDefinition = "MEDIUMTEXT")
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "project_creation_date", nullable = false, updatable = false)
     private LocalDateTime projectCreationDate;
@@ -27,10 +31,6 @@ public class Project {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "project_deadline")
     private LocalDateTime projectDeadline;
-
-    @ManyToOne
-    @JoinColumn(name = "owner_id", nullable = false)
-    private User owner;
 
     @ManyToMany
     @JoinTable(name = "project_user",

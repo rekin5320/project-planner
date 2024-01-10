@@ -17,6 +17,10 @@ public class User {
     @Column(length = 100, nullable = false, unique = true)
     private String name;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "account_creation_date", nullable = false, updatable = false)
+    private LocalDateTime accountCreationDate;
+
     @Column(name = "password_hash")
     private String passwordHash;
 
@@ -25,10 +29,6 @@ public class User {
 
     @Column(name = "email")
     private String email;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "account_creation_date", nullable = false, updatable = false)
-    private LocalDateTime accountCreationDate;
 
     public User() { }
 
