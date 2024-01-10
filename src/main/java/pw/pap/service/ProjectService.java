@@ -1,6 +1,5 @@
 package pw.pap.service;
 
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +20,14 @@ import java.util.Optional;
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
     private final TaskRepository taskRepository;
 
     @Autowired
-    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository, TaskRepository taskRepository) {
+    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository, UserService userService, TaskRepository taskRepository) {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
+        this.userService = userService;
         this.taskRepository = taskRepository;
     }
 
@@ -106,11 +107,11 @@ public class ProjectService {
     }
 
     @Transactional
-    public void assignUserToProject(Long projectId, Long userId) {
+    public void assignUserToProject(Long projectId, String userName) {
         Project project = projectRepository.findById(projectId)
             .orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
-        User user = userRepository.findById(userId)
+        User user = userService.findByName(userName)
             .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         project.getMembers().add(user);
@@ -118,11 +119,11 @@ public class ProjectService {
     }
 
     @Transactional
-    public void removeUserFromProject(Long projectId, Long userId) {
+    public void removeUserFromProject(Long projectId, String userName) {
         Project project = projectRepository.findById(projectId)
             .orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
-        User user = userRepository.findById(userId)
+        User user = userService.findByName(userName)
             .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         Iterable<Task> tasks = taskRepository.findAll();

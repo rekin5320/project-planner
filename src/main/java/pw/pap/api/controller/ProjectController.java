@@ -67,10 +67,10 @@ public class ProjectController {
         }
     }
     @Transactional
-    @PostMapping("/assignUser/{projectId}/{userId}")
-    public ResponseEntity<Void> assignUserToProject(@PathVariable Long projectId, @PathVariable Long userId) {
+    @PostMapping("/assignUser/{projectId}")
+    public ResponseEntity<Void> assignUserToProject(@PathVariable Long projectId, @RequestBody String userName) {
         try {
-            projectService.assignUserToProject(projectId, userId);
+            projectService.assignUserToProject(projectId, userName);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -78,10 +78,10 @@ public class ProjectController {
     }
 
     @Transactional
-    @PostMapping("/removeUser/{projectId}/{userId}")
-    public ResponseEntity<Void> removeUserFromProject(@PathVariable Long projectId, @PathVariable Long userId) {
+    @PostMapping("/removeUser/{projectId}")
+    public ResponseEntity<Void> removeUserFromProject(@PathVariable Long projectId, @RequestBody String userName) {
         try {
-            projectService.removeUserFromProject(projectId, userId);
+            projectService.removeUserFromProject(projectId, userName);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
