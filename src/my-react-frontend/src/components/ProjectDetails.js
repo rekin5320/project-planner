@@ -68,7 +68,11 @@ const ProjectDetails = ({ project }) => {
     };
 
     const handleAssignUser = () => {
-        axios.post(`/api/projects/assignUser/${project.id}/${newMember}`)
+        const requestBody = {
+            name: newMember
+        };
+
+        axios.post(`/api/projects/assignUser/${project.id}`, requestBody)
             .then(response => {
                 setMembers([...members, response.data])
                 setNewMember("");

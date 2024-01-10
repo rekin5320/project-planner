@@ -13,6 +13,7 @@ import pw.pap.model.Project;
 import pw.pap.model.Task;
 import pw.pap.service.ProjectService;
 import pw.pap.api.dto.ProjectAddDTO;
+import pw.pap.api.dto.UserNameDTO;
 
 
 @RestController
@@ -66,18 +67,17 @@ public class ProjectController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @Transactional
+
     @PostMapping("/assignUser/{projectId}")
-    public ResponseEntity<Void> assignUserToProject(@PathVariable Long projectId, @RequestBody String userName) {
+    public ResponseEntity<Void> assignUserToProject(@PathVariable Long projectId, @RequestBody UserNameDTO userNameDTO) {
         try {
-            projectService.assignUserToProject(projectId, userName);
+            projectService.assignUserToProject(projectId, userNameDTO.getName());
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @Transactional
     @PostMapping("/removeUser/{projectId}")
     public ResponseEntity<Void> removeUserFromProject(@PathVariable Long projectId, @RequestBody String userName) {
         try {
@@ -88,7 +88,6 @@ public class ProjectController {
         }
     }
 
-    @Transactional
     @PostMapping("/removeTask/{projectId}/{taskId}")
     public ResponseEntity<Void> removeTaskFromProject(@PathVariable Long projectId, @PathVariable Long taskId) {
         try {
