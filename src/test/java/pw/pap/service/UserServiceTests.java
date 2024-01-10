@@ -21,6 +21,7 @@ public class UserServiceTests {
     private UserService userService;
 
     @Test
+    @Transactional
     @Rollback
     public void testRegister() {
         String username = "testBob";
@@ -36,6 +37,7 @@ public class UserServiceTests {
     }
 
     @Test
+    @Transactional
     @Rollback
     public void testRegisterExistingName() {
         String username = "testBob";
@@ -46,6 +48,7 @@ public class UserServiceTests {
     }
 
     @Test
+    @Transactional
     @Rollback
     public void testLogin() {
         String username = "testBob";
@@ -63,6 +66,7 @@ public class UserServiceTests {
     }
 
     @Test
+    @Transactional
     @Rollback
     public void testLoginUserNotInDatabase() {
         assertThrows(EntityNotFoundException.class, () -> userService.login("hvdfi14iicvg6575xzhccd342scjba574sgu87xscgas7vhc", "Password"));
@@ -79,6 +83,7 @@ public class UserServiceTests {
     }
 
     @Test
+    @Transactional
     @Rollback
     public void testUpdate() {
         String username = "testBob";
