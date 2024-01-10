@@ -14,16 +14,16 @@ const ProjectDetails = ({ project }) => {
     useEffect(() => {
         // The condition is moved inside the useEffect
 
-        if (project && project.id) {
+        if (project2 && project2.id) {
             axios.get(`/api/projects/${project.id}/tasks`, project.id)
                 .then(response => {
                     setTasks(response.data);
                 })
                 .catch(error => console.error('Error fetching tasks:', error));
         }
-    }, [project]);
+    }, [project2]);
 
-    if (!project) {
+    if (!project2) {
         return <div className="text-center text-lg text-gray-600">No project selected</div>;
     }
 
@@ -73,7 +73,7 @@ const ProjectDetails = ({ project }) => {
 
         axios.post(`/api/projects/assignUser/${project.id}`, requestBody)
             .then(response => {
-                project.members = [...project.members, response.data];
+                project2.members = [...project2.members, response.data];
                 setNewMember("");
                 alert('User assigned successfully');
             })
@@ -106,7 +106,7 @@ const ProjectDetails = ({ project }) => {
 
         axios.post(`/api/projects/removeUser/${project.id}`, requestBody)
             .then(response => {
-                const updatedMembers = project.members.filter(item => item.name !== name);
+                const updatedMembers = project2.members.filter(item => item.name !== name);
                 setProject2(prevProject => ({
                     ...prevProject,
                     members: updatedMembers
@@ -174,7 +174,7 @@ const ProjectDetails = ({ project }) => {
                 {/* Middle Column */}
 
                 <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4 ml-4">
-                    <h1 className="text-3xl font-bold text-gray-800">{project.name}</h1>
+                    <h1 className="text-3xl font-bold text-gray-800">{project2.name}</h1>
                     <p className="text-md text-gray-700"><span className="font-bold">Description:</span> {description}</p>
 
                     <div className="flex mt-2">
