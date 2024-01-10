@@ -14,6 +14,9 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -79,6 +82,19 @@ public class UserService {
         User newUser = new User(name, email, currentDate);
         userRepository.save(newUser);
         return newUser;
+    }
+
+    public Page<Project> getMemberProjectsWithPaging(Long memberId, Pageable pageable){
+        Iterable<Project> allProjects = projectRepository.findAll();
+
+        List<Project> memberProjects = StreamSupport.stream(allProjects.spliterator(), false)
+                .filter(project -> project.getMembers().stream().anyMatch(member -> member.getId().equals(memberId)))
+                .collect(Collectors.toList());
+
+        int start = pageable.getPageNumber();
+        int end = Math.min((start + pageable.getPageSize()), memberProjects.size());
+
+        return new PageImpl<>(memberProjects.subList(start, end), pageable, memberProjects.size());
     }
 
     public List<Project> getMemberProjects(Long memberId){

@@ -5,6 +5,9 @@ import java.util.List;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,8 +55,11 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/projects")
-    public ResponseEntity<List<Project>> getMemberProjects(@PathVariable Long userId) {
-        List<Project> memberProjects = userService.getMemberProjects(userId);
+    public ResponseEntity<Page<Project>> getMemberProjects(@PathVariable Long userId,
+                                                                     @RequestParam(defaultValue =  "0") int page,
+                                                                     @RequestParam(defaultValue = "5") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Project> memberProjects = userService.getMemberProjectsWithPaging(userId, pageable);
         return new ResponseEntity<>(memberProjects, HttpStatus.OK);
     }
 

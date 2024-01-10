@@ -6,6 +6,9 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,11 +45,25 @@ public class ProjectController {
         return new ResponseEntity<>(addedProject, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{projectId}/members")
+    public ResponseEntity<Page<User>> getMembers(@PathVariable Long projectId,
+                                                      @RequestParam(defaultValue = "0") int page,
+                                                      @RequestParam(defaultValue = "5") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<User> members = projectService.getMembersWithPaging(projectId, pageable);
+        return new ResponseEntity<>(members, HttpStatus.OK);
+    }
+
     @GetMapping("/{projectId}/tasks")
-    public ResponseEntity<List<Task>> getProjectTasks(@PathVariable Long projectId) {
-        List<Task> projectTasks = projectService.getProjectTasks(projectId);
+    public ResponseEntity<Page<Task>> getProjectTasks(@PathVariable Long projectId,
+                                                      @RequestParam(defaultValue = "0") int page,
+                                                      @RequestParam(defaultValue = "5") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Task> projectTasks = projectService.getProjectTasksWithPaging(projectId, pageable);
         return new ResponseEntity<>(projectTasks, HttpStatus.OK);
     }
+
+
 
     @PutMapping("/update/{projectId}")
     public ResponseEntity<Project> updateProject(@PathVariable Long projectId, @RequestBody Project updatedProject) {

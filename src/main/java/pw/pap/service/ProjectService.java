@@ -4,6 +4,9 @@ import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pw.pap.model.Project;
 import pw.pap.model.User;
@@ -36,6 +39,31 @@ public class ProjectService {
         LocalDateTime currentDate = LocalDateTime.now();
         Project project = new Project(name, owner, currentDate);
         return projectRepository.save(project);
+    }
+
+    public Page<User> getMembersWithPaging(Long projectId, Pageable pageable){
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("Project not found"));
+        List<User> members = project.getMembers();
+        int start = pageable.getPageNumber();
+        int end = Math.min((start + pageable.getPageSize()), members.size());
+
+        return new PageImpl<>(members.subList(start, end), pageable, members.size());
+    }
+
+    public Page<Task> getProjectTasksWithPaging(Long projectId, Pageable pageable){
+        List<Task> projectTasks = new ArrayList<>();
+        Iterable<Task> tasks = taskRepository.findAll();
+        for (Task task : tasks){
+            if(task.getProject().getId().equals(projectId)){
+                projectTasks.add(task);
+            }
+        }
+
+        int start = pageable.getPageNumber();
+        int end = Math.min((start + pageable.getPageSize()), projectTasks.size());
+
+        return new PageImpl<>(projectTasks.subList(start, end), pageable, projectTasks.size());
     }
 
     public List<Task> getProjectTasks(Long projectId){

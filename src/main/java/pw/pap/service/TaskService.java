@@ -3,9 +3,13 @@ package pw.pap.service;
 import jakarta.transaction.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import pw.pap.model.Task;
@@ -45,6 +49,16 @@ public class TaskService {
         LocalDateTime currentDate = LocalDateTime.now();
         Task task = new Task(title, currentDate, creator, project);
         return taskRepository.save(task);
+    }
+
+    public Page<User> getAssigneesWithPaging(Long taskId, Pageable pageable){
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new IllegalArgumentException("Task not found"));
+        List<User> assignees = task.getAssignees();
+        int start = pageable.getPageNumber();
+        int end = Math.min((start + pageable.getPageSize()), assignees.size());
+
+        return new PageImpl<>(assignees.subList(start, end), pageable, assignees.size());
     }
 
     public Optional<Task> getTaskById(Long taskId) {
