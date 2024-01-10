@@ -127,7 +127,7 @@ function Login({ onLogin }) {
                                  onFailure={onFailure}
                                  cookiePolicy={'single_host_origin'}
                                  isSignedIn={true}
-                                 theme={"dark"}
+                                 theme={"filled_black"}
                                     className={"w-full"}
                     />
 
