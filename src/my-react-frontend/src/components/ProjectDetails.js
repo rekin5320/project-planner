@@ -108,6 +108,7 @@ const ProjectDetails = ({ project }) => {
 
         axios.post(`/api/projects/removeUser/${project.id}`, requestBody)
             .then(response => {
+                project.members = project.members.filter((item) => item.name !== name);
                 alert('User deleted successfully');
             })
             .catch(error => {
