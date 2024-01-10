@@ -29,15 +29,18 @@ const UserEditComponent = ({user, onUpdateUser}) => {
         <div>
             <h2 className="text-white">Edit User</h2>
             <form onSubmit={handleSubmit}>
-                <label>
-                    <span className="text-white mr-2">Name:</span>
-                    <input
-                        type="text"
-                        className="myinput"
-                        value={name}
-                        onChange={handleNameChange}
-                    />
-                </label>
+                <div className="mb-2">
+                    <label>
+                        <span className="text-white mr-2">Name:</span>
+                        <input
+                            type="text"
+                            className="myinput"
+                            value={name}
+                            onChange={handleNameChange}
+                        />
+                    </label>
+                </div>
+
                 <div>
                     <button
                         type="submit"
