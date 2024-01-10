@@ -1,5 +1,6 @@
 package pw.pap.api.controller;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -74,6 +75,8 @@ public class ProjectController {
         try {
             User user = projectService.assignUserToProject(projectId, userNameDTO.getName());
             return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (EntityExistsException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
