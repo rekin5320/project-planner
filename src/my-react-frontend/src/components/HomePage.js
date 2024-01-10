@@ -10,6 +10,7 @@ function HomePage({ user, onLogout }) {
     const navigate = useNavigate();
 
     const [currentUser, setCurrentUser] = useState(user);
+    const [projectManagementUpdate, setProjectManagementUpdate] = useState(0);
 
     const handleLogoutClick = () => {
         onLogout();
@@ -20,6 +21,9 @@ function HomePage({ user, onLogout }) {
 
     const handleUserUpdate = (updatedUser) => {
         setCurrentUser(updatedUser);
+
+        // Increment the state variable to trigger ProjectManagementComponent update
+        setProjectManagementUpdate(prevValue => prevValue + 1);
     };
 
     return (
@@ -41,7 +45,7 @@ function HomePage({ user, onLogout }) {
                 </div>
 
                 <div className="flex flex-wrap justify-evenly content-evenly">
-                    <ProjectManagementComponent user={currentUser}/>
+                    <ProjectManagementComponent user={currentUser} projectManagementUpdate={projectManagementUpdate}/>
                 </div>
             </div>
 

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 
-const ProjectManagementComponent = ( {user}) => {
+const ProjectManagementComponent = ({user, projectManagementUpdate}) => {
     const [projects, setProjects] = useState([]);
     const [newProjectName, setNewProjectName] = useState("");
 
@@ -11,26 +11,21 @@ const ProjectManagementComponent = ( {user}) => {
                 setProjects(response.data);
             })
             .catch(error => console.error("API call error:", error));
-    }, [user.id]);
+    }, [user.id, projectManagementUpdate]); // Include projectManagementUpdate in the dependency array
 
     const handleAddProject = (e) => {
         e.preventDefault();
-        //alert(user.name);
-        //alert(newProjectName);
-        //alert(newProjectOwnerId);
 
         const newProject = {name: newProjectName, owner: {id: user.id}};
         axios.post("/api/projects/add", newProject)
             .then(response => {
-                //alert('Nie poszło');
-
                 const addedProject = {
                     ...response.data,
-                    owner: user // Założenie, że obiekt 'user' zawiera pełne informacje o właścicielu
+                    owner: user
                 };
 
                 setProjects([...projects, addedProject]);
-                setNewProjectName("");    // Clear the input field
+                setNewProjectName(""); // Clear the input field
             })
             .catch(error => console.error("Error adding project:", error));
     };
@@ -57,7 +52,7 @@ const ProjectManagementComponent = ( {user}) => {
                             <span className="ml-2">
                                 <span>members: </span>
                                 {project.members.map((member, index) => (
-                                     <span>{member.name + (index + 1 !== project.members.length ? ', ' : '')}</span>
+                                    <span>{member.name + (index + 1 !== project.members.length ? ', ' : '')}</span>
                                 ))}
                             </span>
                         </span>
@@ -70,7 +65,7 @@ const ProjectManagementComponent = ( {user}) => {
                     </div>
                 ))}
             </div>
-            {/* Form for adding a new project */}
+
             <form onSubmit={handleAddProject} className="w-full">
                 <div className="flex">
                     <input
@@ -93,4 +88,3 @@ const ProjectManagementComponent = ( {user}) => {
 };
 
 export default ProjectManagementComponent;
-
