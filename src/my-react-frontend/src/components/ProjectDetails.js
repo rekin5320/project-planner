@@ -133,7 +133,7 @@ const ProjectDetails = ({ project }) => {
 
             </div>
             <div className="flex justify-center mt-4">
-                <button onClick={goBack} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <button onClick={goBack} className="mybutton">
                     Go back to Home
                 </button>
             </div>
