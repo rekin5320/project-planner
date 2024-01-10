@@ -47,4 +47,26 @@ public class TaskServiceTests {
             fail("Exception occurred during login: " + e.getMessage());
         }
     }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void testUpdateTask() {
+        String username = "testBob";
+        String password = "reallySecurePassword";
+        User user = userService.register(username, password);
+        Project project = projectService.createProject("roller coaster", user);
+        Task task = taskService.createTask("Stairs", user.getId(), project.getId());
+
+        task.setTitle("Chair");
+        task.setDescription("Make chair");
+        task.setTaskDeadline(date);
+        taskService.updateTask(task.getId(), task);
+
+        Task taskInDatabase = taskService.getTaskById(task.getId()).orElse(null);
+        assertNotNull(taskInDatabase);
+        assertEquals(taskInDatabase.getTitle(), "Chair");
+        assertEquals(taskInDatabase.getDescription(), "Make chair");
+        assertEquals(taskInDatabase.getTaskDeadline(), date);
+    }
 }
