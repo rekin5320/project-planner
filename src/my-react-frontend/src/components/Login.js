@@ -94,7 +94,7 @@ function Login({ onLogin }) {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
-                    <FaUser className="icon"/>
+                    <FaUser className="icon_user"/>
                     <input
                         className="myinput mb-2"
                         required
@@ -103,7 +103,7 @@ function Login({ onLogin }) {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <FaLock className="icon"/>
+                    <FaLock className="icon_lock"/>
                     <button
                         type="submit"
                         className="loginbutton loginbutton-submit"
