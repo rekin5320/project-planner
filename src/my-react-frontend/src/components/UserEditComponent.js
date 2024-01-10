@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 
-const UserEditComponent = ({user}) => {
+const UserEditComponent = ({user, onUpdateUser}) => {
     const [name, setName] = useState(user.name);
 
     const handleNameChange = (e) => {
@@ -17,7 +17,7 @@ const UserEditComponent = ({user}) => {
                     name: name,
                 }
             );
-
+            onUpdateUser(response.data);
             console.log("Update successful:", response.data);
         } catch (error) {
             console.error("Error updating user:", error);
