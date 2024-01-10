@@ -175,7 +175,7 @@ const ProjectDetails = ({ project }) => {
 
                 <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4 ml-4">
                     <h1 className="text-3xl font-bold text-gray-800">{project2.name}</h1>
-                    <p className="text-md text-gray-700"><span className="font-bold">Description:</span> {description}</p>
+                    <p className="text-md"><span className="font-bold">Description:</span> {description}</p>
 
                     <div className="flex mt-2">
                         <input
