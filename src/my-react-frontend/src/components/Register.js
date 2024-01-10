@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
 
 const Register = ({ onRegister }) => {
     const [newUserName, setNewUserName] = useState("");
     const [newUserPassword, setNewUserPassword] = useState("");
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
     const handleRegisterUser = (e) => {
         e.preventDefault();
         const newUser = { name: newUserName, password: newUserPassword };
         axios.post("/api/users/register", newUser)
             .then(response => {
-                alert('User added successfully!'); // Notify user
+                alert('User added successfully!');
                 onRegister(response.data);
-                navigate('/home'); // Navigate to the HomePage
+                navigate('/home');
             })
             .catch(error => {
                 if (error.response && error.response.status === 409) {

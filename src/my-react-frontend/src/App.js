@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate  } from 'react-router-dom';
-import { GoogleOAuthProvider } from '@react-oauth/google'; // Import the GoogleOAuthProvider
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import Login from './components/Login';
 import Register from './components/Register';
 import HomePage from './components/HomePage';

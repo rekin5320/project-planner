@@ -25,7 +25,6 @@ function Login({ onLogin }) {
         setLoginError(''); // Reset any previous login errors
 
         try {
-            // Prepare the request body and parameters for the authentication request
             const requestBody = {
                 name: username,
                 password: password,
@@ -42,16 +41,16 @@ function Login({ onLogin }) {
                     navigate('/home'); // Navigate to HomePage
                 }
             } else {
-                throw new Error('Authentication failed'); // Rzuć wyjątek, jeśli autoryzacja nie powiedzie się
+                throw new Error('Authentication failed');
             }
         } catch (error) {
             console.error('Login error:', error);
             if (error.response && error.response.status === 404) {
-                setLoginError("User not found"); // Ustaw błąd dla błędnej nazwy użytkownika
+                setLoginError("User not found");
             } else {
-                setLoginError('An error occurred during login'); // Ustaw błąd dla innych błędów
+                setLoginError('An error occurred during login');
             }
-            alert(loginError); // Teraz alert wyświetli aktualny błąd
+            alert(loginError);
         }
     }
 

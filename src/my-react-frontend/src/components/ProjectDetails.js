@@ -41,7 +41,6 @@ const ProjectDetails = ({ project }) => {
         // Sending a POST request to the create task endpoint
         axios.post('/api/tasks/create', requestBody)
             .then(response => {
-                // Assuming you want to add the new task to your existing tasks list
                 setTasks([...tasks, response.data]);
                 setNewTaskTitle(""); // Reset the input field after task creation
                 alert('Task created successfully');
@@ -57,7 +56,7 @@ const ProjectDetails = ({ project }) => {
 
         axios.put(`/api/projects/update/${project.id}`, updatedProject)
             .then(response => {
-                setDescription(newDescription); // Update state to reflect new description
+                setDescription(newDescription);
                 alert('Project description updated successfully');
             })
             .catch(error => {
@@ -89,7 +88,6 @@ const ProjectDetails = ({ project }) => {
             .then(response => {
                 const updatedTasks = tasks.filter(task => task.id !== id);
                 setTasks(updatedTasks);
-                // Assuming you want to add the new task to your existing tasks list
                 alert('Task created successfully');
             })
             .catch(error => {
