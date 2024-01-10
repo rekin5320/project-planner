@@ -140,7 +140,7 @@ const ProjectDetails = ({ project }) => {
                             onClick={handleAssignUser}
                             className="mybutton-green px-1 w-full"
                         >
-                            Assign User to Project
+                            Assign User
                         </button>
                     </div>
 
