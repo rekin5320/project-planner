@@ -64,12 +64,12 @@ java -jar target/pap-app-0.1.0.jar
 ```
 
 #### Usage
-Open `http://127.0.0.1:8080/api/users/all`
+Open `http://localhost:8080/api/projects/all`
 
 ### React frontend
 #### Install dependencies
 ```sh
-npm install axios
+npm install
 ```
 
 #### Run
@@ -78,5 +78,5 @@ npm start
 ```
 
 #### Usage
-Open `http://127.0.0.1:3000/`
+Open `http://localhost:3000/`
 
