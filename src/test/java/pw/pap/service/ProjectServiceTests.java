@@ -25,7 +25,7 @@ public class ProjectServiceTests {
     @Autowired
     private ProjectService projectService;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private final LocalDateTime date = LocalDateTime.parse("2023-10-11 13:37:42", formatter);
+    private final LocalDateTime date = LocalDateTime.parse("2024-10-11 13:37:42", formatter);
 
      @Test
      @Rollback
@@ -46,4 +46,24 @@ public class ProjectServiceTests {
              userService.deleteUser(user.getId());
          }
      }
+
+    @Test
+    @Rollback
+    public void testUpdateProject() {
+        String username = "testBob";
+        String password = "reallySecurePassword";
+        User user = userService.register(username, password);
+
+        Project project = projectService.createProject("roller coaster", user);
+        project.setName("coaster roller");
+        project.setDescription("roller coaster but swapped");
+        project.setProjectDeadline(date);
+        projectService.updateProject(project.getId(), project);
+
+        Project projectInDatabase = projectService.getProjectById(project.getId()).orElse(null);
+        assertNotNull(projectInDatabase, "Project not in database");
+        assertEquals(projectInDatabase.getName(), "coaster roller");
+        assertEquals(projectInDatabase.getProjectDeadline(), date);
+        assertEquals(projectInDatabase.getDescription(), "roller coaster but swapped");
+    }
 }

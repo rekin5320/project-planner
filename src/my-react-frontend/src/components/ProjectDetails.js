@@ -12,8 +12,12 @@ const ProjectDetails = ({ project }) => {
 
     useEffect(() => {
         // The condition is moved inside the useEffect
+        alert(project.id);
+
+
+
         if (project && project.id) {
-            axios.get(`/api/projects/${project.id}/tasks`)
+            axios.get(`/api/projects/${project.id}/tasks`, project.id)
                 .then(response => {
                     setTasks(response.data);
                 })
