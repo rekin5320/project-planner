@@ -83,9 +83,9 @@ public class ProjectController {
     }
 
     @PostMapping("/removeUser/{projectId}")
-    public ResponseEntity<Void> removeUserFromProject(@PathVariable Long projectId, @RequestBody String userName) {
+    public ResponseEntity<Void> removeUserFromProject(@PathVariable Long projectId, @RequestBody UserNameDTO userNameDTO) {
         try {
-            projectService.removeUserFromProject(projectId, userName);
+            projectService.removeUserFromProject(projectId, userNameDTO.getName());
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
