@@ -56,28 +56,32 @@ public class TaskService {
     }
 
     public Task updateTask(Long taskId, Task updatedTask) {
+        LocalDateTime currentDate = LocalDateTime.now();
         Task existingTask = taskRepository.findById(taskId)
                 .orElseThrow(() -> new IllegalArgumentException("Task not found"));
 
         String newTitle = updatedTask.getTitle();
-        if(newTitle.isBlank()){
-            throw new IllegalArgumentException("Task title cannot be empty");
+        if(newTitle != null){
+            if (newTitle.isBlank()) {
+                throw new IllegalArgumentException("Task title cannot be empty");
+            }
+            existingTask.setTitle(newTitle);
         }
-        existingTask.setTitle(newTitle);
 
         String newDescription = updatedTask.getDescription();
-        existingTask.setDescription(newDescription);
+        if (newDescription != null) {
+            existingTask.setDescription(newDescription);
+        }
 
         LocalDateTime newDeadline = updatedTask.getTaskDeadline();
-        LocalDateTime currentDate = LocalDateTime.now();
-        if (!newDeadline.isAfter(currentDate)) {
-            throw new IllegalArgumentException("New deadline must be after current time");
+        if (newDeadline != null) {
+            if (!newDeadline.isAfter(currentDate)) {
+                throw new IllegalArgumentException("New deadline must be after current time");
+            }
+            existingTask.setTaskDeadline(newDeadline);
         }
-        existingTask.setTaskDeadline(newDeadline);
 
-        taskRepository.deleteById(taskId);
-        updatedTask.setId(taskId);
-        return taskRepository.save(updatedTask);
+        return taskRepository.save(existingTask);
     }
 
     public void deleteTask(Long taskId) {
