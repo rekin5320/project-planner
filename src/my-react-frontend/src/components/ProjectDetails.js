@@ -142,7 +142,7 @@ const ProjectDetails = ({ project }) => {
                                     </div>
                                     <button
                                         onClick={() => deleteMember(member.name)} // Assuming deleteTask function needs task's id
-                                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-1/3"
+                                        className="mybutton-red"
                                     >
                                         Delete
                                     </button>
@@ -206,7 +206,7 @@ const ProjectDetails = ({ project }) => {
                                     </div>
                                     <button
                                         onClick={() => deleteTask(task.id)} // Assuming deleteTask function needs task's id
-                                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-1/3"
+                                        className="mybutton-red"
                                     >
                                         Delete
                                     </button>
