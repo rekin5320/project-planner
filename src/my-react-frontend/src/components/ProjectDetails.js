@@ -124,21 +124,20 @@ const ProjectDetails = ({ project }) => {
 
                 <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4 ml-4">
                     <h1 className="text-2xl font-bold text-gray-800">{project.name}</h1>
-                    <h2 className="text-md text-gray-600">ID: {project.id}</h2>
-                    <p className="text-md text-gray-700">Description: {description}</p>
+                    <p className="text-md text-gray-700"><span className="font-bold">Description:</span> {description}</p>
 
                     <div className="flex mt-2">
                         <input
                             type="text"
                             value={newDescription}
                             onChange={handleDescriptionChange}
-                            className="bg-gray-200 p-2 rounded w-full mt-2"
+                            className="bg-gray-200 p-2 rounded w-full"
                         />
                         <button
                             onClick={updateProjectDescription}
-                            className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full ml-2"
+                            className="mybutton px-1 w-full"
                         >
-                            Change Description
+                            Change description
                         </button>
                     </div>
                 </div>
@@ -164,12 +163,12 @@ const ProjectDetails = ({ project }) => {
                             type="text"
                             value={newTaskTitle}
                             onChange={(e) => setNewTaskTitle(e.target.value)}
-                            placeholder="New Task Title"
-                            className="bg-gray-200 p-2 rounded w-full mt-2"
+                            placeholder="New Task title"
+                            className="bg-gray-200 p-2 rounded w-full"
                         />
                         <button
                             onClick={handleAddTask}
-                            className="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full ml-2"
+                            className="mybutton-green px-1 w-full"
                         >
                             Add Task
                         </button>
@@ -179,7 +178,7 @@ const ProjectDetails = ({ project }) => {
 
             </div>
             <div className="flex justify-center mt-4">
-                <button onClick={goBack} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <button onClick={goBack} className="mybutton">
                     Go back to Home
                 </button>
             </div>
