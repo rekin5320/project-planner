@@ -84,6 +84,22 @@ const ProjectDetails = ({ project }) => {
             });
     };
 
+    const deleteTask = (id) =>{
+
+        axios.delete(`/api/tasks/delete/${id}`)
+            .then(response => {
+                const updatedTasks = tasks.filter(task => task.id !== id);
+                setTasks(updatedTasks);
+                // Assuming you want to add the new task to your existing tasks list
+                alert('Task created successfully');
+            })
+            .catch(error => {
+                console.error('Error creating task:', error);
+                alert('Failed to delete task');
+            });
+
+    }
+
 
     const goBack = () => {
         navigate('/home');
@@ -154,9 +170,17 @@ const ProjectDetails = ({ project }) => {
                     <div className="tasks-container">
                         {tasks.length > 0 ? (
                             tasks.map(task => (
-                                <div key={task.id} className="bg-white shadow p-4 rounded mb-2">
-                                    <h3 className="text-lg font-bold">{task.title}</h3>
-                                    <p>{task.description}</p>
+                                <div key={task.id} className="bg-white shadow p-4 rounded mb-2 flex items-center">
+                                    <div className="flex-1">
+                                        <h3 className="text-lg font-bold">{task.title}</h3>
+                                        <p>{task.description}</p>
+                                    </div>
+                                    <button
+                                        onClick={() => deleteTask(task.id)} // Assuming deleteTask function needs task's id
+                                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-1/3"
+                                    >
+                                        Delete
+                                    </button>
                                 </div>
                             ))
                         ) : (
