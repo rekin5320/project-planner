@@ -6,9 +6,12 @@ import jakarta.transaction.Transactional;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -46,11 +49,19 @@ public class UserService {
     }
 
     public User register(String name, String password) {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("Empty user name is not allowed");
+        }
+        if (password.isBlank()) {
+            throw new IllegalArgumentException("Empty password is not allowed");
+        }
+
         Optional<User> optionalUser = findByName(name);
 
         if (optionalUser.isPresent()) {
             throw new EntityExistsException("User with the same name already in the database");
         }
+
         String salt = generateRandomSalt();
         String hashedPassword = hashPasswordWithSalt(password, salt);
         LocalDateTime currentDate = LocalDateTime.now();
@@ -59,13 +70,44 @@ public class UserService {
         return user;
     }
 
+    public User googleLogin(String name, String email){
+        Optional<User> user = findByEmail(email);
+        if(user.isPresent()){
+            return user.get();
+        }
+        LocalDateTime currentDate = LocalDateTime.now();
+        User newUser = new User(name, email, currentDate);
+        userRepository.save(newUser);
+        return newUser;
+    }
+
+    public List<Project> getMemberProjects(Long memberId){
+        Iterable<Project> allProjects = projectRepository.findAll();
+
+        return StreamSupport.stream(allProjects.spliterator(), false)
+                .filter(project -> project.getMembers().stream().anyMatch(member -> member.getId().equals(memberId)))
+                .collect(Collectors.toList());
+    }
+
     public User updateUser(Long userId, User updatedUser) {
         User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+            .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        userRepository.deleteById(userId);
-        updatedUser.setId(userId);
-        return userRepository.save(updatedUser);
+        String newName = updatedUser.getName();
+        if (newName != null && !newName.equals(existingUser.getName())){
+            if(newName.isBlank()){
+                throw new IllegalArgumentException("User name cannot be empty");
+            }
+
+            Optional<User> optionalUser = findByName(updatedUser.getName());
+            if (optionalUser.isPresent()) {
+                throw new EntityExistsException("User with the same name already in the database");
+            }
+
+            existingUser.setName(updatedUser.getName());
+        }
+
+        return userRepository.save(existingUser);
     }
 
     @Transactional
@@ -75,6 +117,7 @@ public class UserService {
 
         Iterable<Project> projects = projectRepository.findAll();
         for (Project project : projects) {
+            project.getMembers().remove(user);
             if (project.getOwner().getId().equals(userId)){
                 if (project.getMembers().isEmpty()) {
                     projectRepository.deleteById(project.getId());
@@ -83,7 +126,6 @@ public class UserService {
                     project.setOwner(project.getMembers().get(0));
                 }
             }
-            project.getMembers().remove(user);
         }
 
         Iterable<Task> tasks = taskRepository.findAll();
@@ -105,10 +147,17 @@ public class UserService {
         return userRepository.findById(userId).orElse(null);
     }
 
-
     public Optional<User> findByName(String name) {
         for(User user : userRepository.findAll())
             if(user.getName().equals(name)){
+                return Optional.of(user);
+            }
+        return Optional.empty();
+    }
+
+    public Optional<User> findByEmail(String email) {
+        for(User user : userRepository.findAll())
+            if(user.getEmail() != null && user.getEmail().equals(email)){
                 return Optional.of(user);
             }
         return Optional.empty();

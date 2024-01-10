@@ -1,0 +1,44 @@
+.flex.justify-center.items-center.h-screen {
+    background-image: url(https://cdn.pixabay.com/photo/2015/12/01/15/43/black-1072366_1280.jpg);
+    background-repeat: no-repeat;
+    background-position: top;
+    background-color: rgb(1, 0, 8);
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+h2 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.w-full.max-w-xs.flex.flex-col.items-center{
+    width: 420px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 10px;
+    padding: 30px 40px;
+    backdrop-filter: blur(30px);
+    box-shadow: 0 0 10px rgba(0,0,0,.2);
+}
+
+.icon_user{
+    color: #fff;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-475%);
+    font-size: 16px;
+}
+
+.icon_lock{
+    color: #fff;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-150%);
+    font-size: 16px;
+}
+

@@ -10,9 +10,18 @@
         @apply bg-custom-blue shadow-md flex items-center justify-between rounded-md w-full mr-2 mb-2 p-4 hover:bg-custom-blue-hov transition duration-150 ease-in-out;
     }
     .myinput {
-        @apply bg-custom-lightgray rounded border border-custom-lightgray mr-2 mb-2 p-2;
+        @apply rounded border border-[#c9c9c9] p-2;
     }
     .mybutton {
-        @apply bg-custom-gray hover:bg-pink-600 text-white rounded px-3 py-2;
+        @apply bg-[#3498db] hover:bg-[#2980b9] text-white rounded px-4 py-2 transition duration-150 ease-in-out;
+    }
+    .loginbutton {
+        @apply text-white font-bold rounded p-2;
+    }
+    .loginbutton-submit {
+        @apply bg-blue-500 hover:bg-blue-700;
+    }
+    .loginbutton-other {
+        @apply bg-gray-300 text-gray-800 hover:bg-gray-400;
     }
 }

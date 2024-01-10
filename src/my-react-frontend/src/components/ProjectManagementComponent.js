@@ -6,12 +6,12 @@ const ProjectManagementComponent = ( {user}) => {
     const [newProjectName, setNewProjectName] = useState("");
 
     useEffect(() => {
-        axios.get("/api/projects/all")
+        axios.get(`/api/users/${user.id}/projects`)
             .then(response => {
                 setProjects(response.data);
             })
             .catch(error => console.error("API call error:", error));
-    }, []);
+    }, [user.id]);
 
     const handleAddProject = (e) => {
         e.preventDefault();
@@ -23,7 +23,13 @@ const ProjectManagementComponent = ( {user}) => {
         axios.post("/api/projects/add", newProject)
             .then(response => {
                 //alert('Nie poszło');
-                setProjects([...projects, response.data]);
+
+                const addedProject = {
+                    ...response.data,
+                    owner: user // Założenie, że obiekt 'user' zawiera pełne informacje o właścicielu
+                };
+
+                setProjects([...projects, addedProject]);
                 setNewProjectName("");    // Clear the input field
             })
             .catch(error => console.error("Error adding project:", error));
@@ -39,7 +45,7 @@ const ProjectManagementComponent = ( {user}) => {
 
     return (
         <div className="flex flex-col items-center justify-center overflow-hidden">
-            <h2 className="text-3xl mb-2">Projects</h2>
+            <h2 className="text-3xl text-white mb-2">Your Projects</h2>
             {/* Scrollable container for the project list */}
             <div className="mylist-container">
                 {projects.map(project => (
@@ -48,7 +54,12 @@ const ProjectManagementComponent = ( {user}) => {
                             <span className="font-bold">{project.name}</span>
                             <span className="ml-2">id: {project.id}</span>
                             <span className="ml-2">owner: {project.owner.name}</span>
-                            <span className="ml-2">members: {project.members}</span>
+                            <span className="ml-2">
+                                <span>members: </span>
+                                {project.members.map((member, index) => (
+                                     <span>{member.name + (index + 1 !== project.members.length ? ', ' : '')}</span>
+                                ))}
+                            </span>
                         </span>
                         <button
                             onClick={() => handleDeleteProject(project.id)}
@@ -60,20 +71,22 @@ const ProjectManagementComponent = ( {user}) => {
                 ))}
             </div>
             {/* Form for adding a new project */}
-            <form onSubmit={handleAddProject} className="mb-4">
-                <input
-                    type="text"
-                    value={newProjectName}
-                    onChange={(e) => setNewProjectName(e.target.value)}
-                    placeholder="Name"
-                    className="myinput"
-                />
-                <button
-                    type="submit"
-                    className="mybutton"
-                    >
-                    Add project
-                </button>
+            <form onSubmit={handleAddProject} className="w-full">
+                <div className="flex">
+                    <input
+                        type="text"
+                        value={newProjectName}
+                        onChange={(e) => setNewProjectName(e.target.value)}
+                        placeholder="Name"
+                        className="myinput mr-2 grow"
+                    />
+                    <button
+                        type="submit"
+                        className="mybutton"
+                        >
+                        Add project
+                    </button>
+                </div>
             </form>
         </div>
     );
