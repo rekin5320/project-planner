@@ -5,7 +5,6 @@ import axios from 'axios';
 const ProjectDetails = ({ project }) => {
     // Use state for the description
     const [tasks, setTasks] = useState([]);
-    const [members, setMembers] = useState([]);
     const [newMember, setNewMember] = useState([]);
     const [description, setDescription] = useState(project.description);
     const [newDescription, setNewDescription] = useState(project.description);
@@ -74,7 +73,7 @@ const ProjectDetails = ({ project }) => {
 
         axios.post(`/api/projects/assignUser/${project.id}`, requestBody)
             .then(response => {
-                setMembers([...members, response.data])
+                project.members = [...project.members, response.data];
                 setNewMember("");
                 alert('User assigned successfully');
             })

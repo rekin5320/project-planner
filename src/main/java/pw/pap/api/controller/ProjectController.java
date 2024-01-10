@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import pw.pap.model.Project;
 import pw.pap.model.Task;
+import pw.pap.model.User;
 import pw.pap.service.ProjectService;
 import pw.pap.api.dto.ProjectAddDTO;
 import pw.pap.api.dto.UserNameDTO;
@@ -69,10 +70,10 @@ public class ProjectController {
     }
 
     @PostMapping("/assignUser/{projectId}")
-    public ResponseEntity<Void> assignUserToProject(@PathVariable Long projectId, @RequestBody UserNameDTO userNameDTO) {
+    public ResponseEntity<User> assignUserToProject(@PathVariable Long projectId, @RequestBody UserNameDTO userNameDTO) {
         try {
-            projectService.assignUserToProject(projectId, userNameDTO.getName());
-            return new ResponseEntity<>(HttpStatus.OK);
+            User user = projectService.assignUserToProject(projectId, userNameDTO.getName());
+            return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

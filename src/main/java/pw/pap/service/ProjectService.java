@@ -107,7 +107,7 @@ public class ProjectService {
     }
 
     @Transactional
-    public void assignUserToProject(Long projectId, String userName) {
+    public User assignUserToProject(Long projectId, String userName) {
         Project project = projectRepository.findById(projectId)
             .orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
@@ -116,6 +116,8 @@ public class ProjectService {
 
         project.getMembers().add(user);
         projectRepository.save(project);
+
+        return user;
     }
 
     @Transactional
