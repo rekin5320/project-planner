@@ -54,7 +54,7 @@ function Login({ onLogin }) {
         }
     }
 
-    const onSuccess = (response) => {
+    const onGoogleSuccess = (response) => {
         console.log('Login Success: currentUser:', response);
         console.log("Encoded JWT ID token: " + response.credential);
         // Handle the Google Sign-In callback response if needed
@@ -75,7 +75,7 @@ function Login({ onLogin }) {
         }
     };
 
-    const onFailure = (response) => {
+    const onGoogleFailure = (response) => {
         console.log('Login failed: ', response);
     }
 
@@ -116,19 +116,15 @@ function Login({ onLogin }) {
                 >
                     Register here
                 </button>
-                <div id="signInDiv"></div>
-                <div>
-                    <GoogleLogin clientId={clientId}
-                                 buttonText="Login"
-                                 onSuccess={onSuccess}
-                                 onFailure={onFailure}
-                                 cookiePolicy={'single_host_origin'}
-                                 isSignedIn={true}
-                                 theme={"dark"}
-                                    className={"w-full"}
-                    />
 
-                </div>
+                <GoogleLogin clientId={clientId}
+                    buttonText="Login"
+                    onSuccess={onGoogleSuccess}
+                    onFailure={onGoogleFailure}
+                    cookiePolicy={"single_host_origin"}
+                    isSignedIn={true}
+                    className={"w-full"}
+                />
             </div>
         </div>
     );
