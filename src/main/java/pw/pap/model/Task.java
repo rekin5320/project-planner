@@ -14,6 +14,9 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column()
+    private Boolean isDone;
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -45,9 +48,12 @@ public class Task {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    public Task() { }
+    public Task() {
+        this.isDone = false;
+    }
 
     public Task(String title, LocalDateTime taskCreationDate, User creator, Project project) {
+        this.isDone = false;
         this.title = title;
         this.taskCreationDate = taskCreationDate;
         this.creator = creator;
@@ -55,6 +61,7 @@ public class Task {
     }
 
     public Task(String title, String description, LocalDateTime taskCreationDate, LocalDateTime taskDeadline, List<User> assignees, User creator, Project project) {
+        this.isDone = false;
         this.title = title;
         this.description = description;
         this.taskCreationDate = taskCreationDate;
@@ -70,6 +77,14 @@ public class Task {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Boolean getDone() {
+        return isDone;
+    }
+
+    public void setDone(Boolean done) {
+        isDone = done;
     }
 
     public String getTitle() {
