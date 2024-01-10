@@ -1,5 +1,6 @@
 package pw.pap.api.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import pw.pap.model.Project;
+import pw.pap.model.Task;
 import pw.pap.service.ProjectService;
 import pw.pap.api.dto.ProjectAddDTO;
 
@@ -37,12 +39,20 @@ public class ProjectController {
         return new ResponseEntity<>(addedProject, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{userId}/tasks")
+    public ResponseEntity<List<Task>> getProjectTasks(@PathVariable Long projectId) {
+        List<Task> projectTasks = projectService.getProjectTasks(projectId);
+        return new ResponseEntity<>(projectTasks, HttpStatus.OK);
+    }
+
     @PutMapping("/update/{projectId}")
     public ResponseEntity<Project> updateProject(@PathVariable Long projectId, @RequestBody Project updatedProject) {
         try {
             Project updated = projectService.updateProject(projectId, updatedProject);
             return new ResponseEntity<>(updated, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

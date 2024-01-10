@@ -6,12 +6,12 @@ const ProjectManagementComponent = ( {user}) => {
     const [newProjectName, setNewProjectName] = useState("");
 
     useEffect(() => {
-        axios.get("/api/projects/all")
+        axios.get(`/api/users/${user.id}/projects`)
             .then(response => {
                 setProjects(response.data);
             })
             .catch(error => console.error("API call error:", error));
-    }, []);
+    }, [user.id]);
 
     const handleAddProject = (e) => {
         e.preventDefault();
@@ -23,7 +23,13 @@ const ProjectManagementComponent = ( {user}) => {
         axios.post("/api/projects/add", newProject)
             .then(response => {
                 //alert('Nie poszło');
-                setProjects([...projects, response.data]);
+
+                const addedProject = {
+                    ...response.data,
+                    owner: user // Założenie, że obiekt 'user' zawiera pełne informacje o właścicielu
+                };
+
+                setProjects([...projects, addedProject]);
                 setNewProjectName("");    // Clear the input field
             })
             .catch(error => console.error("Error adding project:", error));
@@ -39,7 +45,7 @@ const ProjectManagementComponent = ( {user}) => {
 
     return (
         <div className="flex flex-col items-center justify-center overflow-hidden">
-            <h2 className="text-3xl mb-2">Your Projects</h2>
+            <h2 className="text-3xl text-white mb-2">Your Projects</h2>
             {/* Scrollable container for the project list */}
             <div className="mylist-container">
                 {projects.map(project => (
