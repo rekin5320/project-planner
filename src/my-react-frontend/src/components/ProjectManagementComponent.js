@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 
-const ProjectManagementComponent = ({user, projectManagementUpdate}) => {
+const ProjectManagementComponent = ({user, updateProjects, projectManagementUpdate}) => {
     const [projects, setProjects] = useState([]);
     const [newProjectName, setNewProjectName] = useState("");
 
@@ -26,6 +26,7 @@ const ProjectManagementComponent = ({user, projectManagementUpdate}) => {
 
                 setProjects([...projects, addedProject]);
                 setNewProjectName(""); // Clear the input field
+                updateProjects(user);
             })
             .catch(error => console.error("Error adding project:", error));
     };

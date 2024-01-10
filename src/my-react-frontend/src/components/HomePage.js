@@ -26,6 +26,11 @@ function HomePage({ user, onLogout }) {
         setProjectManagementUpdate(prevValue => prevValue + 1);
     };
 
+    const updateProjects = (user) => {
+        // Increment the state variable to trigger ProjectManagementComponent update
+        setProjectManagementUpdate(prevValue => prevValue + 1);
+    }
+
     return (
         <div className="min-h-screen bg-custom-background">
             <div className="user-section">
@@ -45,7 +50,7 @@ function HomePage({ user, onLogout }) {
                 </div>
 
                 <div className="flex flex-wrap justify-evenly content-evenly">
-                    <ProjectManagementComponent user={currentUser} projectManagementUpdate={projectManagementUpdate}/>
+                    <ProjectManagementComponent user={currentUser} updateProjects={updateProjects} projectManagementUpdate={projectManagementUpdate}/>
                 </div>
             </div>
 
