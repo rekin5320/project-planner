@@ -54,8 +54,8 @@ function Login({ onLogin }) {
         }
     }
 
-    const onGoogleSuccess = (response) => {
-        console.log('Login Success: currentUser:', response);
+    const onGoogleSuccess = async (response) => {
+        console.log("Google login Success: currentUser:", response);
         console.log("Encoded JWT ID token: " + response.credential);
         // Handle the Google Sign-In callback response if needed
         // For example, you can use the response to:
@@ -67,16 +67,27 @@ function Login({ onLogin }) {
         try {
             const userObject = jwtDecode(response.credential);
             console.log("Decoded JWT ID token:", userObject);
-            setUser(userObject);
-            onLogin(userObject); // Update App state if authentication is successful
-            navigate('/home'); // Navigate to HomePage
+
+            const requestBody = {
+                name: userObject.given_name + " " + userObject.family_name,
+                email: userObject.email,
+            };
+
+            const response2 = await axios.post("/api/users/googleLogin", requestBody);
+            if (response2.status === 200 && response2.data) {
+                onLogin(response2.data); // Update App state if authentication is successful
+            } else {
+                throw new Error("Authentication failed");
+            }
+
+            navigate("/home");
         } catch (error) {
-            console.error("Error decoding JWT:", error);
+            console.error("Error:", error);
         }
     };
 
     const onGoogleFailure = (response) => {
-        console.log('Login failed: ', response);
+        console.log("Google login failed:", response);
     }
 
     return (

@@ -147,7 +147,6 @@ public class UserService {
         return userRepository.findById(userId).orElse(null);
     }
 
-
     public Optional<User> findByName(String name) {
         for(User user : userRepository.findAll())
             if(user.getName().equals(name)){
@@ -158,12 +157,11 @@ public class UserService {
 
     public Optional<User> findByEmail(String email) {
         for(User user : userRepository.findAll())
-            if(user.getEmail().equals(email)){
+            if(user.getEmail() != null && user.getEmail().equals(email)){
                 return Optional.of(user);
             }
         return Optional.empty();
     }
-
 
     private String generateRandomSalt() {
         SecureRandom random = new SecureRandom();
