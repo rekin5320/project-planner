@@ -28,6 +28,7 @@ public class ProjectServiceTests {
     private final LocalDateTime date = LocalDateTime.parse("2024-10-11 13:37:42", formatter);
 
      @Test
+     @Transactional
      @Rollback
      public void testCreateProject() {
          String username = "testBob";
@@ -48,6 +49,7 @@ public class ProjectServiceTests {
      }
 
     @Test
+    @Transactional
     @Rollback
     public void testUpdateProject() {
         String username = "testBob";
