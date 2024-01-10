@@ -17,6 +17,7 @@ const UserEditComponent = ({user, onUpdateUser}) => {
                     name: name,
                 }
             );
+            response.data.google = user.google;
             onUpdateUser(response.data);
             console.log("Update successful:", response.data);
         } catch (error) {
