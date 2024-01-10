@@ -25,6 +25,7 @@ h2 {
 }
 
 .icon_user{
+    color: #fff;
     position: absolute;
     right: 10px;
     top: 50%;
@@ -33,6 +34,7 @@ h2 {
 }
 
 .icon_lock{
+    color: #fff;
     position: absolute;
     right: 10px;
     top: 50%;
