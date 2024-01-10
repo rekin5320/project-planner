@@ -100,8 +100,6 @@ const ProjectDetails = ({ project }) => {
     }
 
     const deleteMember = (name) =>{
-        alert(name)
-
         const requestBody = {
             name: name
         };
