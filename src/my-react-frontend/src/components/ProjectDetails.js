@@ -13,7 +13,6 @@ const ProjectDetails = ({ project }) => {
 
     useEffect(() => {
         // The condition is moved inside the useEffect
-
         if (project2 && project2.id) {
             axios.get(`/api/projects/${project.id}/tasks`, project.id)
                 .then(response => {
@@ -126,9 +125,8 @@ const ProjectDetails = ({ project }) => {
     return (
         <div className="min-h-screen  p-6 bg-custom-background ">
             <div  className = "flex justify-between" >
+
                 {/* Left Column */}
-
-
                 <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4">
                     <h2 className="text-xl font-bold text-gray-800">Members</h2>
                     <ul className="tasks-container">
@@ -170,7 +168,6 @@ const ProjectDetails = ({ project }) => {
                 </div>
 
                 {/* Middle Column */}
-
                 <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4 ml-4">
                     <h1 className="text-3xl font-bold text-gray-800">{project2.name}</h1>
                     <p className="text-md"><span className="font-bold">Description:</span> {description}</p>

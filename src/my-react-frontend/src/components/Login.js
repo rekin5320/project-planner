@@ -31,12 +31,9 @@ function Login({ onLogin }) {
             };
 
             const response = await axios.post("/api/users/login", requestBody);
-            //alert(response.data);
-            //alert(response.status)
             if (response.status === 200) {
                 if (response.data)
                 {
-                    //alert(response.data.id)
                     onLogin(response.data); // Update App state if authentication is successful
                     navigate('/home'); // Navigate to HomePage
                 }
@@ -62,7 +59,6 @@ function Login({ onLogin }) {
         // - Obtain the Google user ID
         // - Obtain an ID token for the user (which may be used with Google services)
         // - See the Google Sign-In documentation for more details
-        //alert(response.credential)
 
         try {
             const userObject = jwtDecode(response.credential);
