@@ -99,6 +99,24 @@ const ProjectDetails = ({ project }) => {
 
     }
 
+    const deleteMember = (name) =>{
+        alert(name)
+
+        const requestBody = {
+            name: name
+        };
+
+        axios.post(`/api/projects/removeUser/${project.id}`, requestBody)
+            .then(response => {
+                alert('User deleted successfully');
+            })
+            .catch(error => {
+                console.error('Error assigning user:', error);
+                alert('Failed to assign user');
+            });
+
+    }
+
 
     const goBack = () => {
         navigate('/home');
@@ -115,9 +133,18 @@ const ProjectDetails = ({ project }) => {
                     <ul className="tasks-container">
                         {project.members && project.members.length > 0 ? (
                             project.members.map(member => (
-                                <div key={member.id} className="bg-white shadow p-4 rounded mb-2">
-                                    <h3 className="text-lg font-bold">{member.name}</h3>
+                                <div key={member.id} className="bg-white shadow p-4 rounded mb-2 flex">
+                                    <div className="flex-1">
+                                        <h3 className="text-lg font-bold">{member.name}</h3>
+                                    </div>
+                                    <button
+                                        onClick={() => deleteMember(member.name)} // Assuming deleteTask function needs task's id
+                                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-1/3"
+                                    >
+                                        Delete
+                                    </button>
                                 </div>
+
                             ))
                         ) : (
                             <p>No members in this project.</p>
