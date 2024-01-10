@@ -32,8 +32,6 @@ public class TaskController {
         }
     }
 
-
-
     @GetMapping("/{taskId}")
     public ResponseEntity<Task> getTask(@PathVariable Long taskId) {
         return taskService.getTaskById(taskId)

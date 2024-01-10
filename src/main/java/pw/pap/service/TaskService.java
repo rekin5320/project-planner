@@ -60,6 +60,11 @@ public class TaskService {
         Task existingTask = taskRepository.findById(taskId)
                 .orElseThrow(() -> new IllegalArgumentException("Task not found"));
 
+        Boolean isDone = updatedTask.getDone();
+        if(isDone != null){
+            existingTask.setDone(isDone);
+        }
+
         String newTitle = updatedTask.getTitle();
         if(newTitle != null){
             if (newTitle.isBlank()) {
