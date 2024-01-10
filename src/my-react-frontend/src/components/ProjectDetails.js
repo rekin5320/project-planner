@@ -116,7 +116,7 @@ const ProjectDetails = ({ project }) => {
 
 
                 <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4">
-                    <h1 className="text-2xl font-bold text-gray-800">Members</h1>
+                    <h2 className="text-xl font-bold text-gray-800">Members</h2>
                     <ul className="tasks-container">
                         {project.members && project.members.length > 0 ? (
                             project.members.map(member => (
@@ -149,7 +149,7 @@ const ProjectDetails = ({ project }) => {
                 {/* Middle Column */}
 
                 <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4 ml-4">
-                    <h1 className="text-2xl font-bold text-gray-800">{project.name}</h1>
+                    <h1 className="text-3xl font-bold text-gray-800">{project.name}</h1>
                     <p className="text-md text-gray-700"><span className="font-bold">Description:</span> {description}</p>
 
                     <div className="flex mt-2">
