@@ -1,7 +1,6 @@
 import React, { useState, useEffect  } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { FaCalendarAlt } from "react-icons/fa";
 
 const ProjectDetails = ({ project }) => {
     // Use state for the description
@@ -11,10 +10,6 @@ const ProjectDetails = ({ project }) => {
     const [newDescription, setNewDescription] = useState(project.description);
     const [newTaskTitle, setNewTaskTitle] = useState("");
     const navigate = useNavigate();
-
-    const handleAddEventClick = () => {
-        window.open('https://calendar.google.com', '_blank');
-    };
 
     useEffect(() => {
         // The condition is moved inside the useEffect
@@ -207,13 +202,6 @@ const ProjectDetails = ({ project }) => {
                             Add Task
                         </button>
                     </div>
-                    <button
-                        onClick={handleAddEventClick}
-                        className="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full"
-                    >
-                        Add event into Google Calendar
-                        <FaCalendarAlt className="icon_event"/>
-                    </button>
                 </div>
 
 
