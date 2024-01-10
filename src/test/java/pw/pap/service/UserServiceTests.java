@@ -73,6 +73,7 @@ public class UserServiceTests {
     }
 
     @Test
+    @Transactional
     @Rollback
     public void testLoginWrongPassword() {
         String username = "testBob";

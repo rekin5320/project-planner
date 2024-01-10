@@ -1,5 +1,6 @@
 package pw.pap.api.controller;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import pw.pap.model.Project;
 import pw.pap.model.Task;
+import pw.pap.model.User;
 import pw.pap.service.ProjectService;
 import pw.pap.api.dto.ProjectAddDTO;
+import pw.pap.api.dto.UserNameDTO;
 
 
 @RestController
@@ -66,29 +69,29 @@ public class ProjectController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @Transactional
-    @PostMapping("/assignUser/{projectId}/{userId}")
-    public ResponseEntity<Void> assignUserToProject(@PathVariable Long projectId, @PathVariable Long userId) {
+
+    @PostMapping("/assignUser/{projectId}")
+    public ResponseEntity<User> assignUserToProject(@PathVariable Long projectId, @RequestBody UserNameDTO userNameDTO) {
         try {
-            projectService.assignUserToProject(projectId, userId);
+            User user = projectService.assignUserToProject(projectId, userNameDTO.getName());
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (EntityExistsException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/removeUser/{projectId}")
+    public ResponseEntity<Void> removeUserFromProject(@PathVariable Long projectId, @RequestBody String userName) {
+        try {
+            projectService.removeUserFromProject(projectId, userName);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @Transactional
-    @PostMapping("/removeUser/{projectId}/{userId}")
-    public ResponseEntity<Void> removeUserFromProject(@PathVariable Long projectId, @PathVariable Long userId) {
-        try {
-            projectService.removeUserFromProject(projectId, userId);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @Transactional
     @PostMapping("/removeTask/{projectId}/{taskId}")
     public ResponseEntity<Void> removeTaskFromProject(@PathVariable Long projectId, @PathVariable Long taskId) {
         try {

@@ -6,6 +6,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 const ProjectDetails = ({ project }) => {
     // Use state for the description
     const [tasks, setTasks] = useState([]);
+    const [newMember, setNewMember] = useState([]);
     const [description, setDescription] = useState(project.description);
     const [newDescription, setNewDescription] = useState(project.description);
     const [newTaskTitle, setNewTaskTitle] = useState("");
@@ -17,9 +18,6 @@ const ProjectDetails = ({ project }) => {
 
     useEffect(() => {
         // The condition is moved inside the useEffect
-        alert(project.id);
-
-
 
         if (project && project.id) {
             axios.get(`/api/projects/${project.id}/tasks`, project.id)
@@ -73,6 +71,40 @@ const ProjectDetails = ({ project }) => {
             });
     };
 
+    const handleAssignUser = () => {
+        const requestBody = {
+            name: newMember
+        };
+
+        axios.post(`/api/projects/assignUser/${project.id}`, requestBody)
+            .then(response => {
+                project.members = [...project.members, response.data];
+                setNewMember("");
+                alert('User assigned successfully');
+            })
+            .catch(error => {
+                console.error('Error assigning user:', error);
+                alert('Failed to assign user');
+            });
+    };
+
+    const deleteTask = (id) =>{
+
+        axios.delete(`/api/tasks/delete/${id}`)
+            .then(response => {
+                const updatedTasks = tasks.filter(task => task.id !== id);
+                setTasks(updatedTasks);
+                // Assuming you want to add the new task to your existing tasks list
+                alert('Task created successfully');
+            })
+            .catch(error => {
+                console.error('Error creating task:', error);
+                alert('Failed to delete task');
+            });
+
+    }
+
+
     const goBack = () => {
         navigate('/home');
     };
@@ -81,23 +113,57 @@ const ProjectDetails = ({ project }) => {
         <div className="min-h-screen  p-6 bg-custom-background ">
             <div  className = "flex justify-between" >
                 {/* Left Column */}
+
+
                 <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4">
+                    <h1 className="text-2xl font-bold text-gray-800">Members</h1>
+                    <ul className="tasks-container">
+                        {project.members && project.members.length > 0 ? (
+                            project.members.map(member => (
+                                <div key={member.id} className="bg-white shadow p-4 rounded mb-2">
+                                    <h3 className="text-lg font-bold">{member.name}</h3>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No members in this project.</p>
+                        )}
+                    </ul>
+                    <div className="flex mt-2">
+                        <input
+                            type="text"
+                            value={newMember}
+                            onChange={(e) => setNewMember(e.target.value)}
+                            placeholder="Enter User ID"
+                            className="bg-gray-200 p-2 rounded w-full"
+                        />
+                        <button
+                            onClick={handleAssignUser}
+                            className="mybutton-green px-1 w-full"
+                        >
+                            Assign User to Project
+                        </button>
+                    </div>
+
+                </div>
+
+                {/* Middle Column */}
+
+                <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4 ml-4">
                     <h1 className="text-2xl font-bold text-gray-800">{project.name}</h1>
-                    <h2 className="text-md text-gray-600">ID: {project.id}</h2>
-                    <p className="text-md text-gray-700">Description: {description}</p>
+                    <p className="text-md text-gray-700"><span className="font-bold">Description:</span> {description}</p>
 
                     <div className="flex mt-2">
                         <input
                             type="text"
                             value={newDescription}
                             onChange={handleDescriptionChange}
-                            className="bg-gray-200 p-2 rounded w-full mt-2"
+                            className="bg-gray-200 p-2 rounded w-full"
                         />
                         <button
                             onClick={updateProjectDescription}
-                            className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+                            className="mybutton px-1 w-full"
                         >
-                            Change Description
+                            Change description
                         </button>
                     </div>
                 </div>
@@ -108,9 +174,17 @@ const ProjectDetails = ({ project }) => {
                     <div className="tasks-container">
                         {tasks.length > 0 ? (
                             tasks.map(task => (
-                                <div key={task.id} className="bg-white shadow p-4 rounded mb-2">
-                                    <h3 className="text-lg font-bold">{task.title}</h3>
-                                    <p>{task.description}</p>
+                                <div key={task.id} className="bg-white shadow p-4 rounded mb-2 flex items-center">
+                                    <div className="flex-1">
+                                        <h3 className="text-lg font-bold">{task.title}</h3>
+                                        <p>{task.description}</p>
+                                    </div>
+                                    <button
+                                        onClick={() => deleteTask(task.id)} // Assuming deleteTask function needs task's id
+                                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-1/3"
+                                    >
+                                        Delete
+                                    </button>
                                 </div>
                             ))
                         ) : (
@@ -123,12 +197,12 @@ const ProjectDetails = ({ project }) => {
                             type="text"
                             value={newTaskTitle}
                             onChange={(e) => setNewTaskTitle(e.target.value)}
-                            placeholder="New Task Title"
-                            className="bg-gray-200 p-2 rounded w-full mt-2"
+                            placeholder="New Task title"
+                            className="bg-gray-200 p-2 rounded w-full"
                         />
                         <button
                             onClick={handleAddTask}
-                            className="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full"
+                            className="mybutton-green px-1 w-full"
                         >
                             Add Task
                         </button>
@@ -145,7 +219,7 @@ const ProjectDetails = ({ project }) => {
 
             </div>
             <div className="flex justify-center mt-4">
-                <button onClick={goBack} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <button onClick={goBack} className="mybutton">
                     Go back to Home
                 </button>
             </div>

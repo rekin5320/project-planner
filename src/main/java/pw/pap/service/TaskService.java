@@ -1,10 +1,8 @@
 package pw.pap.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +20,14 @@ import pw.pap.repository.ProjectRepository;
 public class TaskService {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
     private final ProjectRepository projectRepository;
 
     @Autowired
-    public TaskService(TaskRepository taskRepository, UserRepository userRepository, ProjectRepository projectRepository) {
+    public TaskService(TaskRepository taskRepository, UserRepository userRepository, UserService userService, ProjectRepository projectRepository) {
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
+        this.userService = userService;
         this.projectRepository = projectRepository;
     }
 
@@ -94,11 +94,11 @@ public class TaskService {
     }
 
     @Transactional
-    public void assignUserToTask(Long taskId, Long userId) {
+    public void assignUserToTask(Long taskId, String userName) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new IllegalArgumentException("Task not found"));
 
-        User user = userRepository.findById(userId)
+        User user = userService.findByName(userName)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         if (!task.getProject().getMembers().contains(user)) {
@@ -112,11 +112,11 @@ public class TaskService {
     }
 
     @Transactional
-    public void removeUserFromTask(Long taskId, Long userId) {
+    public void removeUserFromTask(Long taskId, String userName) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new IllegalArgumentException("Task not found"));
 
-        User user = userRepository.findById(userId)
+        User user = userService.findByName(userName)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         task.getAssignees().remove(user);

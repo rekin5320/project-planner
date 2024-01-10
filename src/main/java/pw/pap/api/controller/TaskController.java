@@ -68,9 +68,9 @@ public class TaskController {
     }
 
     @PostMapping("/assignUser")
-    public ResponseEntity<Void> assignUserToTask(@RequestParam Long taskId, @RequestParam Long userId) {
+    public ResponseEntity<Void> assignUserToTask(@RequestParam Long taskId, @RequestParam String userName) {
         try {
-            taskService.assignUserToTask(taskId, userId);
+            taskService.assignUserToTask(taskId, userName);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -78,9 +78,9 @@ public class TaskController {
     }
 
     @PostMapping("/removeUser")
-    public ResponseEntity<Void> removeUserFromTask(@RequestParam Long taskId, @RequestParam Long userId) {
+    public ResponseEntity<Void> removeUserFromTask(@RequestParam Long taskId, @RequestBody String userName) {
         try {
-            taskService.removeUserFromTask(taskId, userId);
+            taskService.removeUserFromTask(taskId, userName);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
