@@ -26,9 +26,6 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "google_id")
-    private String googleId;
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "account_creation_date", nullable = false, updatable = false)
     private LocalDateTime accountCreationDate;
@@ -53,12 +50,11 @@ public class User {
         this.accountCreationDate = accountCreationDate;
     }
 
-    public User(String name, String passwordHash, String salt, String email, String googleId, LocalDateTime accountCreationDate) {
+    public User(String name, String passwordHash, String salt, String email, LocalDateTime accountCreationDate) {
         this.name = name;
         this.passwordHash = passwordHash;
         this.salt = salt;
         this.email = email;
-        this.googleId = googleId;
         this.accountCreationDate = accountCreationDate;
     }
 
@@ -100,14 +96,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getGoogleId() {
-        return googleId;
-    }
-
-    public void setGoogleId(String googleId) {
-        this.googleId = googleId;
     }
 
     public LocalDateTime getAccountCreationDate() {

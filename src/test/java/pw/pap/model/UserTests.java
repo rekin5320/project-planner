@@ -37,12 +37,11 @@ class UserTests {
 
     @Test
     public void testFullConstructor() {
-        User user = new User("Rob", "abcd", "dcba", "abc@cba", "111", date);
+        User user = new User("Rob", "abcd", "dcba", "abc@cba", date);
         assertEquals("Rob", user.getName());
         assertEquals("abcd", user.getPasswordHash());
         assertEquals("dcba", user.getSalt());
         assertEquals("abc@cba", user.getEmail());
-        assertEquals("111", user.getGoogleId());
         assertEquals(date, user.getAccountCreationDate());
     }
 
@@ -50,7 +49,7 @@ class UserTests {
     @Transactional
     @Rollback
     public void testSaveRetrieveDeleteUser() {
-        User user = new User("Bob", "abcd", "dcba", "abc@cba", "111", date);
+        User user = new User("Bob", "abcd", "dcba", "abc@cba", date);
         User savedUser = userRepository.save(user);
         User retrievedUser = userRepository
             .findById(savedUser.getId())
@@ -61,7 +60,6 @@ class UserTests {
         assertEquals("abcd", retrievedUser.getPasswordHash());
         assertEquals("dcba", retrievedUser.getSalt());
         assertEquals("abc@cba", retrievedUser.getEmail());
-        assertEquals("111", retrievedUser.getGoogleId());
         assertEquals(date, user.getAccountCreationDate());
 
         userRepository.deleteById(retrievedUser.getId());
