@@ -14,7 +14,6 @@ function HomePage({ user, onLogout, changeSelected }) {
     const navigate = useNavigate();
 
     const handleSelectProject = (project) => {
-        alert('I am here');
         changeSelected(project);
         navigate(`/project/${project.id}`);
     };
