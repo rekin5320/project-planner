@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/projects")
-    public ResponseEntity<Page<Project>> getMemberProjectsWithPaging(@PathVariable Long userId,
+    public ResponseEntity<Page<Project>> getMemberProjects(@PathVariable Long userId,
                                                                      @RequestParam(defaultValue =  "0") int page,
                                                                      @RequestParam(defaultValue = "5") int size) {
         Pageable pageable = PageRequest.of(page, size);
