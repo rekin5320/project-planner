@@ -128,14 +128,12 @@ const ProjectDetails = ({ project }) => {
 
                 {/* Left Column */}
                 <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4">
-                    <h2 className="text-xl font-bold text-gray-800">Members</h2>
-                    <ul className="tasks-container">
+                    <h2 className="text-2xl font-bold">Members</h2>
+                    <ul className="list-container">
                         {project2.members && project2.members.length > 0 ? (
                             project2.members.map(member => (
-                                <div key={member.id} className="bg-white shadow p-4 rounded mb-2 flex">
-                                    <div className="flex-1">
-                                        <h3 className="text-lg font-bold">{member.name}</h3>
-                                    </div>
+                                <div key={member.id} className="bg-white border-solid border-2 rounded-[6px] p-4 mb-2 flex items-center">
+                                    <h3 className="text-lg font-bold flex-1">{member.name}</h3>
                                     <button
                                         onClick={() => deleteMember(member.name)} // Assuming deleteTask function needs task's id
                                         className="mybutton-red"
@@ -159,7 +157,7 @@ const ProjectDetails = ({ project }) => {
                         />
                         <button
                             onClick={handleAssignUser}
-                            className="mybutton-green px-1 w-full"
+                            className="mybutton-green px-1 w-40"
                         >
                             Assign User
                         </button>
@@ -169,7 +167,7 @@ const ProjectDetails = ({ project }) => {
 
                 {/* Middle Column */}
                 <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4 ml-4">
-                    <h1 className="text-3xl font-bold text-gray-800">{project2.name}</h1>
+                    <h1 className="text-4xl font-bold">{project2.name}</h1>
                     <p className="text-md"><span className="font-bold">Description:</span> {description}</p>
 
                     <div className="flex mt-2">
@@ -181,7 +179,7 @@ const ProjectDetails = ({ project }) => {
                         />
                         <button
                             onClick={updateProjectDescription}
-                            className="mybutton px-1 w-full"
+                            className="mybutton px-1 w-64"
                         >
                             Change description
                         </button>
@@ -190,17 +188,17 @@ const ProjectDetails = ({ project }) => {
 
                 {/* Right Column */}
                 <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4 ml-4">
-                    <h2 className="text-xl font-bold text-gray-800">Tasks</h2>
-                    <div className="tasks-container">
+                    <h2 className="text-2xl font-bold">Tasks</h2>
+                    <div className="list-container">
                         {tasks.length > 0 ? (
                             tasks.map(task => (
-                                <div key={task.id} className="bg-white shadow p-4 rounded mb-2 flex items-center">
+                                <div key={task.id} className="bg-white border-solid border-2 rounded-[6px] p-4 mb-2 flex items-center">
                                     <div className="flex-1">
                                         <h3 className="text-lg font-bold">{task.title}</h3>
                                         <p>{task.description}</p>
                                     </div>
                                     <button
-                                        onClick={() => deleteTask(task.id)} // Assuming deleteTask function needs task's id
+                                        onClick={() => deleteTask(task.id)}
                                         className="mybutton-red"
                                     >
                                         Delete
@@ -222,7 +220,7 @@ const ProjectDetails = ({ project }) => {
                         />
                         <button
                             onClick={handleAddTask}
-                            className="mybutton-green px-1 w-full"
+                            className="mybutton-green px-1 w-32"
                         >
                             Add Task
                         </button>
