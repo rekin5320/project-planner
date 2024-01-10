@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 
-const ProjectManagementComponent = ({user, updateProjects, projectManagementUpdate}) => {
+const ProjectManagementComponent = ({user, updateProjects, projectManagementUpdate, onSelect}) => {
     const [projects, setProjects] = useState([]);
     const [newProjectName, setNewProjectName] = useState("");
 
@@ -45,17 +45,13 @@ const ProjectManagementComponent = ({user, updateProjects, projectManagementUpda
             {/* Scrollable container for the project list */}
             <div className="mylist-container">
                 {projects.map(project => (
-                    <div key={project.id} className="mylist-entry" >
-                        <span className="text-gray-800">
-                            <span className="font-bold">{project.name}</span>
-                            <span className="ml-2">id: {project.id}</span>
-                            <span className="ml-2">owner: {project.owner.name}</span>
-                            <span className="ml-2">
-                                <span>members: </span>
-                                {project.members.map((member, index) => (
-                                    <span>{member.name + (index + 1 !== project.members.length ? ', ' : '')}</span>
-                                ))}
-                            </span>
+                    <div key={project.id} className="mylist-entry">
+                        <span
+                            className="text-gray-800 font-bold cursor-pointer"
+                            onClick={() => onSelect(project)}
+
+                            >
+                            {project.name}
                         </span>
                         <button
                             onClick={() => handleDeleteProject(project.id)}

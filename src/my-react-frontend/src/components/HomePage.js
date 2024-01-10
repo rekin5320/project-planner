@@ -6,12 +6,18 @@ import './Style/HomePage.css';
 import default_profile_pic from "./Images/npc_face.jpg";
 import UserEditComponent from "./UserEditComponent";
 
-function HomePage({ user, onLogout }) {
-    const navigate = useNavigate();
+function HomePage({ user, onLogout, changeSelected }) {
 
     const [currentUser, setCurrentUser] = useState(user);
     const [projectManagementUpdate, setProjectManagementUpdate] = useState(0);
 
+    const navigate = useNavigate();
+
+    const handleSelectProject = (project) => {
+        alert('I am here');
+        changeSelected(project);
+        navigate(`/project/${project.id}`);
+    };
     const handleLogoutClick = () => {
         onLogout();
         googleLogout();
@@ -50,7 +56,7 @@ function HomePage({ user, onLogout }) {
                 </div>
 
                 <div className="flex flex-wrap justify-evenly content-evenly">
-                    <ProjectManagementComponent user={currentUser} updateProjects={updateProjects} projectManagementUpdate={projectManagementUpdate}/>
+                    <ProjectManagementComponent user={currentUser} updateProjects={updateProjects} projectManagementUpdate={projectManagementUpdate} onSelect ={handleSelectProject}/>
                 </div>
             </div>
 
