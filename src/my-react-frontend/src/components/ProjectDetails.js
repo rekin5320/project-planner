@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const ProjectDetails = ({ project }) => {
-    // Use state for the description
+    const [project2, setProject2] = useState(project);
     const [tasks, setTasks] = useState([]);
     const [newMember, setNewMember] = useState([]);
     const [description, setDescription] = useState(project.description);
@@ -108,7 +108,11 @@ const ProjectDetails = ({ project }) => {
 
         axios.post(`/api/projects/removeUser/${project.id}`, requestBody)
             .then(response => {
-                project.members = project.members.filter((item) => item.name !== name);
+                const updatedMembers = project.members.filter(item => item.name !== name);
+                setProject2(prevProject => ({
+                    ...prevProject,
+                    members: updatedMembers
+                }));
                 alert('User deleted successfully');
             })
             .catch(error => {
@@ -132,8 +136,8 @@ const ProjectDetails = ({ project }) => {
                 <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4">
                     <h2 className="text-xl font-bold text-gray-800">Members</h2>
                     <ul className="tasks-container">
-                        {project.members && project.members.length > 0 ? (
-                            project.members.map(member => (
+                        {project2.members && project2.members.length > 0 ? (
+                            project2.members.map(member => (
                                 <div key={member.id} className="bg-white shadow p-4 rounded mb-2 flex">
                                     <div className="flex-1">
                                         <h3 className="text-lg font-bold">{member.name}</h3>
