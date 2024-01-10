@@ -46,7 +46,7 @@ const UserEditComponent = ({user, onUpdateUser}) => {
                         type="submit"
                         className="mybutton w-full"
                         >
-                        Save Changesc/my
+                        Save changes
                     </button>
                 </div>
             </form>
