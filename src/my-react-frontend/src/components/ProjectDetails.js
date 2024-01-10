@@ -8,10 +8,12 @@ const ProjectDetails = ({ project }) => {
     const [description, setDescription] = useState(project.description);
     const [newDescription, setNewDescription] = useState(project.description);
     const [newTaskTitle, setNewTaskTitle] = useState("");
+    const [userIdToAdd, setUserIdToAdd] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
         // The condition is moved inside the useEffect
+
         if (project && project.id) {
             axios.get(`/api/projects/${project.id}/tasks`, project.id)
                 .then(response => {
@@ -64,6 +66,19 @@ const ProjectDetails = ({ project }) => {
             });
     };
 
+    const handleAssignUser = () => {
+        axios.post(`/api/projects/assignUser/${project.id}/${userIdToAdd}`)
+            .then(() => {
+                alert('User assigned successfully');
+                // You may want to update your project's member list here
+            })
+            .catch(error => {
+                console.error('Error assigning user:', error);
+                alert('Failed to assign user');
+            });
+    };
+
+
     const goBack = () => {
         navigate('/home');
     };
@@ -72,22 +87,58 @@ const ProjectDetails = ({ project }) => {
         <div className="min-h-screen  p-6 bg-custom-background ">
             <div  className = "flex justify-between" >
                 {/* Left Column */}
+
+
                 <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4">
+                    <h1 className="text-2xl font-bold text-gray-800">Members</h1>
+                    <ul className="tasks-container">
+                        {project.members && project.members.length > 0 ? (
+                            project.members.map(member => (
+                                <div key={member.id} className="bg-white shadow p-4 rounded mb-2">
+                                    <h3 className="text-lg font-bold">{member.name}</h3>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No members in this project.</p>
+                        )}
+                    </ul>
+                    <div className="flex mt-2">
+                        <input
+                            type="text"
+                            value={userIdToAdd}
+                            onChange={(e) => setUserIdToAdd(e.target.value)}
+                            placeholder="Enter User ID"
+                            className="bg-gray-200 p-2 rounded w-full mt-2"
+                        />
+                        <button
+                            onClick={handleAssignUser}
+                            className="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full ml-2"
+                        >
+                            Assign User to Project
+                        </button>
+                    </div>
+
+                </div>
+
+                {/* Middle Column */}
+
+                <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4 ml-4">
                     <h1 className="text-2xl font-bold text-gray-800">{project.name}</h1>
-                    <p className="text-md text-gray-700"><span className="font-bold">Description:</span> {description}</p>
+                    <h2 className="text-md text-gray-600">ID: {project.id}</h2>
+                    <p className="text-md text-gray-700">Description: {description}</p>
 
                     <div className="flex mt-2">
                         <input
                             type="text"
                             value={newDescription}
                             onChange={handleDescriptionChange}
-                            className="bg-gray-200 p-2 rounded w-full"
+                            className="bg-gray-200 p-2 rounded w-full mt-2"
                         />
                         <button
                             onClick={updateProjectDescription}
-                            className="mybutton px-1 w-full"
+                            className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full ml-2"
                         >
-                            Change description
+                            Change Description
                         </button>
                     </div>
                 </div>
@@ -113,12 +164,12 @@ const ProjectDetails = ({ project }) => {
                             type="text"
                             value={newTaskTitle}
                             onChange={(e) => setNewTaskTitle(e.target.value)}
-                            placeholder="New Task title"
-                            className="bg-gray-200 p-2 rounded w-full"
+                            placeholder="New Task Title"
+                            className="bg-gray-200 p-2 rounded w-full mt-2"
                         />
                         <button
                             onClick={handleAddTask}
-                            className="mybutton-green px-1 w-full"
+                            className="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full ml-2"
                         >
                             Add Task
                         </button>
@@ -128,7 +179,7 @@ const ProjectDetails = ({ project }) => {
 
             </div>
             <div className="flex justify-center mt-4">
-                <button onClick={goBack} className="mybutton">
+                <button onClick={goBack} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Go back to Home
                 </button>
             </div>
