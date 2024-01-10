@@ -78,7 +78,7 @@ const ProjectDetails = ({ project }) => {
                 {/* Left Column */}
                 <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4">
                     <h1 className="text-2xl font-bold text-gray-800">{project.name}</h1>
-                    <p className="text-md text-gray-700">Description: {description}</p>
+                    <p className="text-md text-gray-700"><span className="font-bold">Description:</span> {description}</p>
 
                     <div className="flex mt-2">
                         <input
