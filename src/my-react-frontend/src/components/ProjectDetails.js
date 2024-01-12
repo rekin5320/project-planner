@@ -104,7 +104,7 @@ const ProjectDetails = ({project, changeSelectedTask, updateTasks, updateMembers
 
         axios.post(`/api/projects/assignUser/${project.id}`, requestBody)
             .then(response => {
-                members = [...members, response.data];
+                setMembers([...members, response.data]);
                 setNewMember("");
                 alert('User assigned successfully');
             })
