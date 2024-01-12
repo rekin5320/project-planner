@@ -156,10 +156,10 @@ const ProjectDetails = ({project, updateTasks, updateMembers}) => {
     }
 
 
-    const handleTaskIsDone = (task) => {
+    const handleTaskIsDone = async (task) => {
         const updatedTask = {...task, done: !task.done};
 
-        axios.put(`/api/tasks/update/${task.id}`, updatedTask)
+        await axios.put(`/api/tasks/update/${task.id}`, updatedTask)
             .then(response => {
                 doUpdateTasks();
             })
