@@ -51,6 +51,7 @@ const ProjectDetails = ({project, updateTasks}) => {
         // Sending a POST request to the create task endpoint
         axios.post('/api/tasks/create', requestBody)
             .then(response => {
+                setNewTaskTitle("");
                 doUpdateTasks();
                 alert("Task created successfully");
             })
