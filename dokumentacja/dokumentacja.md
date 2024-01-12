@@ -46,8 +46,6 @@ Strona zadania:
 - wyświetlanie nazwy oraz opisu zadania
 - zmiana opisu zadania
 
-TO DO opisanie funkcjonalności zadań (w tym momencie nie działają)
-
 ## Architektura aplikacji
 TODO schemat
 
