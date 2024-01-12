@@ -47,5 +47,5 @@ Strona zadania:
 - zmiana opisu zadania
 
 ## Architektura aplikacji
-TODO schemat
+![](images/scheme.png)
 
