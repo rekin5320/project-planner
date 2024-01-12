@@ -24,7 +24,7 @@ Strona startowa:
 Strona domowa użytkownika:
 - wyświetlanie nazwy użytkownika oraz maila jeżeli jest w bazie danych
 - zmiana nazwy użytkownika
-- wyświetlanie projektów których użytkownik jest członkiem z wykorzystaniem stronnciowania
+- wyświetlanie projektów których użytkownik jest członkiem z wykorzystaniem stronnicowania
 - dodawanie nowego projektu
 - usuwanie projektu
 - przejście do strony projektu poprzez kliknięcie w nazwę projektu
@@ -33,10 +33,10 @@ Strona domowa użytkownika:
 Strona projektu:
 - wyświetlanie nazwy oraz opisu projektu
 - zmiana opisu projektu
-- wyświetlanie członków projektu z wykorzytsaniem stronnicowania
+- wyświetlanie członków projektu z wykorzystaniem stronnicowania
 - dodawanie użytkowników do projektu poprzez podanie nazwy użytkownika znajdującego się w bazie danych
 - usuwanie użytkownika z projektu
-- wyświetlanie zadań z wykorzytsaniem stronnicowania
+- wyświetlanie zadań z wykorzystaniem stronnicowania
 - dodawanie zadań
 - możliwość zaznaczenia zadania jako wykonane
 - usuwanie zadań
