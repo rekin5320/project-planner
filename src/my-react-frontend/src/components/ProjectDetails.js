@@ -95,7 +95,7 @@ const ProjectDetails = ({project, updateTasks}) => {
             .then(response => {
                 const updatedTasks = tasks.filter(task => task.id !== id);
                 setTasks(updatedTasks);
-                alert('Task created successfully');
+                alert("Task deleted successfully");
             })
             .catch(error => {
                 console.error('Error creating task:', error);
