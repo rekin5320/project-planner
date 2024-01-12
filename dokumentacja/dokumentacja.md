@@ -6,43 +6,47 @@
 - Tomasz Truszkowski
 
 ## O aplikacji
-Aplikacja Project Planner służy do zarządzania prostymi projektami. Umożliwia utworzenie własnego projektu, dodawanie do niego innych użytkowników oraz przydzielanie im zadań.
+Aplikacja Project Planner służy do zarządzania prostymi projektami. Umożliwia utworzenie projektów, dodawanie do niego innych użytkowników oraz przydzielanie im zadań.
 
 ### Wygląd
 ![Strona logowania](images/login.png)
 
-![Strona główna](images/home.png)
+![Strona domowa](images/home.png)
 
 ![Strona projektu](images/project.png)
 
 ## Lista funkcjonalności
-Strona startowa:
+Strona logowania:
+
 - rejestracja nowego użytkownika
-- logowanie
-- logowania przy użyciu konta google
+- zalogowanie się
+- zalogowanie przy użyciu konta Google
 
 Strona domowa użytkownika:
-- wyświetlanie nazwy użytkownika oraz maila jeżeli jest w bazie danych
+
+- wyświetlanie nazwy użytkownika (oraz adresu e-mail w przypadku zalogowania kontem Google)
 - zmiana nazwy użytkownika
-- wyświetlanie projektów których użytkownik jest członkiem z wykorzystaniem stronnicowania
+- wyświetlanie projektów, których użytkownik jest członkiem z wykorzystaniem stronicowania
 - dodawanie nowego projektu
 - usuwanie projektu
-- przejście do strony projektu poprzez kliknięcie w nazwę projektu
-- wylogowanie
+- przejście do strony projektu poprzez kliknięcie w jego nazwę
+- wylogowanie się
 
 Strona projektu:
+
 - wyświetlanie nazwy oraz opisu projektu
 - zmiana opisu projektu
-- wyświetlanie członków projektu z wykorzystaniem stronnicowania
-- dodawanie użytkowników do projektu poprzez podanie nazwy użytkownika znajdującego się w bazie danych
+- wyświetlanie członków projektu z wykorzystaniem stronicowania
+- dodawanie użytkowników do projektu poprzez podanie nazwy istniejącego użytkownika
 - usuwanie użytkownika z projektu
-- wyświetlanie zadań z wykorzystaniem stronnicowania
+- wyświetlanie zadań z wykorzystaniem stronicowania
 - dodawanie zadań
 - możliwość zaznaczenia zadania jako wykonane
 - usuwanie zadań
-- przejśćie do strony zadania poprzez kliknięcie nazwy zadania
+- przejście do strony zadania poprzez kliknięcie nazwy zadania
 
 Strona zadania:
+
 - wyświetlanie nazwy oraz opisu zadania
 - zmiana opisu zadania
 
