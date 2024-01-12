@@ -10,9 +10,9 @@ const ProjectDetails = ({project, updateTasks, updateMembers}) => {
     const [description, setDescription] = useState(project.description);
     const [newDescription, setNewDescription] = useState(project.description);
     const [newTaskTitle, setNewTaskTitle] = useState("");
-    const [currentMembersPage, setMembersCurrentPage] = useState(0);
+    const [currentMembersPage, setCurrentMembersPage] = useState(0);
     const [totalMembersPages, setMembersTotalPages] = useState(0);
-    const [currentTasksPage, setTasksCurrentPage] = useState(0);
+    const [currentTasksPage, setCurrentTasksPage] = useState(0);
     const [totalTasksPages, setTasksTotalPages] = useState(0);
     const pageSize = 5;
     const navigate = useNavigate();
@@ -47,11 +47,11 @@ const ProjectDetails = ({project, updateTasks, updateMembers}) => {
     }
 
     const handleMembersPageChange = (newPage) => {
-        setMembersCurrentPage(newPage);
+        setCurrentMembersPage(newPage);
     };
 
     const handleTasksPageChange = (newPage) => {
-        setTasksCurrentPage(newPage);
+        setCurrentTasksPage(newPage);
     };
 
     const handleDescriptionChange = (e) => {
