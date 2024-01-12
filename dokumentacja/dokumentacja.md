@@ -6,7 +6,7 @@
 - Tomasz Truszkowski
 
 ## O aplikacji
-TODO ogólny opis, do czego służy ta aplikacja
+Aplikacja Project Planner służy do zarządzania prostymi projektami. Umożliwia dodwanie użytkowników do projektu oraz przydzielanie im zadań.
 
 ### Wygląd
 ![Strona logowania](images/login.png)
