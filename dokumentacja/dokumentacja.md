@@ -16,7 +16,28 @@ TODO ogólny opis, do czego służy ta aplikacja
 ![Strona projektu](images/project.png)
 
 ## Lista funkcjonalności
-- TODO wymienić
+Strona startowa:
+- rejestracja nowego użytkownika
+- logowanie
+- logowania przy użyciu konta google
+
+Strona domowa użytkownika:
+- wyświetlanie nazwy użytkownika oraz maila jeżeli jest w bazie danych
+- zmiana nazwy użytkownika
+- wyświetlanie projektów których użytkownik jest członkiem z wykorzystaniem stronnciowania
+- dodawanie nowego projektu
+- usuwanie projektu
+- przejście do strony projektu poprzez kliknięcie w nazwę projektu
+- wylogowanie
+
+Strona projektu:
+- wyświetlanie nazwy oraz opisu projektu
+- zmiana opisu projektu
+- wyświetlanie członków projektu
+- dodawanie użytkowników do projektu poprzez podanie nazwy użytkownika znajdującego się w bazie danych
+- usuwanie użytkownika z projektu
+
+TO DO opisanie funkcjonalności zadań (w tym momencie nie działają)
 
 ## Architektura aplikacji
 TODO schemat
