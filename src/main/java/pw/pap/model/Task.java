@@ -48,9 +48,12 @@ public class Task {
     @Column()
     private Boolean isDone;
 
-    public Task() { }
+    public Task() {
+        this.isDone = false;
+    }
 
     public Task(String title, LocalDateTime taskCreationDate, User creator, Project project) {
+        this.isDone = false;
         this.title = title;
         this.taskCreationDate = taskCreationDate;
         this.creator = creator;
@@ -58,6 +61,7 @@ public class Task {
     }
 
     public Task(String title, String description, LocalDateTime taskCreationDate, LocalDateTime taskDeadline, List<User> assignees, User creator, Project project) {
+        this.isDone = false;
         this.title = title;
         this.description = description;
         this.taskCreationDate = taskCreationDate;
