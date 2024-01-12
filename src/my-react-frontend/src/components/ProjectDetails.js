@@ -261,7 +261,7 @@ const ProjectDetails = ({project, updateTasks, updateMembers}) => {
                     <div className="list-container">
                         {tasks.length > 0 ? (
                             tasks.map(task => (
-                                <div key={task.id} className="bg-white border-solid border-2 rounded-[6px] p-4 mb-2 flex items-center cursor-pointer" onClick={() => handleSelectTask(task)}>
+                                <div key={task.id} className="bg-white border-solid border-2 rounded-[6px] p-4 mb-2 flex items-center">
 
                                     <div className="form-checkbox mr-2">
                                         <input
@@ -273,7 +273,12 @@ const ProjectDetails = ({project, updateTasks, updateMembers}) => {
                                     </div>
 
                                     <div className="flex-1">
-                                        <h3 className="text-lg font-bold">{task.title}</h3>
+                                        <h3
+                                            className="text-lg font-bold cursor-pointer"
+                                            onClick={() => handleSelectTask(task)}
+                                        >
+                                            {task.title}
+                                        </h3>
                                         <p>{task.description}</p>
                                     </div>
                                     <button
