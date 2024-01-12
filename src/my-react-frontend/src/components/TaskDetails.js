@@ -9,14 +9,16 @@ function TaskDetails() {
     const [task, setTask] = useState(null);
     const [description, setDescription] = useState();
     const [newDescription, setNewDescription] = useState();
+    const [title, setTitle] = useState();
 
     useEffect(() => {
         //alert(taskId);
         axios.get(`/api/tasks/${taskId}`)
             .then(response => {
-                alert(response.data.title);
+                //alert(response.data.title);
                 setTask(response.data);
                 setNewDescription(response.data.description);
+                setTitle(response.data.title);
             })
             .catch(error => console.error('Error fetching task:', error));
     }, [taskId]);
@@ -27,8 +29,8 @@ function TaskDetails() {
 
     const updateTaskDescription = () => {
         const updatedTask = { ...task, description: newDescription };
-        alert(task.id);
-        alert(`/api/tasks/update/${task.id}`)
+        //alert(task.id);
+        //alert(`/api/tasks/update/${task.id}`)
         axios.put(`/api/tasks/update/${task.id}`, updatedTask)
             .then(response => {
                 setDescription(newDescription);
@@ -42,7 +44,7 @@ function TaskDetails() {
 
     return (
         <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4 ml-4">
-            <h1 className="text-4xl font-bold">{task.title}</h1>
+            <h1 className="text-4xl font-bold">{title}</h1>
             <p className="text-md"><span className="font-bold">Description:</span> {description}</p>
 
             <div className="flex mt-2">
