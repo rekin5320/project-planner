@@ -2,29 +2,37 @@ import React, { useState, useEffect  } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const ProjectDetails = ({ project }) => {
+const ProjectDetails = ({project, updateTasks}) => {
     const [project2, setProject2] = useState(project);
     const [tasks, setTasks] = useState([]);
     const [newMember, setNewMember] = useState([]);
     const [description, setDescription] = useState(project.description);
     const [newDescription, setNewDescription] = useState(project.description);
     const [newTaskTitle, setNewTaskTitle] = useState("");
+    const [currentTasksPage, setTasksCurrentPage] = useState(0);
+    const [totalTasksPages, setTasksTotalPages] = useState(0);
+    const pageSize = 5;
     const navigate = useNavigate();
 
     useEffect(() => {
         // The condition is moved inside the useEffect
         if (project2 && project2.id) {
-            axios.get(`/api/projects/${project.id}/tasks`, project.id)
+            axios.get(`/api/projects/${project.id}/tasks`, {params: {page: currentTasksPage, size: pageSize}})
                 .then(response => {
-                    setTasks(response.data);
+                    setTasks(response.data.content);
+                    setTasksTotalPages(response.data.totalPages);
                 })
-                .catch(error => console.error('Error fetching tasks:', error));
+                .catch(error => console.error("Error fetching tasks:", error));
         }
-    }, [project2]);
+    }, [project2, currentTasksPage]);
 
     if (!project2) {
         return <div className="text-center text-lg text-gray-600">No project selected</div>;
     }
+
+    const handleTasksPageChange = (newPage) => {
+        setTasksCurrentPage(newPage);
+    };
 
     const handleDescriptionChange = (e) => {
         setNewDescription(e.target.value);
@@ -210,7 +218,19 @@ const ProjectDetails = ({ project }) => {
                         )}
                     </div>
 
-                    <div className="flex mt-2">
+                    <div className="pagination-controls flex justify-center items-center mt-2">
+                        {[...Array(totalTasksPages).keys()].map(page => (
+                            <button
+                                key={page}
+                                onClick={() => handleTasksPageChange(page)}
+                                className={`mybutton-pagination ${page === currentTasksPage ? "" : "mybutton-pagination-other"}`}
+                            >
+                                {page + 1}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="flex mt-4">
                         <input
                             type="text"
                             value={newTaskTitle}
@@ -226,7 +246,6 @@ const ProjectDetails = ({ project }) => {
                         </button>
                     </div>
                 </div>
-
 
             </div>
             <div className="flex justify-center mt-4">

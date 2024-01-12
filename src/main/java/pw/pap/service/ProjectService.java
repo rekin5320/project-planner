@@ -60,7 +60,7 @@ public class ProjectService {
             }
         }
 
-        int start = pageable.getPageNumber();
+        int start = pageable.getPageNumber() * pageable.getPageSize();
         int end = Math.min((start + pageable.getPageSize()), projectTasks.size());
 
         return new PageImpl<>(projectTasks.subList(start, end), pageable, projectTasks.size());
