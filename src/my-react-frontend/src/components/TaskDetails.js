@@ -1,21 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
-import { useParams } from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 
 
 function TaskDetails() {
-
-    const { taskId } = useParams();
+    const {taskId} = useParams();
     const [task, setTask] = useState(null);
     const [description, setDescription] = useState();
     const [newDescription, setNewDescription] = useState();
     const [title, setTitle] = useState();
 
     useEffect(() => {
-        //alert(taskId);
         axios.get(`/api/tasks/${taskId}`)
             .then(response => {
-                //alert(response.data.title);
                 setTask(response.data);
                 setNewDescription(response.data.description);
                 setTitle(response.data.title);
@@ -28,9 +25,7 @@ function TaskDetails() {
     };
 
     const updateTaskDescription = () => {
-        const updatedTask = { ...task, description: newDescription };
-        //alert(task.id);
-        //alert(`/api/tasks/update/${task.id}`)
+        const updatedTask = {...task, description: newDescription};
         axios.put(`/api/tasks/update/${task.id}`, updatedTask)
             .then(response => {
                 setDescription(newDescription);
