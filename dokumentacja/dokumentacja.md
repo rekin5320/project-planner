@@ -6,7 +6,7 @@
 - Tomasz Truszkowski
 
 ## O aplikacji
-Aplikacja Project Planner służy do zarządzania prostymi projektami. Umożliwia dodwanie użytkowników do projektu oraz przydzielanie im zadań.
+Aplikacja Project Planner służy do zarządzania prostymi projektami. Umożliwia utworzenie własnego projektu, dodawanie do niego innych użytkowników oraz przydzielanie im zadań.
 
 ### Wygląd
 ![Strona logowania](images/login.png)
