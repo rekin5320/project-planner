@@ -15,19 +15,22 @@ const ProjectDetails = ({project, updateTasks}) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // The condition is moved inside the useEffect
         if (project2 && project2.id) {
-            axios.get(`/api/projects/${project.id}/tasks`, {params: {page: currentTasksPage, size: pageSize}})
-                .then(response => {
-                    setTasks(response.data.content);
-                    setTasksTotalPages(response.data.totalPages);
-                })
-                .catch(error => console.error("Error fetching tasks:", error));
+            doUpdateTasks();
         }
     }, [project2, currentTasksPage]);
 
     if (!project2) {
         return <div className="text-center text-lg text-gray-600">No project selected</div>;
+    }
+
+    const doUpdateTasks = () => {
+        axios.get(`/api/projects/${project.id}/tasks`, {params: {page: currentTasksPage, size: pageSize}})
+            .then(response => {
+                setTasks(response.data.content);
+                setTasksTotalPages(response.data.totalPages);
+            })
+            .catch(error => console.error("Error fetching tasks:", error));
     }
 
     const handleTasksPageChange = (newPage) => {
@@ -48,9 +51,8 @@ const ProjectDetails = ({project, updateTasks}) => {
         // Sending a POST request to the create task endpoint
         axios.post('/api/tasks/create', requestBody)
             .then(response => {
-                setTasks([...tasks, response.data]);
-                setNewTaskTitle(""); // Reset the input field after task creation
-                alert('Task created successfully');
+                doUpdateTasks();
+                alert("Task created successfully");
             })
             .catch(error => {
                 console.error('Error creating task:', error);
