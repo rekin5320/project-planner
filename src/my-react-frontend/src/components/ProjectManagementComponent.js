@@ -73,7 +73,7 @@ const ProjectManagementComponent = ({user, updateProjects, projectManagementUpda
 
 
             {/* Scrollable container for the project list */}
-            <div className="pagination-controls flex justify-center items-center mt-4">
+            <div className="pagination-controls flex justify-center items-center mt-2">
                 {[...Array(totalPages).keys()].map(page => (
                     <button
                         key={page}
