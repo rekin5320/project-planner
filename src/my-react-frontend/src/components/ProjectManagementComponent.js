@@ -6,13 +6,13 @@ const ProjectManagementComponent = ({user, updateProjects, projectManagementUpda
     const [newProjectName, setNewProjectName] = useState("");
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
-    const pageSize = 5; // Assuming a fixed page size
+    const pageSize = 5;
 
     useEffect(() => {
-        axios.get(`/api/users/${user.id}/projects`, { params: { page: currentPage, size: pageSize } })
+        axios.get(`/api/users/${user.id}/projects`, {params: {page: currentPage, size: pageSize}})
             .then(response => {
-                setProjects(response.data.content); // Assuming the response has a 'content' key
-                setTotalPages(response.data.totalPages); // Assuming the response includes total pages
+                setProjects(response.data.content);
+                setTotalPages(response.data.totalPages);
             })
             .catch(error => console.error("API call error:", error));
     }, [user.id, currentPage, projectManagementUpdate]);

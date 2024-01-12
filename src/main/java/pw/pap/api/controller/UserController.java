@@ -55,9 +55,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/projects")
-    public ResponseEntity<Page<Project>> getMemberProjects(@PathVariable Long userId,
-                                                                     @RequestParam(defaultValue =  "0") int page,
-                                                                     @RequestParam(defaultValue = "5") int size) {
+    public ResponseEntity<Page<Project>> getMemberProjects(@PathVariable Long userId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Project> memberProjects = userService.getMemberProjectsWithPaging(userId, pageable);
         return new ResponseEntity<>(memberProjects, HttpStatus.OK);
