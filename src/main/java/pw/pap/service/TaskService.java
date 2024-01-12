@@ -55,7 +55,7 @@ public class TaskService {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new IllegalArgumentException("Task not found"));
         List<User> assignees = task.getAssignees();
-        int start = pageable.getPageNumber();
+        int start = pageable.getPageNumber() * pageable.getPageSize();
         int end = Math.min((start + pageable.getPageSize()), assignees.size());
 
         return new PageImpl<>(assignees.subList(start, end), pageable, assignees.size());
