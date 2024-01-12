@@ -157,15 +157,10 @@ const ProjectDetails = ({project, updateTasks, updateMembers}) => {
 
 
     const handleTaskIsDone = (task) => {
-        // Toggle the isDone property of the task
-        //alert(task.isDone);
-
-        const updatedTask = { ...task, done: !task.done };
-        alert(updatedTask.done);
+        const updatedTask = {...task, done: !task.done};
 
         axios.put(`/api/tasks/update/${task.id}`, updatedTask)
             .then(response => {
-                alert('Success');
                 doUpdateTasks();
             })
             .catch(error => {
