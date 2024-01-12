@@ -75,6 +75,7 @@ public class TaskService {
                 .orElseThrow(() -> new IllegalArgumentException("Task not found"));
 
         Boolean isDone = updatedTask.getDone();
+        System.out.println(isDone);
         if(isDone != null){
             existingTask.setDone(isDone);
         }

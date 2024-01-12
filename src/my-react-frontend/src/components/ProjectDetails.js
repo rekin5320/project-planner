@@ -128,6 +128,22 @@ const ProjectDetails = ({project, updateTasks}) => {
     }
 
 
+    const handleTaskIsDone = (task) => {
+        // Toggle the isDone property of the task
+        //alert(task.isDone);
+        const updatedTask = { ...task, isDone: !task.isDone };
+        alert(updatedTask.isDone);
+
+        axios.put(`/api/tasks/update/${task.id}`, updatedTask)
+            .then(response => {
+                alert('Success');
+            })
+            .catch(error => {
+                console.error('Error updating task:', error);
+                alert('Failed to update task status');
+            });
+    };
+
     const goBack = () => {
         navigate('/home');
     };
@@ -206,6 +222,14 @@ const ProjectDetails = ({project, updateTasks}) => {
                                     <div className="flex-1">
                                         <h3 className="text-lg font-bold">{task.title}</h3>
                                         <p>{task.description}</p>
+                                    </div>
+                                    <div className="form-checkbox mr-2">
+                                        <input
+                                            type="checkbox"
+                                            checked={task.isDone}
+                                            onChange={() => handleTaskIsDone(task)}
+                                            className="checked:bg-blue-500 checked:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-300 h-5 w-5 text-blue-600 border-gray-300 rounded"
+                                        />
                                     </div>
                                     <button
                                         onClick={() => deleteTask(task.id)}
