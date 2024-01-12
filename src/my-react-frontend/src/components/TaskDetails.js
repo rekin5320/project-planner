@@ -17,7 +17,7 @@ function TaskDetails() {
             .then(response => {
                 //alert(response.data.title);
                 setTask(response.data);
-                setDescription(response.data.description);
+                setNewDescription(response.data.description);
                 setTitle(response.data.title);
             })
             .catch(error => console.error('Error fetching task:', error));
