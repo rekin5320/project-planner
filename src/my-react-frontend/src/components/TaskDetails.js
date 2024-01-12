@@ -39,23 +39,25 @@ function TaskDetails() {
     };
 
     return (
-        <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4 ml-4">
-            <h1 className="text-4xl font-bold">{title}</h1>
-            <p className="text-md"><span className="font-bold">Description:</span> {description}</p>
+        <div className="min-h-screen bg-custom-background">
+            <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4 ml-4">
+                <h1 className="text-4xl font-bold">{title}</h1>
+                <p className="text-md"><span className="font-bold">Description:</span> {description}</p>
 
-            <div className="flex mt-2">
-                <input
-                    type="text"
-                    value={newDescription}
-                    onChange={handleDescriptionChange}
-                    className="bg-gray-200 p-2 rounded w-full"
-                />
-                <button
-                    onClick={updateTaskDescription}
-                    className="mybutton px-1 w-64"
-                >
-                    Change description
-                </button>
+                <div className="flex mt-2">
+                    <input
+                        type="text"
+                        value={newDescription}
+                        onChange={handleDescriptionChange}
+                        className="bg-gray-200 p-2 rounded w-full"
+                    />
+                    <button
+                        onClick={updateTaskDescription}
+                        className="mybutton px-1 w-64"
+                    >
+                        Change description
+                    </button>
+                </div>
             </div>
         </div>
     );
