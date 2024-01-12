@@ -35,6 +35,7 @@ function App() {
 
     const handleSelectTask = (task) => {
         setSelectedTask(task);
+        //alert(selectedTask.id);
     };
 
     return (

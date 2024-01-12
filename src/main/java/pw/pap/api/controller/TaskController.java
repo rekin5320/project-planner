@@ -61,7 +61,7 @@ public class TaskController {
     public ResponseEntity<Task> updateTask(@PathVariable Long taskId, @RequestBody Task updatedTask) {
         try {
             System.out.println("Tutaj");
-            System.out.println(updatedTask.getDone());
+            System.out.println(updatedTask.getDescription());
             Task updated = taskService.updateTask(taskId, updatedTask);
             return new ResponseEntity<>(updated, HttpStatus.OK);
         } catch (Exception e) {

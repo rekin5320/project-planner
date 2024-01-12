@@ -34,6 +34,8 @@ const ProjectDetails = ({project, changeSelectedTask}) => {
     }
 
     const handleSelectTask = (task) => {
+        //alert(task.id);
+        //alert(task.title);
         changeSelectedTask(task);
         navigate(`/task/${task.id}`);
     };
