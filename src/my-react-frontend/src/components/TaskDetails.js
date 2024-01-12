@@ -1,25 +1,35 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from "axios";
-
-function TaskDetails(task) {
-
-    const [task2, setTask2] = useState(task);
-    const [description, setDescription] = useState(task.description);
-    const [newDescription, setNewDescription] = useState(task.description);
+import { useParams } from 'react-router-dom';
 
 
-    if (!task2) {
-        return <div className="text-center text-lg text-gray-600">No task selected</div>;
-    }
+function TaskDetails() {
+
+    const { taskId } = useParams();
+    const [task, setTask] = useState(null);
+    const [description, setDescription] = useState();
+    const [newDescription, setNewDescription] = useState();
+
+    useEffect(() => {
+        //alert(taskId);
+        axios.get(`/api/tasks/${taskId}`)
+            .then(response => {
+                alert(response.data.title);
+                setTask(response.data);
+                setNewDescription(response.data.description);
+            })
+            .catch(error => console.error('Error fetching task:', error));
+    }, [taskId]);
+
     const handleDescriptionChange = (e) => {
         setNewDescription(e.target.value);
     };
 
     const updateTaskDescription = () => {
-        const updatedTask = { ...task2, description: newDescription };
-        alert(task2.id);
-        alert(`/api/tasks/update/${task2.id}`)
-        axios.put(`/api/tasks/update/${task2.id}`, updatedTask)
+        const updatedTask = { ...task, description: newDescription };
+        alert(task.id);
+        alert(`/api/tasks/update/${task.id}`)
+        axios.put(`/api/tasks/update/${task.id}`, updatedTask)
             .then(response => {
                 setDescription(newDescription);
                 alert('Project description updated successfully');
@@ -32,13 +42,13 @@ function TaskDetails(task) {
 
     return (
         <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4 ml-4">
-            <h1 className="text-4xl font-bold">{task2.title}</h1>
-            <p className="text-md"><span className="font-bold">Description:</span> {task2.description}</p>
+            <h1 className="text-4xl font-bold">{task.title}</h1>
+            <p className="text-md"><span className="font-bold">Description:</span> {description}</p>
 
             <div className="flex mt-2">
                 <input
                     type="text"
-                    value={newDescription}
+                    value={description}
                     onChange={handleDescriptionChange}
                     className="bg-gray-200 p-2 rounded w-full"
                 />

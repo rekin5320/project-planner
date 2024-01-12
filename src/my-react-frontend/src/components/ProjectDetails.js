@@ -2,7 +2,7 @@ import React, { useState, useEffect  } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const ProjectDetails = ({project, changeSelectedTask, updateTasks, updateMembers}) => {
+const ProjectDetails = ({project, updateTasks, updateMembers}) => {
     const [project2, setProject2] = useState(project);
     const [members, setMembers] = useState([]);
     const [tasks, setTasks] = useState([]);
@@ -22,7 +22,7 @@ const ProjectDetails = ({project, changeSelectedTask, updateTasks, updateMembers
             doUpdateMembers();
             doUpdateTasks();
         }
-    }, [project2, changeSelectedTask, currentTasksPage, currentMembersPage]);
+    }, [project2, currentTasksPage, currentMembersPage]);
 
     if (!project2) {
         return <div className="text-center text-lg text-gray-600">No project selected</div>;
@@ -61,9 +61,6 @@ const ProjectDetails = ({project, changeSelectedTask, updateTasks, updateMembers
     };
 
     const handleSelectTask = (task) => {
-        //alert(task.id);
-        //alert(task.title);
-        changeSelectedTask(task);
         navigate(`/task/${task.id}`);
     };
 
