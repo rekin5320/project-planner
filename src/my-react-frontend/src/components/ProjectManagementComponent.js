@@ -78,7 +78,7 @@ const ProjectManagementComponent = ({user, updateProjects, projectManagementUpda
                     <button
                         key={page}
                         onClick={() => handlePageChange(page)}
-                        className={`mx-1 px-3 py-1 rounded-md ${page === currentPage ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"} hover:bg-blue-400 hover:text-white`}
+                        className={`mybutton-pagination ${page === currentPage ? "" : "mybutton-pagination-other"}`}
                     >
                         {page + 1}
                     </button>
