@@ -28,20 +28,26 @@ const ProjectDetails = ({project, changeSelectedTask, updateTasks, updateMembers
         return <div className="text-center text-lg text-gray-600">No project selected</div>;
     }
 
-    const doUpdateMembers = () => {
+    const doUpdateMembers = (focusLast = false) => {
         axios.get(`/api/projects/${project.id}/members`, {params: {page: currentMembersPage, size: pageSize}})
             .then(response => {
                 setMembers(response.data.content);
                 setMembersTotalPages(response.data.totalPages);
+                if (focusLast) {
+                    setCurrentMembersPage(response.data.totalPages - 1);
+                }
             })
             .catch(error => console.error("Error fetching members:", error));
     }
 
-    const doUpdateTasks = () => {
+    const doUpdateTasks = (focusLast = false) => {
         axios.get(`/api/projects/${project.id}/tasks`, {params: {page: currentTasksPage, size: pageSize}})
             .then(response => {
                 setTasks(response.data.content);
                 setTasksTotalPages(response.data.totalPages);
+                if (focusLast) {
+                    setCurrentTasksPage(response.data.totalPages - 1);
+                }
             })
             .catch(error => console.error("Error fetching tasks:", error));
     }
@@ -74,7 +80,7 @@ const ProjectDetails = ({project, changeSelectedTask, updateTasks, updateMembers
         axios.post('/api/tasks/create', requestBody)
             .then(response => {
                 setNewTaskTitle("");
-                doUpdateTasks();
+                doUpdateTasks(true);
                 alert("Task created successfully");
             })
             .catch(error => {
@@ -104,7 +110,7 @@ const ProjectDetails = ({project, changeSelectedTask, updateTasks, updateMembers
 
         axios.post(`/api/projects/assignUser/${project.id}`, requestBody)
             .then(response => {
-                setMembers([...members, response.data]);
+                doUpdateMembers(true);
                 setNewMember("");
                 alert('User assigned successfully');
             })
