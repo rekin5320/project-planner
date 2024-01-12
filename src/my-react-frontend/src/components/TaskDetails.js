@@ -14,6 +14,7 @@ function TaskDetails() {
         axios.get(`/api/tasks/${taskId}`)
             .then(response => {
                 setTask(response.data);
+                setDescription(response.data.description);
                 setNewDescription(response.data.description);
                 setTitle(response.data.title);
             })
@@ -45,7 +46,7 @@ function TaskDetails() {
             <div className="flex mt-2">
                 <input
                     type="text"
-                    value={description}
+                    value={newDescription}
                     onChange={handleDescriptionChange}
                     className="bg-gray-200 p-2 rounded w-full"
                 />
