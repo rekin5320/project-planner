@@ -91,7 +91,7 @@ public class UserService {
                 .filter(project -> project.getMembers().stream().anyMatch(member -> member.getId().equals(memberId)))
                 .collect(Collectors.toList());
 
-        int start = pageable.getPageNumber();
+        int start = pageable.getPageNumber() * pageable.getPageSize();
         int end = Math.min((start + pageable.getPageSize()), memberProjects.size());
 
         return new PageImpl<>(memberProjects.subList(start, end), pageable, memberProjects.size());
