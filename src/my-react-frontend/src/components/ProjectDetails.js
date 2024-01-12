@@ -2,46 +2,69 @@ import React, { useState, useEffect  } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const ProjectDetails = ({project, changeSelectedTask}) => {
+const ProjectDetails = ({project, changeSelectedTask, updateTasks, updateMembers}) => {
     const [project2, setProject2] = useState(project);
+    const [members, setMembers] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [newMember, setNewMember] = useState([]);
     const [description, setDescription] = useState(project.description);
     const [newDescription, setNewDescription] = useState(project.description);
     const [newTaskTitle, setNewTaskTitle] = useState("");
-    const [currentTasksPage, setTasksCurrentPage] = useState(0);
+    const [currentMembersPage, setCurrentMembersPage] = useState(0);
+    const [totalMembersPages, setMembersTotalPages] = useState(0);
+    const [currentTasksPage, setCurrentTasksPage] = useState(0);
     const [totalTasksPages, setTasksTotalPages] = useState(0);
     const pageSize = 5;
     const navigate = useNavigate();
 
     useEffect(() => {
         if (project2 && project2.id) {
+            doUpdateMembers();
             doUpdateTasks();
         }
-    }, [project2, currentTasksPage]);
+    }, [project2, changeSelectedTask, currentTasksPage, currentMembersPage]);
 
     if (!project2) {
         return <div className="text-center text-lg text-gray-600">No project selected</div>;
     }
 
-    const doUpdateTasks = () => {
+    const doUpdateMembers = (focusLast = false) => {
+        axios.get(`/api/projects/${project.id}/members`, {params: {page: currentMembersPage, size: pageSize}})
+            .then(response => {
+                setMembers(response.data.content);
+                setMembersTotalPages(response.data.totalPages);
+                if (focusLast) {
+                    setCurrentMembersPage(response.data.totalPages - 1);
+                }
+            })
+            .catch(error => console.error("Error fetching members:", error));
+    }
+
+    const doUpdateTasks = (focusLast = false) => {
         axios.get(`/api/projects/${project.id}/tasks`, {params: {page: currentTasksPage, size: pageSize}})
             .then(response => {
                 setTasks(response.data.content);
                 setTasksTotalPages(response.data.totalPages);
+                if (focusLast) {
+                    setCurrentTasksPage(response.data.totalPages - 1);
+                }
             })
             .catch(error => console.error("Error fetching tasks:", error));
     }
+
+    const handleMembersPageChange = (newPage) => {
+        setCurrentMembersPage(newPage);
+    }
+
+    const handleTasksPageChange = (newPage) => {
+        setCurrentTasksPage(newPage);
+    };
 
     const handleSelectTask = (task) => {
         //alert(task.id);
         //alert(task.title);
         changeSelectedTask(task);
         navigate(`/task/${task.id}`);
-    };
-
-    const handleTasksPageChange = (newPage) => {
-        setTasksCurrentPage(newPage);
     };
 
     const handleDescriptionChange = (e) => {
@@ -58,7 +81,8 @@ const ProjectDetails = ({project, changeSelectedTask}) => {
         // Sending a POST request to the create task endpoint
         axios.post('/api/tasks/create', requestBody)
             .then(response => {
-                doUpdateTasks();
+                setNewTaskTitle("");
+                doUpdateTasks(true);
                 alert("Task created successfully");
             })
             .catch(error => {
@@ -88,7 +112,7 @@ const ProjectDetails = ({project, changeSelectedTask}) => {
 
         axios.post(`/api/projects/assignUser/${project.id}`, requestBody)
             .then(response => {
-                project2.members = [...project2.members, response.data];
+                doUpdateMembers(true);
                 setNewMember("");
                 alert('User assigned successfully');
             })
@@ -165,8 +189,8 @@ const ProjectDetails = ({project, changeSelectedTask}) => {
                 <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4">
                     <h2 className="text-2xl font-bold">Members</h2>
                     <ul className="list-container">
-                        {project2.members && project2.members.length > 0 ? (
-                            project2.members.map(member => (
+                        {members && members.length > 0 ? (
+                            members.map(member => (
                                 <div key={member.id} className="bg-white border-solid border-2 rounded-[6px] p-4 mb-2 flex items-center">
                                     <h3 className="text-lg font-bold flex-1">{member.name}</h3>
                                     <button
@@ -182,7 +206,20 @@ const ProjectDetails = ({project, changeSelectedTask}) => {
                             <p>No members in this project.</p>
                         )}
                     </ul>
-                    <div className="flex mt-2">
+
+                    <div className="pagination-controls flex justify-center items-center mt-2">
+                        {[...Array(totalMembersPages).keys()].map(page => (
+                            <button
+                                key={page}
+                                onClick={() => handleMembersPageChange(page)}
+                                className={`mybutton-pagination ${page === currentMembersPage ? "" : "mybutton-pagination-other"}`}
+                            >
+                                {page + 1}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="flex mt-4">
                         <input
                             type="text"
                             value={newMember}

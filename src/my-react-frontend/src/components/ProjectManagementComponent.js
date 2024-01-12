@@ -51,7 +51,7 @@ const ProjectManagementComponent = ({user, updateProjects, projectManagementUpda
         <div className="flex flex-col items-center justify-center overflow-hidden">
             <h2 className="text-3xl text-white mb-2">Your Projects</h2>
 
-
+            {/* Scrollable container for the project list */}
             <div className="mylist-container">
                 {projects.map(project => (
                     <div key={project.id} className="mylist-entry">
@@ -71,8 +71,6 @@ const ProjectManagementComponent = ({user, updateProjects, projectManagementUpda
                 ))}
             </div>
 
-
-            {/* Scrollable container for the project list */}
             <div className="pagination-controls flex justify-center items-center mt-2">
                 {[...Array(totalPages).keys()].map(page => (
                     <button
