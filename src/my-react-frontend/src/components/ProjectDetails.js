@@ -261,7 +261,7 @@ const ProjectDetails = ({project, updateTasks, updateMembers}) => {
                     <div className="list-container">
                         {tasks.length > 0 ? (
                             tasks.map(task => (
-                                <div key={task.id} className="bg-white border-solid border-2 rounded-[6px] p-4 mb-2 flex items-center" onClick={() => handleSelectTask(task)}>
+                                <div key={task.id} className="bg-white border-solid border-2 rounded-[6px] p-4 mb-2 flex items-center cursor-pointer" onClick={() => handleSelectTask(task)}>
 
                                     <div className="form-checkbox mr-2">
                                         <input
