@@ -33,9 +33,18 @@ Strona domowa użytkownika:
 Strona projektu:
 - wyświetlanie nazwy oraz opisu projektu
 - zmiana opisu projektu
-- wyświetlanie członków projektu
+- wyświetlanie członków projektu z wykorzytsaniem stronnicowania
 - dodawanie użytkowników do projektu poprzez podanie nazwy użytkownika znajdującego się w bazie danych
 - usuwanie użytkownika z projektu
+- wyświetlanie zadań z wykorzytsaniem stronnicowania
+- dodawanie zadań
+- możliwość zaznaczenia zadania jako wykonane
+- usuwanie zadań
+- przejśćie do strony zadania poprzez kliknięcie nazwy zadania
+
+Strona zadania:
+- wyświetlanie nazwy oraz opisu zadania
+- zmiana opisu zadania
 
 TO DO opisanie funkcjonalności zadań (w tym momencie nie działają)
 
