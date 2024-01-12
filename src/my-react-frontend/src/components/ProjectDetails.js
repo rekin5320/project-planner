@@ -2,13 +2,16 @@ import React, { useState, useEffect  } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const ProjectDetails = ({project, updateTasks}) => {
+const ProjectDetails = ({project, updateTasks, updateMembers}) => {
     const [project2, setProject2] = useState(project);
+    const [members, setMembers] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [newMember, setNewMember] = useState([]);
     const [description, setDescription] = useState(project.description);
     const [newDescription, setNewDescription] = useState(project.description);
     const [newTaskTitle, setNewTaskTitle] = useState("");
+    const [currentMembersPage, setMembersCurrentPage] = useState(0);
+    const [totalMembersPages, setMembersTotalPages] = useState(0);
     const [currentTasksPage, setTasksCurrentPage] = useState(0);
     const [totalTasksPages, setTasksTotalPages] = useState(0);
     const pageSize = 5;
@@ -16,12 +19,22 @@ const ProjectDetails = ({project, updateTasks}) => {
 
     useEffect(() => {
         if (project2 && project2.id) {
+            doUpdateMembers();
             doUpdateTasks();
         }
-    }, [project2, currentTasksPage]);
+    }, [project2, currentTasksPage, currentMembersPage]);
 
     if (!project2) {
         return <div className="text-center text-lg text-gray-600">No project selected</div>;
+    }
+
+    const doUpdateMembers = () => {
+        axios.get(`/api/projects/${project.id}/members`, {params: {page: currentMembersPage, size: pageSize}})
+            .then(response => {
+                setMembers(response.data.content);
+                setMembersTotalPages(response.data.totalPages);
+            })
+            .catch(error => console.error("Error fetching members:", error));
     }
 
     const doUpdateTasks = () => {
@@ -32,6 +45,10 @@ const ProjectDetails = ({project, updateTasks}) => {
             })
             .catch(error => console.error("Error fetching tasks:", error));
     }
+
+    const handleMembersPageChange = (newPage) => {
+        setMembersCurrentPage(newPage);
+    };
 
     const handleTasksPageChange = (newPage) => {
         setTasksCurrentPage(newPage);
@@ -82,7 +99,7 @@ const ProjectDetails = ({project, updateTasks}) => {
 
         axios.post(`/api/projects/assignUser/${project.id}`, requestBody)
             .then(response => {
-                project2.members = [...project2.members, response.data];
+                members = [...members, response.data];
                 setNewMember("");
                 alert('User assigned successfully');
             })
@@ -159,8 +176,8 @@ const ProjectDetails = ({project, updateTasks}) => {
                 <div className="flex-1 max-w-xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-4">
                     <h2 className="text-2xl font-bold">Members</h2>
                     <ul className="list-container">
-                        {project2.members && project2.members.length > 0 ? (
-                            project2.members.map(member => (
+                        {members && members.length > 0 ? (
+                            members.map(member => (
                                 <div key={member.id} className="bg-white border-solid border-2 rounded-[6px] p-4 mb-2 flex items-center">
                                     <h3 className="text-lg font-bold flex-1">{member.name}</h3>
                                     <button
@@ -176,7 +193,20 @@ const ProjectDetails = ({project, updateTasks}) => {
                             <p>No members in this project.</p>
                         )}
                     </ul>
-                    <div className="flex mt-2">
+
+                    <div className="pagination-controls flex justify-center items-center mt-2">
+                        {[...Array(totalMembersPages).keys()].map(page => (
+                            <button
+                                key={page}
+                                onClick={() => handleMembersPageChange(page)}
+                                className={`mybutton-pagination ${page === currentMembersPage ? "" : "mybutton-pagination-other"}`}
+                            >
+                                {page + 1}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="flex mt-4">
                         <input
                             type="text"
                             value={newMember}

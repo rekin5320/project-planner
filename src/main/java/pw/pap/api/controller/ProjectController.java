@@ -46,9 +46,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{projectId}/members")
-    public ResponseEntity<Page<User>> getMembers(@PathVariable Long projectId,
-                                                      @RequestParam(defaultValue = "0") int page,
-                                                      @RequestParam(defaultValue = "5") int size) {
+    public ResponseEntity<Page<User>> getMembers(@PathVariable Long projectId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<User> members = projectService.getMembersWithPaging(projectId, pageable);
         return new ResponseEntity<>(members, HttpStatus.OK);
