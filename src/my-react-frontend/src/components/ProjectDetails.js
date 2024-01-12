@@ -131,12 +131,14 @@ const ProjectDetails = ({project, updateTasks}) => {
     const handleTaskIsDone = (task) => {
         // Toggle the isDone property of the task
         //alert(task.isDone);
-        const updatedTask = { ...task, isDone: !task.isDone };
-        alert(updatedTask.isDone);
+
+        const updatedTask = { ...task, done: !task.done };
+        alert(updatedTask.done);
 
         axios.put(`/api/tasks/update/${task.id}`, updatedTask)
             .then(response => {
                 alert('Success');
+                doUpdateTasks();
             })
             .catch(error => {
                 console.error('Error updating task:', error);
@@ -219,17 +221,19 @@ const ProjectDetails = ({project, updateTasks}) => {
                         {tasks.length > 0 ? (
                             tasks.map(task => (
                                 <div key={task.id} className="bg-white border-solid border-2 rounded-[6px] p-4 mb-2 flex items-center">
-                                    <div className="flex-1">
-                                        <h3 className="text-lg font-bold">{task.title}</h3>
-                                        <p>{task.description}</p>
-                                    </div>
+
                                     <div className="form-checkbox mr-2">
                                         <input
                                             type="checkbox"
-                                            checked={task.isDone}
+                                            checked={task.done}
                                             onChange={() => handleTaskIsDone(task)}
                                             className="checked:bg-blue-500 checked:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-300 h-5 w-5 text-blue-600 border-gray-300 rounded"
                                         />
+                                    </div>
+
+                                    <div className="flex-1">
+                                        <h3 className="text-lg font-bold">{task.title}</h3>
+                                        <p>{task.description}</p>
                                     </div>
                                     <button
                                         onClick={() => deleteTask(task.id)}
