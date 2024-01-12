@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 
-const ProjectManagementComponent = ({user, updateProjects, projectManagementUpdate, onSelect}) => {
+const ProjectManagementComponent = ({user, updateProjects, projectManagementUpdate, onSelectProject}) => {
     const [projects, setProjects] = useState([]);
     const [newProjectName, setNewProjectName] = useState("");
     const [currentPage, setCurrentPage] = useState(0);
@@ -57,7 +57,7 @@ const ProjectManagementComponent = ({user, updateProjects, projectManagementUpda
                     <div key={project.id} className="mylist-entry">
                         <span
                             className="text-gray-800 font-bold cursor-pointer"
-                            onClick={() => onSelect(project)}
+                            onClick={() => onSelectProject(project)}
                         >
                             {project.name}
                         </span>

@@ -2,7 +2,7 @@ import React, { useState, useEffect  } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const ProjectDetails = ({project, updateTasks, updateMembers}) => {
+const ProjectDetails = ({project, changeSelectedTask, updateTasks, updateMembers}) => {
     const [project2, setProject2] = useState(project);
     const [members, setMembers] = useState([]);
     const [tasks, setTasks] = useState([]);
@@ -22,7 +22,7 @@ const ProjectDetails = ({project, updateTasks, updateMembers}) => {
             doUpdateMembers();
             doUpdateTasks();
         }
-    }, [project2, currentTasksPage, currentMembersPage]);
+    }, [project2, changeSelectedTask, currentTasksPage, currentMembersPage]);
 
     if (!project2) {
         return <div className="text-center text-lg text-gray-600">No project selected</div>;
@@ -48,10 +48,15 @@ const ProjectDetails = ({project, updateTasks, updateMembers}) => {
 
     const handleMembersPageChange = (newPage) => {
         setCurrentMembersPage(newPage);
-    };
+    }
 
     const handleTasksPageChange = (newPage) => {
         setCurrentTasksPage(newPage);
+    };
+
+    const handleSelectTask = (task) => {
+        changeSelectedTask(task);
+        navigate(`/task/${task.id}`);
     };
 
     const handleDescriptionChange = (e) => {
@@ -251,7 +256,7 @@ const ProjectDetails = ({project, updateTasks, updateMembers}) => {
                     <div className="list-container">
                         {tasks.length > 0 ? (
                             tasks.map(task => (
-                                <div key={task.id} className="bg-white border-solid border-2 rounded-[6px] p-4 mb-2 flex items-center">
+                                <div key={task.id} className="bg-white border-solid border-2 rounded-[6px] p-4 mb-2 flex items-center" onClick={() => handleSelectTask(task)}>
 
                                     <div className="form-checkbox mr-2">
                                         <input
