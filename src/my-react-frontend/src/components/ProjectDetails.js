@@ -2,7 +2,7 @@ import React, { useState, useEffect  } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const ProjectDetails = ({project, updateTasks}) => {
+const ProjectDetails = ({project, changeSelectedTask}) => {
     const [project2, setProject2] = useState(project);
     const [tasks, setTasks] = useState([]);
     const [newMember, setNewMember] = useState([]);
@@ -32,6 +32,11 @@ const ProjectDetails = ({project, updateTasks}) => {
             })
             .catch(error => console.error("Error fetching tasks:", error));
     }
+
+    const handleSelectTask = (task) => {
+        changeSelectedTask(task);
+        navigate(`/task/${task.id}`);
+    };
 
     const handleTasksPageChange = (newPage) => {
         setTasksCurrentPage(newPage);
@@ -220,7 +225,7 @@ const ProjectDetails = ({project, updateTasks}) => {
                     <div className="list-container">
                         {tasks.length > 0 ? (
                             tasks.map(task => (
-                                <div key={task.id} className="bg-white border-solid border-2 rounded-[6px] p-4 mb-2 flex items-center">
+                                <div key={task.id} className="bg-white border-solid border-2 rounded-[6px] p-4 mb-2 flex items-center" onClick={() => handleSelectTask(task)}>
 
                                     <div className="form-checkbox mr-2">
                                         <input
