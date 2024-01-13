@@ -46,7 +46,7 @@ function TaskDetails() {
     return (
         <div className="min-h-screen bg-custom-background">
             <div className="flex-col max-w-xl bg-white shadow-lg rounded-lg overflow-hidden p-4 ml-4">
-                <h1 className="text-4xl font-bold">{title}</h1>
+                <h1 className={"text-4xl font-bold" + ((task && task.done) ? " line-through decoration-4" : "")}>{title}</h1>
                 <p className="text-md"><span className="font-bold">Status:</span> {(task && task.done) ? "done" : "to do"}</p>
 
                 <p className="text-md"><span className="font-bold">Description:</span> {description}</p>
