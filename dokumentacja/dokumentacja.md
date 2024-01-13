@@ -53,3 +53,22 @@ Strona zadania:
 ## Architektura aplikacji
 ![](images/scheme.png)
 
+## Poprawki
+Dodane funkcjonalności:
+
+- paginacja po stronie serwera
+- strona tasku
+- zaznaczanie tasku jako wykonanego
+
+![](images/pagination_code1.png)
+
+![](images/pagination_code2.png)
+
+![](images/improvements1.png)
+
+![](images/improvements2.png)
+
+![](images/improvements3.png)
+
+![](images/improvements4.png)
+
