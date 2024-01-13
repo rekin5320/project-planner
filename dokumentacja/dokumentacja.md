@@ -72,3 +72,5 @@ Dodane funkcjonalności:
 
 ![](images/improvements4.png)
 
+![](images/improvements5.png)
+
