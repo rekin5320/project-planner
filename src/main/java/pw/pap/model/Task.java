@@ -46,14 +46,11 @@ public class Task {
     private List<User> assignees = new ArrayList<>();
 
     @Column()
-    private Boolean isDone;
+    private boolean isDone;
 
-    public Task() {
-        this.isDone = false;
-    }
+    public Task() { }
 
     public Task(String title, LocalDateTime taskCreationDate, User creator, Project project) {
-        this.isDone = false;
         this.title = title;
         this.taskCreationDate = taskCreationDate;
         this.creator = creator;
@@ -61,7 +58,6 @@ public class Task {
     }
 
     public Task(String title, String description, LocalDateTime taskCreationDate, LocalDateTime taskDeadline, List<User> assignees, User creator, Project project) {
-        this.isDone = false;
         this.title = title;
         this.description = description;
         this.taskCreationDate = taskCreationDate;
