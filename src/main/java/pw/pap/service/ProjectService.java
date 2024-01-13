@@ -45,6 +45,7 @@ public class ProjectService {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found"));
         List<User> members = project.getMembers();
+
         int start = pageable.getPageNumber() * pageable.getPageSize();
         int end = Math.min((start + pageable.getPageSize()), members.size());
 
@@ -53,6 +54,7 @@ public class ProjectService {
 
     public Page<Task> getProjectTasksWithPaging(Long projectId, Pageable pageable){
         List<Task> projectTasks = new ArrayList<>();
+
         Iterable<Task> tasks = taskRepository.findAll();
         for (Task task : tasks){
             if(task.getProject().getId().equals(projectId)){
