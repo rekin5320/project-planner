@@ -27,7 +27,6 @@ function TaskDetails() {
     };
 
     const goBack = () => {
-        alert(task.project.id);
         navigate(`../project/${task.project.id}`);
     };
 
