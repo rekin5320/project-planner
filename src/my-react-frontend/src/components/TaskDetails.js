@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 
 
 function TaskDetails() {
@@ -9,6 +9,7 @@ function TaskDetails() {
     const [description, setDescription] = useState();
     const [newDescription, setNewDescription] = useState();
     const [title, setTitle] = useState();
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(`/api/tasks/${taskId}`)
@@ -23,6 +24,11 @@ function TaskDetails() {
 
     const handleDescriptionChange = (e) => {
         setNewDescription(e.target.value);
+    };
+
+    const goBack = () => {
+        alert(task.project.id);
+        navigate(`../project/${task.project.id}`);
     };
 
     const updateTaskDescription = () => {
@@ -58,6 +64,11 @@ function TaskDetails() {
                         Change description
                     </button>
                 </div>
+            </div>
+            <div className="flex justify-center mt-4">
+                <button onClick={goBack} className="mybutton">
+                    Go back to Project
+                </button>
             </div>
         </div>
     );
