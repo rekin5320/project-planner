@@ -256,7 +256,10 @@ const ProjectDetails = ({project, updateTasks, updateMembers}) => {
                     <div className="list-container">
                         {tasks.length > 0 ? (
                             tasks.map(task => (
-                                <div key={task.id} className="bg-white border-solid border-2 rounded-[6px] p-4 mb-2 flex items-center">
+                                <div
+                                    key={task.id}
+                                    className={"border-solid border-2 rounded-[6px] p-4 mb-2 flex items-center" + (task.done ? ' bg-gray-200' : '')}
+                                >
 
                                     <div className="form-checkbox mr-2">
                                         <input
@@ -269,12 +272,16 @@ const ProjectDetails = ({project, updateTasks, updateMembers}) => {
 
                                     <div className="flex-1">
                                         <h3
-                                            className="text-lg font-bold cursor-pointer"
+                                            className={"text-lg font-bold cursor-pointer" + (task.done ? ' line-through decoration-2' : '')}
                                             onClick={() => handleSelectTask(task)}
                                         >
                                             {task.title}
                                         </h3>
-                                        <p>{task.description}</p>
+                                        <p
+                                            className={(task.done ? 'line-through' : '')}
+                                        >
+                                            {task.description}
+                                        </p>
                                     </div>
                                     <button
                                         onClick={() => deleteTask(task.id)}
