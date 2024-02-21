@@ -29,22 +29,6 @@ Dodatkowe funkcjonalności, na przykład:
 
 ## How to use it
 ### MySQL database
-#### Credentials
-<details>
-<p><summary>Click to expand</summary></p>
-
-address: `rekin.ddns.net:30306`
-
-database name: `papdb`
-
-jdbc: `jdbc:mysql://rekin.ddns.net:30306/papdb`
-
-user: `myuser`
-
-password: `2L9(4Evz,9`
-
-</details>
-
 #### Testing connection
 ```sh
 pip install mysql-connector-python
