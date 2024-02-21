@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 
+import os
+
 import mysql.connector
 
 
 credentials = {
-    "host": "rekin.ddns.net",
-    "port": 30306,
-    "user": "myuser",
-    "password": "2L9(4Evz,9",
-    "database": "papdb",
+    "host": os.environ["DB_HOST"],
+    "port": os.environ["DB_PORT"],
+    "database": os.environ["DB_NAME"],
+    "user": os.environ["DB_USER"],
+    "password": os.environ["DB_PASSWORD"],
 }
 
 with mysql.connector.connect(**credentials) as connection, connection.cursor() as cursor:
