@@ -1,11 +1,15 @@
-# Projekt PAP – ProjectPlanner
-![](dokumentacja/images/improvements1.png)
+# Project Planner – projekt z PAP
+## O aplikacji
+Aplikacja Project Planner służy do zarządzania prostymi projektami. Umożliwia utworzenie projektów, dodawanie do niego innych użytkowników oraz przydzielanie im zadań.
 
-![](dokumentacja/images/improvements3.png)
+### Wygląd
+![Strona logowania](dokumentacja/images/login.png)
 
-## Założenia
-### Temat
-Aplikacja służąca do planowania zadań dla pracowników
+![Strona domowa](dokumentacja/images/improvements1.png)
+
+![Strona projektu](dokumentacja/images/improvements3.png)
+
+![Strona zadania](dokumentacja/images/improvements5.png)
 
 ### Technologie
 Frontend: interfejs webowy (React)
@@ -14,17 +18,31 @@ Backend: Java (Spring + REST)
 
 Baza danych: MySQL
 
-### Funkcjonalności
-Podstawowe funkcjonalności:
+### Funkcje
+Strona logowania:
 
-- wyświetlanie, dodawanie, edytowanie, usuwanie użytkowników, projektów i zadań
-- dodawanie użytkowników do projektów i przydzielanie im zadań
-- ustawianie opisów projektów i zadań
+- założenie konta
+- zalogowanie się nazwą użytkownika i hasłem
+- zalogowanie przy użyciu konta Google
+
+Strona domowa użytkownika:
+
+- wyświetlanie projektów użytkownika z wykorzystaniem stronicowania
+- dodawanie i usuwanie projektów
+- przejście do strony projektu poprzez kliknięcie w jego nazwę
+- zmiana nazwy użytkownika
+
+Strona projektu:
+- wyświetlanie członków projektu z wykorzystaniem stronicowania
+- dodawanie i usuwanie członków projektu
+- zmiana opisu projektu
+- wyświetlanie zadań z wykorzystaniem stronicowania
+- dodawanie i usuwanie zadań
 - odznaczanie wykonanych zadań
 
-Dodatkowe funkcjonalności:
+Strona zadania:
 
-- możliwość zalogowania się kontem Google
+- zmiana opisu zadania
 
 ## Członkowie zespołu
 - Piotr Lenczewski
@@ -32,14 +50,14 @@ Dodatkowe funkcjonalności:
 - Jakub Pęk
 - Tomasz Truszkowski
 
-## How to use it?
-### MySQL database
-#### Set environment variables – credentials
+## Uruchamianie
+### Zmienne środowiskowe – dane dostępowe
 ```sh
 export DB_HOST=… DB_PORT=… DB_NAME=… DB_USER=… DB_PASSWORD=…
 ```
 
-#### Testing connection
+### MySQL
+#### Testowanie połączenia
 ```sh
 pip install mysql-connector-python
 ```
@@ -49,30 +67,30 @@ python src/check_db_connection.py
 ```
 
 ### Spring backend
-#### Build
+#### Budowanie
 ```sh
 mvn package
 ```
 
-#### Run
+#### Uruchomienie
 ```sh
 java -jar target/pap-app-1.0.0.jar
 ```
 
-API is available at <http://localhost:8080/api/>
+API jest dostępne na: <http://localhost:8080/api/>
 
 ### React frontend
-#### Install dependencies
+#### Instalacja zależności
 ```sh
 cd src/my-react-frontend
 npm install
 ```
 
-#### Run
+#### Uruchomienie
 ```sh
 cd src/my-react-frontend
 npm start
 ```
 
-Open <http://localhost:3000/>
+Strona jest dostępna na: <http://localhost:3000/>
 
