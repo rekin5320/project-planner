@@ -1,6 +1,6 @@
 # Project Planner – projekt z PAP
 ## O aplikacji
-Aplikacja Project Planner służy do zarządzania prostymi projektami. Umożliwia utworzenie projektów, dodawanie do niego innych użytkowników oraz przydzielanie im zadań.
+Aplikacja Project Planner służy do zarządzania prostymi projektami. Umożliwia tworzenie projektów, dodawanie do niego zadań oraz przydzielanie zadań poszczególnym osobom.
 
 ### Wygląd
 ![Strona logowania](dokumentacja/images/login.png)
